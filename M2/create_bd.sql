@@ -1,0 +1,27 @@
+DROP DATABASE IF EXISTS zelda;
+CREATE DATABASE zelda CHARACTER SET utf8mb4;
+USE zelda;
+
+
+CREATE TABLE IF NOT EXISTS hearts(
+	hearts_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    remaining INT NOT NULL,
+    total INT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS blood_moon(
+	blood_moon_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    remaining INT NOT NULL,
+    total INT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS players(
+	player_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_name VARCHAR(10) NOT NULL,
+    date_started DATETIME DEFAULT NOW(),
+    hearts_id INT UNSIGNED NOT NULL,
+    blood_moon_id INT UNSIGNED NOT NULL,
+    
+    FOREIGN KEY (hearts_id) REFERENCES hearts(hearts_id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (blood_moon_id) REFERENCES blood_moon(blood_moon_id) ON UPDATE CASCADE ON DELETE CASCADE
+);
