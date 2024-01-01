@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS game(
     
     CHECK (region IN ('hyrule', 'death mountain', 'gerudo', 'necluda', 'castle')),
     
-    FOREIGN KEY (player_id) REFERENCES players(player_id)
+    FOREIGN KEY (player_id) REFERENCES players(player_id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS food(
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS food(
     CHECK (food_name IN ('vegetables', 'fish', 'meat', 'salads', 'pescatarian','roasted')),
     
     PRIMARY KEY (food_name, game_id),
-    FOREIGN KEY (game_id) REFERENCES game(game_id)
+    FOREIGN KEY (game_id) REFERENCES game(game_id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS weapons(
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS weapons(
     CHECK (weapon_name IN ('wood sword', 'sword', 'wood shield', 'shield')),
     
     PRIMARY KEY (weapon_id, game_id),
-    FOREIGN KEY (game_id) REFERENCES game(game_id)
+    FOREIGN KEY (game_id) REFERENCES game(game_id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS enemies(
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS enemies(
     CHECK (region IN ('hyrule', 'death mountain', 'gerudo', 'necluda', 'castle')),
 
 	PRIMARY KEY (enemy_id, game_id,region),
-    FOREIGN KEY (game_id) REFERENCES game(game_id)
+    FOREIGN KEY (game_id) REFERENCES game(game_id) ON UPDATE CASCADE ON DELETE CASCADE
 
 );
 
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS chests(
     CHECK (region IN ('hyrule', 'death mountain', 'gerudo', 'necluda', 'castle')),
 
 	PRIMARY KEY (chest_id, game_id,region),
-    FOREIGN KEY (game_id) REFERENCES game(game_id)
+    FOREIGN KEY (game_id) REFERENCES game(game_id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS santuaries(
@@ -84,5 +84,5 @@ CREATE TABLE IF NOT EXISTS santuaries(
     CHECK (region IN ('hyrule', 'death mountain', 'gerudo', 'necluda', 'castle')),
 
 	PRIMARY KEY (sactuary_id, game_id,region),
-    FOREIGN KEY (game_id) REFERENCES game(game_id)
+    FOREIGN KEY (game_id) REFERENCES game(game_id) ON UPDATE CASCADE ON DELETE CASCADE
 );
