@@ -6,7 +6,10 @@ CREATE TABLE IF NOT EXISTS players(
 	player_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     user_name VARCHAR(10) NOT NULL,
     hearts_remaining INT NOT NULL,
-    hearts_total INT NOT NULL
+    hearts_total INT NOT NULL,
+    
+    date_created DATETIME DEFAULT NOW(),
+    date_modified DATETIME DEFAULT NOW() ON UPDATE NOW()
 );
 
 CREATE TABLE IF NOT EXISTS game(
@@ -19,18 +22,24 @@ CREATE TABLE IF NOT EXISTS game(
     
     CHECK (region IN ('hyrule', 'death mountain', 'gerudo', 'necluda', 'castle')),
     
-    FOREIGN KEY (player_id) REFERENCES players(player_id) ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY (player_id) REFERENCES players(player_id) ON UPDATE CASCADE ON DELETE CASCADE,
+    
+    date_created DATETIME DEFAULT NOW(),
+    date_modified DATETIME DEFAULT NOW() ON UPDATE NOW()
 );
 
 CREATE TABLE IF NOT EXISTS food(
 	food_name VARCHAR(15) NOT NULL,
     game_id INT UNSIGNED NOT NULL,
-    quantity_remaining INT UNSIGNED NOT NULL,
+    quantity_remaining INT NOT NULL,
     
     CHECK (food_name IN ('vegetables', 'fish', 'meat', 'salads', 'pescatarian','roasted')),
     
     PRIMARY KEY (food_name, game_id),
-    FOREIGN KEY (game_id) REFERENCES game(game_id) ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY (game_id) REFERENCES game(game_id) ON UPDATE CASCADE ON DELETE CASCADE,
+    
+    date_created DATETIME DEFAULT NOW(),
+    date_modified DATETIME DEFAULT NOW() ON UPDATE NOW()
 );
 
 CREATE TABLE IF NOT EXISTS weapons(
@@ -43,7 +52,10 @@ CREATE TABLE IF NOT EXISTS weapons(
     CHECK (weapon_name IN ('wood sword', 'sword', 'wood shield', 'shield')),
     
     PRIMARY KEY (weapon_id, game_id),
-    FOREIGN KEY (game_id) REFERENCES game(game_id) ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY (game_id) REFERENCES game(game_id) ON UPDATE CASCADE ON DELETE CASCADE,
+    
+    date_created DATETIME DEFAULT NOW(),
+    date_modified DATETIME DEFAULT NOW() ON UPDATE NOW()
 );
 
 CREATE TABLE IF NOT EXISTS enemies(
@@ -56,8 +68,10 @@ CREATE TABLE IF NOT EXISTS enemies(
     CHECK (region IN ('hyrule', 'death mountain', 'gerudo', 'necluda', 'castle')),
 
 	PRIMARY KEY (enemy_id, game_id,region),
-    FOREIGN KEY (game_id) REFERENCES game(game_id) ON UPDATE CASCADE ON DELETE CASCADE
-
+    FOREIGN KEY (game_id) REFERENCES game(game_id) ON UPDATE CASCADE ON DELETE CASCADE,
+    
+    date_created DATETIME DEFAULT NOW(),
+    date_modified DATETIME DEFAULT NOW() ON UPDATE NOW()
 );
 
 CREATE TABLE IF NOT EXISTS chests(
@@ -70,7 +84,10 @@ CREATE TABLE IF NOT EXISTS chests(
     CHECK (region IN ('hyrule', 'death mountain', 'gerudo', 'necluda', 'castle')),
 
 	PRIMARY KEY (chest_id, game_id,region),
-    FOREIGN KEY (game_id) REFERENCES game(game_id) ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY (game_id) REFERENCES game(game_id) ON UPDATE CASCADE ON DELETE CASCADE,
+    
+    date_created DATETIME DEFAULT NOW(),
+    date_modified DATETIME DEFAULT NOW() ON UPDATE NOW()
 );
 
 CREATE TABLE IF NOT EXISTS santuaries(
@@ -83,5 +100,8 @@ CREATE TABLE IF NOT EXISTS santuaries(
     CHECK (region IN ('hyrule', 'death mountain', 'gerudo', 'necluda', 'castle')),
 
 	PRIMARY KEY (sactuary_id, game_id,region),
-    FOREIGN KEY (game_id) REFERENCES game(game_id) ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY (game_id) REFERENCES game(game_id) ON UPDATE CASCADE ON DELETE CASCADE,
+    
+    date_created DATETIME DEFAULT NOW(),
+    date_modified DATETIME DEFAULT NOW() ON UPDATE NOW()
 );
