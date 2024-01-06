@@ -8,8 +8,8 @@ CREATE TABLE IF NOT EXISTS players(
     hearts_remaining INT,
     hearts_total INT,
     
-    date_created DATETIME,
-    date_modified DATETIME
+    date_created DATETIME DEFAULT NOW(),
+    date_modified DATETIME DEFAULT NOW() ON UPDATE NOW()
 );
 
 
@@ -21,12 +21,8 @@ CREATE TABLE IF NOT EXISTS game(
     blood_moon_countdown INT,
     blood_moon_appearences INT,
     
-    date_created DATETIME,
-    date_modified DATETIME,
-    user_modifies INT,
-    
-    date_created DATETIME,
-    date_modified DATETIME
+    date_created DATETIME DEFAULT NOW(),
+    date_modified DATETIME DEFAULT NOW() ON UPDATE NOW()
 );
 
 
@@ -35,20 +31,20 @@ CREATE TABLE IF NOT EXISTS food(
     fk_game_id_game_food INT,
     quantity_remaining INT,
     
-    date_created DATETIME,
-    date_modified DATETIME
+    date_created DATETIME DEFAULT NOW(),
+    date_modified DATETIME DEFAULT NOW() ON UPDATE NOW()
 );
 
 
 CREATE TABLE IF NOT EXISTS weapons(
 	weapon_id INT,
-    fk_game_id_game_food INT,
+    fk_game_id_game_weapons INT,
     weapon_name VARCHAR(15),
     equiped BOOLEAN,
     lives_remaining INT,
     
-    date_created DATETIME,
-    date_modified DATETIME
+    date_created DATETIME DEFAULT NOW(),
+    date_modified DATETIME DEFAULT NOW() ON UPDATE NOW()
 );
 
 
@@ -59,6 +55,30 @@ CREATE TABLE IF NOT EXISTS enemies(
     position INT,
     lifes_remaining INT,
     
-    date_created DATETIME,
-    date_modified DATETIME
+    date_created DATETIME DEFAULT NOW(),
+    date_modified DATETIME DEFAULT NOW() ON UPDATE NOW()
+);
+
+
+CREATE TABLE IF NOT EXISTS chest(
+	chest_id INT,
+    fk_game_id_game_chest INT,
+    region VARCHAR(20),
+    position INT,
+    state BOOLEAN,
+    
+    date_created DATETIME DEFAULT NOW(),
+    date_modified DATETIME DEFAULT NOW() ON UPDATE NOW()
+);
+
+
+CREATE TABLE IF NOT EXISTS santuaries(
+	sactuary_id INT,
+    fk_game_id_game_santuaries INT,
+    region VARCHAR(20),
+    position INT,
+    state BOOLEAN,
+    
+    date_created DATETIME DEFAULT NOW(),
+    date_modified DATETIME DEFAULT NOW() ON UPDATE NOW()
 );
