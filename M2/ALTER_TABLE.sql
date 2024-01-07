@@ -18,8 +18,8 @@ ALTER TABLE game
 	MODIFY fk_player_id_players_game INT UNSIGNED NOT NULL,
 	MODIFY date_started DATETIME DEFAULT NOW() NOT NULL,
     MODIFY region VARCHAR(20) NOT NULL,
-    MODIFY blood_moon_countdown INT NOT NULL,
-    MODIFY blood_moon_appearences INT NOT NULL,
+    MODIFY blood_moon_countdown INT NOT NULL DEFAULT 0,
+    MODIFY blood_moon_appearences INT NOT NULL DEFAULT 0,
     
 	ADD CONSTRAINT ck_game_region CHECK (region IN ('hyrule', 'death mountain', 'gerudo', 'necluda', 'castle')),    
     
@@ -44,15 +44,15 @@ ALTER TABLE food
 
 ALTER TABLE weapons
 	MODIFY weapon_id INT UNSIGNED AUTO_INCREMENT NOT NULL,
-    MODIFY fk_game_id_game_food INT UNSIGNED NOT NULL,
+    MODIFY fk_game_id_game_weapons INT UNSIGNED NOT NULL,
     MODIFY weapon_name VARCHAR(15) NOT NULL,
     MODIFY equiped BOOLEAN DEFAULT FALSE NOT NULL,
     MODIFY lives_remaining INT NOT NULL,
     
     ADD CONSTRAINT ck_weapons_weapon_name CHECK (weapon_name IN ('wood sword', 'sword', 'wood shield', 'shield')),
     
-    ADD CONSTRAINT fk_weapons_fk_game_id_game_food  FOREIGN KEY (fk_game_id_game_food) REFERENCES game(game_id) ON UPDATE CASCADE ON DELETE CASCADE,
-    ADD CONSTRAINT pk_weapons PRIMARY KEY(weapon_id, fk_game_id_game_food);
+    ADD CONSTRAINT fk_weapons_fk_game_id_game_food  FOREIGN KEY (fk_game_id_game_weapons) REFERENCES game(game_id) ON UPDATE CASCADE ON DELETE CASCADE,
+    ADD CONSTRAINT pk_weapons PRIMARY KEY(weapon_id, fk_game_id_game_weapons);
 
 
 -- Taula enemies
@@ -77,7 +77,7 @@ ALTER TABLE chest
 	MODIFY fk_game_id_game_chest INT UNSIGNED NOT NULL,
 	MODIFY region VARCHAR(20) NOT NULL,
 	MODIFY position INT NOT NULL,
-	MODIFY state BOOLEAN DEFAULT FALSE,
+	MODIFY state BOOLEAN DEFAULT FALSE NOT NULL,
 	
 	ADD CONSTRAINT ck_chest_region CHECK (region IN ('hyrule', 'death mountain', 'gerudo', 'necluda', 'castle')),
 	
@@ -92,7 +92,7 @@ ALTER TABLE santuaries
     MODIFY fk_game_id_game_santuaries INT UNSIGNED NOT NULL,
     MODIFY region VARCHAR(20) NOT NULL,
     MODIFY position INT NOT NULL,
-    MODIFY state BOOLEAN DEFAULT FALSE,
+    MODIFY state BOOLEAN DEFAULT FALSE NOT NULL,
     
     ADD CONSTRAINT ck_santuaries_region CHECK (region IN ('hyrule', 'death mountain', 'gerudo', 'necluda', 'castle')),
     

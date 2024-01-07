@@ -7,3 +7,6 @@ y no dos coordenadas. Si a la hora de programar pesamos que es mejor dos coorden
 " Totes les columnes referides a dates de modificació i usuaris de modificació han de permetre ‘null’ " Pone en el pdf,
 como no sé cómo guardar los usuarios que modifican, voy a omitirlo. Y ya lo preguntaré.
 
+Cuál es la vid amáxima del enemigo? así se pondrá un default a la hora de crar las tablas
+
+La nomenclatura de las fk está bien?
