@@ -1,2 +1,0 @@
-# Projecte-_Zelda
-Arevalo_Marta_Fernandez_Unax_Sargisson_William
