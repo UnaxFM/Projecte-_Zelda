@@ -32,3 +32,16 @@ INSERT INTO weapons (game_id,weapon_name,lives_remaining) VALUES (2,'sword',2);
 INSERT INTO food (food_name,game_id,quantity_remaining) VALUES ('fish',1,0);
 INSERT INTO food (food_name,game_id,quantity_remaining) VALUES ('meat',1,6);
 INSERT INTO food (food_name,game_id,quantity_remaining) VALUES ('vegetables',5,7);
+
+-- INSERT DE SANTUARIOS
+
+INSERT INTO santuaries (game_id,region,xpos,ypos) VALUES (1,'hyrule',1,2);
+INSERT INTO santuaries (game_id,region,xpos,ypos) VALUES (1,'hyrule',1,5);
+INSERT INTO santuaries (game_id,region,xpos,ypos) VALUES (1,'death mountain',5,2);
+INSERT INTO santuaries (game_id,region,xpos,ypos) VALUES (1,'death mountain',5,2);
+INSERT INTO santuaries (game_id,region,xpos,ypos) VALUES (1,'gerudo',5,2);
+INSERT INTO santuaries (game_id,region,xpos,ypos) VALUES (1,'gerudo',8,2);
+INSERT INTO santuaries (game_id,region,xpos,ypos) VALUES (1,'necluda',8,1);
+INSERT INTO santuaries (game_id,region,xpos,ypos) VALUES (1,'necluda',3,2);
+INSERT INTO santuaries (game_id,region,xpos,ypos) VALUES (1,'castle',8,2);
+INSERT INTO santuaries (game_id,region,xpos,ypos) VALUES (1,'castle',9,2);

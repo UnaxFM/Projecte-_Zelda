@@ -70,7 +70,6 @@ CREATE TABLE IF NOT EXISTS chest(
     region VARCHAR(20),
     xpos INT,
     ypos INT,
-    state BOOLEAN,
     
     date_created DATETIME DEFAULT NOW(),
     date_modified DATETIME DEFAULT NOW() ON UPDATE NOW()
@@ -83,7 +82,6 @@ CREATE TABLE IF NOT EXISTS santuaries(
     region VARCHAR(20),
     xpos INT,
     ypos INT,
-    state BOOLEAN,
     
     date_created DATETIME DEFAULT NOW(),
     date_modified DATETIME DEFAULT NOW() ON UPDATE NOW()

@@ -81,7 +81,6 @@ ALTER TABLE chest
 	MODIFY region VARCHAR(20) NOT NULL,
 	MODIFY xpos INT NOT NULL,
     MODIFY ypos INT NOT NULL,
-	MODIFY state BOOLEAN DEFAULT FALSE NOT NULL,
 	
 	ADD CONSTRAINT ck_chest_region CHECK (region IN ('hyrule', 'death mountain', 'gerudo', 'necluda', 'castle')),
 	
@@ -97,7 +96,6 @@ ALTER TABLE santuaries
     MODIFY region VARCHAR(20) NOT NULL,
     MODIFY xpos INT NOT NULL,
     MODIFY ypos INT NOT NULL,
-    MODIFY state BOOLEAN DEFAULT FALSE NOT NULL,
     
     ADD CONSTRAINT ck_santuaries_region CHECK (region IN ('hyrule', 'death mountain', 'gerudo', 'necluda', 'castle')),
     

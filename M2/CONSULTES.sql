@@ -68,7 +68,7 @@ select NomUsuari,
        SUM(QuantitatObtenida) as 'QuantitatTotalObtenida',
        DataPartida as 'DataPartidaMesUsada'
 
-from v_comida_partidas
+from v_comidas_partidas
 where (NomUsuari, NomMenjar, QuantitatObtenida) IN (select NomUsuari,NomMenjar,
 															  MAX(QuantitatObtenida) as 'MaxQuantitatObtenida'
 													  from v_comida_partidas group by NomUsuari, NomMenjar)
@@ -95,7 +95,7 @@ FROM (
             SUM(QuantitatObtenida) AS QuantitatTotalObtenida,
             MAX(DataPartida) AS DataPartida
         FROM
-            v_comida_partidas
+            v_comidas_partidas
         GROUP BY
             NomUsuari, NomMenjar
     ) AS SubconsultaTotal
