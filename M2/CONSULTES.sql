@@ -3,7 +3,7 @@
 select p.user_name as 'NomUsuari',
 	   MAX(g.date_started) as 'UltimaPartida'
 
-from players p join game g on p.player_id = g.fk_player_id_players_game
+from players p join game g on p.player_id = g.player_id
 group by p.player_id,p.user_name
 order by p.user_name;
 
@@ -13,7 +13,7 @@ order by p.user_name;
 select p.user_name as 'NomUsuari', 
 	   COUNT(g.game_id) as 'PartidesJugades'
 
-from players p join game g on p.player_id = g.fk_player_id_players_game
+from players p join game g on p.player_id = g.player_id
 group by p.player_id, p.user_name
 order by p.user_name;
 
@@ -118,7 +118,7 @@ SELECT
 FROM
     game g
 JOIN
-    players p ON g.fk_player_id_players_game = p.player_id
+    players p ON g.player_id = p.player_id
 ORDER BY
     g.blood_moon_appearences DESC
 LIMIT 1;

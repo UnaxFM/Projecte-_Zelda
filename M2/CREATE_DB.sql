@@ -15,11 +15,14 @@ CREATE TABLE IF NOT EXISTS players(
 
 CREATE TABLE IF NOT EXISTS game(
 	game_id INT,
-    fk_player_id_players_game INT,
+    player_id INT,
     date_started DATETIME,
     region VARCHAR(20),
+    xpos INT,
+    ypos INT,
     blood_moon_countdown INT,
     blood_moon_appearences INT,
+
     
     date_created DATETIME DEFAULT NOW(),
     date_modified DATETIME DEFAULT NOW() ON UPDATE NOW()
@@ -28,7 +31,7 @@ CREATE TABLE IF NOT EXISTS game(
 
 CREATE TABLE IF NOT EXISTS food(
 	food_name VARCHAR(15),
-    fk_game_id_game_food INT,
+    game_id INT,
     quantity_remaining INT,
     
     date_created DATETIME DEFAULT NOW(),
@@ -38,7 +41,7 @@ CREATE TABLE IF NOT EXISTS food(
 
 CREATE TABLE IF NOT EXISTS weapons(
 	weapon_id INT,
-    fk_game_id_game_weapons INT,
+    game_id INT,
     weapon_name VARCHAR(15),
     equiped BOOLEAN,
     lives_remaining INT,
@@ -50,9 +53,10 @@ CREATE TABLE IF NOT EXISTS weapons(
 
 CREATE TABLE IF NOT EXISTS enemies(
 	enemy_id INT,
-    fk_game_id_game_enemies INT,
+    game_id INT,
     region VARCHAR(20),
-    position INT,
+    xpos INT,
+    ypos INT,
     lifes_remaining INT,
     
     date_created DATETIME DEFAULT NOW(),
@@ -62,9 +66,10 @@ CREATE TABLE IF NOT EXISTS enemies(
 
 CREATE TABLE IF NOT EXISTS chest(
 	chest_id INT,
-    fk_game_id_game_chest INT,
+    game_id INT,
     region VARCHAR(20),
-    position INT,
+    xpos INT,
+    ypos INT,
     state BOOLEAN,
     
     date_created DATETIME DEFAULT NOW(),
@@ -74,9 +79,10 @@ CREATE TABLE IF NOT EXISTS chest(
 
 CREATE TABLE IF NOT EXISTS santuaries(
 	sactuary_id INT,
-    fk_game_id_game_santuaries INT,
+    game_id INT,
     region VARCHAR(20),
-    position INT,
+    xpos INT,
+    ypos INT,
     state BOOLEAN,
     
     date_created DATETIME DEFAULT NOW(),

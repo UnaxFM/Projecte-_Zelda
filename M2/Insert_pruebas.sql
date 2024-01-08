@@ -8,31 +8,27 @@ INSERT INTO players (user_name,hearts_remaining,hearts_total) VALUES ('alvaro',2
 
 -- INSERT DE PARTIDAS
 
-INSERT INTO game (fk_player_id_players_game,region) VALUES (1,'hyrule');
-INSERT INTO game (fk_player_id_players_game,region) VALUES (2,'necluda');
-INSERT INTO game (fk_player_id_players_game,region) VALUES (3,'hyrule');
-INSERT INTO game (fk_player_id_players_game,region) VALUES (4,'necluda');
-INSERT INTO game (fk_player_id_players_game,region) VALUES (1,'gerudo');
-INSERT INTO game (fk_player_id_players_game,region) VALUES (2,'death mountain');
-INSERT INTO game (fk_player_id_players_game,region) VALUES (1,'death mountain');
-INSERT INTO game (fk_player_id_players_game,region) VALUES (1,'death mountain');
+INSERT INTO game (player_id,region,xpos,ypos) VALUES (1,'hyrule',1,1);
+INSERT INTO game (player_id,region,xpos,ypos) VALUES (2,'necluda',1,1);
+INSERT INTO game (player_id,region,xpos,ypos) VALUES (3,'hyrule',1,1);
+INSERT INTO game (player_id,region,xpos,ypos) VALUES (4,'necluda',1,1);
+INSERT INTO game (player_id,region,xpos,ypos) VALUES (1,'gerudo',1,1);
+INSERT INTO game (player_id,region,xpos,ypos) VALUES (2,'death mountain',1,1);
+INSERT INTO game (player_id,region,xpos,ypos) VALUES (1,'death mountain',1,1);
+INSERT INTO game (player_id,region,xpos,ypos) VALUES (1,'death mountain',1,1);
 
 -- INSERT DE ARMAS
 
-INSERT INTO weapons (fk_game_id_game_weapons,weapon_name,lives_remaining) VALUES (5,'wood sword',2);
-INSERT INTO weapons (fk_game_id_game_weapons,weapon_name,lives_remaining) VALUES (1,'sword',2);
-INSERT INTO weapons (fk_game_id_game_weapons,weapon_name,lives_remaining) VALUES (1,'shield',2);
-INSERT INTO weapons (fk_game_id_game_weapons,weapon_name,lives_remaining) VALUES (1,'shield',2);
-INSERT INTO weapons (fk_game_id_game_weapons,weapon_name,lives_remaining) VALUES (2,'sword',2);
-INSERT INTO weapons (fk_game_id_game_weapons,weapon_name,lives_remaining) VALUES (2,'shield',2);
-INSERT INTO weapons (fk_game_id_game_weapons,weapon_name,lives_remaining) VALUES (3,'shield',2);
-INSERT INTO weapons (fk_game_id_game_weapons,weapon_name,lives_remaining) VALUES (4,'wood sword',2);
-INSERT INTO weapons (fk_game_id_game_weapons,weapon_name,lives_remaining) VALUES (9,'sword',2);
+INSERT INTO weapons (game_id,weapon_name,lives_remaining) VALUES (1,'wood sword',2);
+INSERT INTO weapons (game_id,weapon_name,lives_remaining) VALUES (1,'sword',2);
+INSERT INTO weapons (game_id,weapon_name,lives_remaining) VALUES (1,'shield',2);
+INSERT INTO weapons (game_id,weapon_name,lives_remaining) VALUES (1,'shield',2);
+INSERT INTO weapons (game_id,weapon_name,lives_remaining) VALUES (2,'sword',2);
+
 
 
 -- INSERT DE COMIDA
 
-INSERT INTO food (food_name,fk_game_id_game_food) VALUES ('salads',1);
-INSERT INTO food (food_name,fk_game_id_game_food,quantity_remaining) VALUES ('fish',1,0);
-INSERT INTO food (food_name,fk_game_id_game_food,quantity_remaining) VALUES ('meat',1,6);
-INSERT INTO food (food_name,fk_game_id_game_food,quantity_remaining) VALUES ('vegetables',5,7);
+INSERT INTO food (food_name,game_id,quantity_remaining) VALUES ('fish',1,0);
+INSERT INTO food (food_name,game_id,quantity_remaining) VALUES ('meat',1,6);
+INSERT INTO food (food_name,game_id,quantity_remaining) VALUES ('vegetables',5,7);

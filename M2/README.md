@@ -10,3 +10,5 @@ como no sé cómo guardar los usuarios que modifican, voy a omitirlo. Y ya lo pr
 Cuál es la vid amáxima del enemigo? así se pondrá un default a la hora de crar las tablas
 
 La nomenclatura de las fk está bien?
+
+aÑADIR LA POSICIÓN DEL JUGADOR PAR AGUARDARLO EN TBL GAME Y LSA QUE ESTÁN TIENEN QUE SER X Y
