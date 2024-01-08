@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=DotGothic16&family=Overlock+SC&display=swap');
+
 body {
     background-image: url('imagen/fondo_de_la_web.jpg');
     background-repeat: no-repeat;
@@ -6,21 +8,74 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    min-height: 100vh; /* Garantiza que el cuerpo tenga al menos la altura completa de la ventana gráfica (viewport height) */
+    min-height: 100vh;
     display: flex;
-    flex-direction: column; /* Alinea los elementos en columna */
+    flex-direction: column;
 }
 
 header {
-    background-color: #333;
+    background-color: rgba(51, 51, 51, 0);
     padding: 10px;
     color: white;
 }
 
-.menu-sticky {
+.sticky-menu {
+    background-color: #333;
+    padding: 10px;
+    color: white;
     position: sticky;
     top: 0;
-    background-color: #333;
+    z-index: 100;
+    border-bottom: 2px solid black;
+    cursor: pointer;
+}
+
+.sticky-menu::after {
+    content: "";
+    border-style: solid;
+    border-width: 8px 8px 0;
+    border-color: white transparent transparent;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.menu {
+    display: none;
+}
+
+.sticky-menu:hover .menu {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu li {
+    margin-right: 20px;
+}
+
+.menu li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 10px 16px;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: border-bottom 0.3s ease;
+}
+
+.menu li a:hover {
+    border-bottom: 2px solid #fff;
+}
+
+.main {
+    flex: 1;
+    padding: 20px;
+    color: white;
+    text-align: center;
 }
 
 nav ul {
@@ -28,39 +83,58 @@ nav ul {
     padding: 0;
     margin: 0;
     display: flex;
+    justify-content: center;
 }
 
 nav li {
     margin-right: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 nav li a {
     display: block;
-    color: white; /* Ajusta el color del texto del menú principal */
+    color: white;
     text-align: center;
-    padding: -1px 16px;
+    padding: 10px 16px;
     text-decoration: none;
+    transition: background-color 0.3s ease;
+    font-family: 'Black Ops One', system-ui;
+}
+
+nav:hover li {
+    opacity: 1;
+}
+
+nav li:hover a {
+    background-color: rgba(51, 51, 51, 0);
 }
 
 main {
     flex: 1;
     padding: 20px;
-    color: white; /* Ajusta el color del texto para el contenido principal */
+    color: white;
 }
 
 h1 {
-    font-size: 40px;
+    font-size: 45px;
     text-transform: uppercase;
     text-align: center;
-    color: #fff;
+    color: #b99e66;
     text-shadow: 2px 2px 4px #000;
-    margin-top: -10px; /* Ajusta este valor para mover el texto hacia arriba */
+    margin-top: 35px;
+    font-family: 'Black Ops One', system-ui;
 }
 
 footer {
-    background-color: rgba(51, 51, 51, 0); /* Fondo completamente transparente */
+    background-color: rgba(51, 51, 51, 0);
     color: white;
     text-align: center;
     padding: 10px;
     margin-top: auto;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 100;
 }
+
