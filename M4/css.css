@@ -1,0 +1,66 @@
+body {
+    background-image: url('imagen/fondo_de_la_web.jpg');
+    background-repeat: no-repeat;
+    background-position: center 0%;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    min-height: 100vh; /* Garantiza que el cuerpo tenga al menos la altura completa de la ventana gráfica (viewport height) */
+    display: flex;
+    flex-direction: column; /* Alinea los elementos en columna */
+}
+
+header {
+    background-color: #333;
+    padding: 10px;
+    color: white;
+}
+
+.menu-sticky {
+    position: sticky;
+    top: 0;
+    background-color: #333;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+nav li {
+    margin-right: 20px;
+}
+
+nav li a {
+    display: block;
+    color: white; /* Ajusta el color del texto del menú principal */
+    text-align: center;
+    padding: -1px 16px;
+    text-decoration: none;
+}
+
+main {
+    flex: 1;
+    padding: 20px;
+    color: white; /* Ajusta el color del texto para el contenido principal */
+}
+
+h1 {
+    font-size: 40px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #fff;
+    text-shadow: 2px 2px 4px #000;
+    margin-top: -10px; /* Ajusta este valor para mover el texto hacia arriba */
+}
+
+footer {
+    background-color: rgba(51, 51, 51, 0); /* Fondo completamente transparente */
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin-top: auto;
+}
