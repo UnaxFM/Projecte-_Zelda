@@ -6,6 +6,7 @@ INSERT INTO players (user_name,hearts_remaining,hearts_total) VALUES ('blanca',4
 INSERT INTO players (user_name,hearts_remaining,hearts_total) VALUES ('alvaro',2,4);
 
 
+
 -- INSERT DE PARTIDAS
 
 INSERT INTO game (player_id,region,xpos,ypos) VALUES (1,'hyrule',1,1);

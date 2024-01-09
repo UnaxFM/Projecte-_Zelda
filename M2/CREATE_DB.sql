@@ -17,15 +17,12 @@ CREATE TABLE IF NOT EXISTS game(
 	game_id INT,
     player_id INT,
     date_started DATETIME,
+    date_modified DATETIME,
     region VARCHAR(20),
     xpos INT,
     ypos INT,
     blood_moon_countdown INT,
-    blood_moon_appearences INT,
-
-    
-    date_created DATETIME DEFAULT NOW(),
-    date_modified DATETIME DEFAULT NOW() ON UPDATE NOW()
+    blood_moon_appearences INT
 );
 
 
