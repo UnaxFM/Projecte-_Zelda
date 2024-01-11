@@ -7,6 +7,8 @@ ALTER TABLE players
     MODIFY user_name VARCHAR(10) NOT NULL,
 	MODIFY hearts_remaining INT NOT NULL,
     MODIFY hearts_total INT NOT NULL,
+    MODIFY date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    MODIFY date_modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE NOW(),
     
 	ADD CONSTRAINT pk_players PRIMARY KEY (player_id);
 
@@ -16,8 +18,8 @@ ALTER TABLE players
 ALTER TABLE game
 	MODIFY game_id INT UNSIGNED AUTO_INCREMENT,
 	MODIFY player_id INT UNSIGNED NOT NULL,
-	MODIFY date_started DATETIME DEFAULT NOW() NOT NULL,
-    MODIFY date_modified DATETIME DEFAULT NOW() ON UPDATE NOW() NOT NULL,
+	MODIFY date_started TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    MODIFY date_modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE NOW(),
     MODIFY region VARCHAR(20) NOT NULL,
     MODIFY xpos INT NOT NULL,
     MODIFY ypos INT NOT NULL,
@@ -36,6 +38,8 @@ ALTER TABLE food
 	MODIFY food_name VARCHAR(15) NOT NULL,
 	MODIFY game_id INT UNSIGNED NOT NULL,
     MODIFY quantity_remaining INT NOT NULL,
+    MODIFY date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    MODIFY date_modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE NOW(),
     
 	ADD CONSTRAINT ck_food_food_name CHECK (food_name IN ('vegetables', 'fish', 'meat', 'salads', 'pescatarian','roasted')),
 
@@ -51,6 +55,8 @@ ALTER TABLE weapons
     MODIFY weapon_name VARCHAR(15) NOT NULL,
     MODIFY equiped BOOLEAN DEFAULT FALSE NOT NULL,
     MODIFY lives_remaining INT NOT NULL,
+    MODIFY date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    MODIFY date_modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE NOW(),
     
     ADD CONSTRAINT ck_weapons_weapon_name CHECK (weapon_name IN ('wood sword', 'sword', 'wood shield', 'shield')),
     
@@ -67,6 +73,8 @@ ALTER TABLE enemies
     MODIFY xpos INT NOT NULL,
     MODIFY ypos INT NOT NULL,
     MODIFY lifes_remaining INT NOT NULL,
+    MODIFY date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    MODIFY date_modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE NOW(),
     
     ADD CONSTRAINT ck_enemies_region CHECK (region IN ('hyrule', 'death mountain', 'gerudo', 'necluda', 'castle')),
     
@@ -82,6 +90,8 @@ ALTER TABLE chest
 	MODIFY region VARCHAR(20) NOT NULL,
 	MODIFY xpos INT NOT NULL,
     MODIFY ypos INT NOT NULL,
+    MODIFY date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    MODIFY date_modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE NOW(),
 	
 	ADD CONSTRAINT ck_chest_region CHECK (region IN ('hyrule', 'death mountain', 'gerudo', 'necluda', 'castle')),
 	
@@ -97,6 +107,8 @@ ALTER TABLE santuaries
     MODIFY region VARCHAR(20) NOT NULL,
     MODIFY xpos INT NOT NULL,
     MODIFY ypos INT NOT NULL,
+    MODIFY date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    MODIFY date_modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE NOW(),
     
     ADD CONSTRAINT ck_santuaries_region CHECK (region IN ('hyrule', 'death mountain', 'gerudo', 'necluda', 'castle')),
     

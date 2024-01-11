@@ -8,16 +8,16 @@ CREATE TABLE IF NOT EXISTS players(
     hearts_remaining INT,
     hearts_total INT,
     
-    date_created DATETIME DEFAULT NOW(),
-    date_modified DATETIME DEFAULT NOW() ON UPDATE NOW()
+    date_created TIMESTAMP,
+    date_modified TIMESTAMP
 );
 
 
 CREATE TABLE IF NOT EXISTS game(
 	game_id INT,
     player_id INT,
-    date_started DATETIME,
-    date_modified DATETIME,
+    date_started TIMESTAMP,
+    date_modified TIMESTAMP,
     region VARCHAR(20),
     xpos INT,
     ypos INT,
@@ -31,8 +31,8 @@ CREATE TABLE IF NOT EXISTS food(
     game_id INT,
     quantity_remaining INT,
     
-    date_created DATETIME DEFAULT NOW(),
-    date_modified DATETIME DEFAULT NOW() ON UPDATE NOW()
+    date_created TIMESTAMP,
+    date_modified TIMESTAMP
 );
 
 
@@ -43,8 +43,8 @@ CREATE TABLE IF NOT EXISTS weapons(
     equiped BOOLEAN,
     lives_remaining INT,
     
-    date_created DATETIME DEFAULT NOW(),
-    date_modified DATETIME DEFAULT NOW() ON UPDATE NOW()
+    date_created TIMESTAMP,
+    date_modified TIMESTAMP
 );
 
 
@@ -56,8 +56,8 @@ CREATE TABLE IF NOT EXISTS enemies(
     ypos INT,
     lifes_remaining INT,
     
-    date_created DATETIME DEFAULT NOW(),
-    date_modified DATETIME DEFAULT NOW() ON UPDATE NOW()
+    date_created TIMESTAMP,
+    date_modified TIMESTAMP
 );
 
 
@@ -68,8 +68,8 @@ CREATE TABLE IF NOT EXISTS chest(
     xpos INT,
     ypos INT,
     
-    date_created DATETIME DEFAULT NOW(),
-    date_modified DATETIME DEFAULT NOW() ON UPDATE NOW()
+    date_created TIMESTAMP,
+    date_modified TIMESTAMP
 );
 
 
@@ -80,6 +80,6 @@ CREATE TABLE IF NOT EXISTS santuaries(
     xpos INT,
     ypos INT,
     
-    date_created DATETIME DEFAULT NOW(),
-    date_modified DATETIME DEFAULT NOW() ON UPDATE NOW()
+    date_created TIMESTAMP,
+    date_modified TIMESTAMP
 );
