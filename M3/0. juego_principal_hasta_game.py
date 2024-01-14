@@ -260,7 +260,7 @@ def input_saved_games():
         try:
             if int(opc[5]) == 0 and len(opc[5:]) > 1:
                 raise ValueError
-            indice_partida = int(opc[5:].replace(" ", "/"))
+            indice_partida = int(opc[5:].replace(" ", "/")) # lista_partidas[indice_partida] == primary key == key del diccionario
             assert 0 <= indice_partida < len(lista_partidas)
         except (ValueError, AssertionError):
             lista_prompt.append("Invalid Action")
