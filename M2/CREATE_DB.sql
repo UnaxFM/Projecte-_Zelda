@@ -37,7 +37,6 @@ CREATE TABLE IF NOT EXISTS food(
 
 
 CREATE TABLE IF NOT EXISTS weapons(
-	weapon_id INT,
     game_id INT,
     weapon_name VARCHAR(15),
     equiped BOOLEAN,
@@ -61,7 +60,7 @@ CREATE TABLE IF NOT EXISTS enemies(
 );
 
 
-CREATE TABLE IF NOT EXISTS chest(
+CREATE TABLE IF NOT EXISTS chest_opened(
 	chest_id INT,
     game_id INT,
     region VARCHAR(20),
@@ -73,7 +72,7 @@ CREATE TABLE IF NOT EXISTS chest(
 );
 
 
-CREATE TABLE IF NOT EXISTS santuaries(
+CREATE TABLE IF NOT EXISTS santuaries_opened(
 	sactuary_id INT,
     game_id INT,
     region VARCHAR(20),

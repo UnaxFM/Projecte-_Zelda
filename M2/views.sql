@@ -57,7 +57,7 @@ select p.player_id as 'PlayerID',
        s.ypos as 'ypos'
 
 from players p join game g on p.player_id = g.player_id
-			   join santuaries s on g.game_id = s.game_id;
+			   join santuaries_opened s on g.game_id = s.game_id;
 
 
 -- VISTA DE COFRES POR PARTIDA DE CADA USUARIO
@@ -72,7 +72,7 @@ select p.player_id as 'PlayerID',
        c.ypos as 'ypos'
 
 from players p join game g on p.player_id = g.player_id
-			   join chest c on g.game_id = c.game_id;
+			   join chest_opened c on g.game_id = c.game_id;
 
 
 -- VISTA DE ENEMIGOS POR PARTIDA DE CADA USUARIO
