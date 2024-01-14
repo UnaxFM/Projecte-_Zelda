@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d86b9cfc-92df-4ee3-a703-0f01ee329b43" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/M3/cheats.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/M3/0. juego_principal_hasta_game(pruebas).py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/0. juego_principal_hasta_game(pruebas).py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/M3/datos_juego.py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/datos_juego.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/M3/import de datos + carga + print mapa.py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/import de datos + carga + print mapa.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/M3/show map.py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/show map.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/M3/parte_ganon.py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/parte_ganon.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +44,7 @@
     "Python.0. juego_principal_hasta_game.executor": "Run",
     "Python.DATOS_MAPAS_INICIO.executor": "Run",
     "Python.FOX + BLOODMOON.executor": "Run",
+    "Python.IMPORT + CARGA RÁPIDA PARA PRUEBAS.executor": "Run",
     "Python.PREGAME_DEFINITIVO_SIN_QUERIES.executor": "Run",
     "Python.castillo_ganon.executor": "Run",
     "Python.cheats.executor": "Run",
