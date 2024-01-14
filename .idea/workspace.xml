@@ -5,18 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d86b9cfc-92df-4ee3-a703-0f01ee329b43" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/M3/parte_ganon.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/M3/prints dinamicos (desactualizado).py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/M3/prompt.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/M3/show map.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/M3/cheats.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/M3/0. juego_principal_hasta_game.py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/0. juego_principal_hasta_game(pruebas).py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/M3/SAVE GAME.py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/SAVE GAME.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/M3/comprobaciones de inicio de partida (fox etc).py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/comprobaciones de inicio de partida (fox etc).py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/M3/0. juego_principal_hasta_game(pruebas).py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/0. juego_principal_hasta_game(pruebas).py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/M3/datos_juego.py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/datos_juego.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/M3/import de datos + carga + print mapa.py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/import de datos + carga + print mapa.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/M3/prueba_importar_datos_inicio.py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/prueba_importar_datos_inicio (desactualizado).py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/M3/sistema_saved_games_funcional.py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/sistema_saved_games_funcional(desactualizado).py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/M3/show map.py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/show map.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,13 +44,16 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python.0. juego_principal_hasta_game(pruebas).executor": "Run",
     "Python.0. juego_principal_hasta_game.executor": "Run",
     "Python.DATOS_MAPAS_INICIO.executor": "Run",
     "Python.FOX + BLOODMOON.executor": "Run",
     "Python.PREGAME_DEFINITIVO_SIN_QUERIES.executor": "Run",
     "Python.castillo_ganon.executor": "Run",
+    "Python.cheats.executor": "Run",
     "Python.comprobaciones de inicio de partida (fox etc).executor": "Run",
     "Python.import de datos + carga + print mapa.executor": "Run",
+    "Python.parte_ganon.executor": "Run",
     "Python.prueba cargar partida.executor": "Run",
     "Python.prueba_importar_datos_inicio.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
@@ -64,6 +61,11 @@
     "git-widget-placeholder": "savegame"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\William Sargisson\Desktop\proyecto_zelda\Projecte-_Zelda\M3" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
