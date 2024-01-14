@@ -17,21 +17,27 @@ cursor = db.cursor()
 # LIMPIEZA DE PANTALLA
 sistema = platform.system()
 
+
 def limpiar_pantalla():
     if sistema == "Windows":
         os.system("cls")
     else:
         os.system("clear")
 
+
 # PROMPT
 lista_prompt = []
+
+
 def prompt(lista):
     lista = lista[-8:]
     for elemento in lista:
         print(elemento)
 
+
 # IMPORTACION DE DATOS
 import datos_juego as datos_importados
+
 
 def importar_datos_partida_sin_modificaciones():
     datos_partida = {}
@@ -60,7 +66,8 @@ def importar_datos_partida_sin_modificaciones():
             if "santuarios" in datos_importados.datos[key_mapa]:
                 for santuario in datos_importados.datos[key_mapa]["santuarios"]:
                     santuarios[santuario] = datos_importados.datos[key_mapa]["santuarios"][santuario].copy()
-            dato_por_mapa = {"spawn": spawn, "enemigos": enemigos, "arboles": arboles,  "cofres": cofres, "fox": fox, "santuarios": santuarios}
+            dato_por_mapa = {"spawn": spawn, "enemigos": enemigos, "arboles": arboles, "cofres": cofres, "fox": fox,
+                             "santuarios": santuarios}
             datos_partida[key_mapa] = dato_por_mapa
     return datos_partida
 
@@ -78,10 +85,12 @@ def importar_datos_comida_sin_modificaciones():
         datos_comida[alimento] = datos_importados.food[alimento].copy()
     return datos_comida
 
+
 def importar_datos_jugador_sin_modificaciones():
     datos_jugador = datos_importados.informacion_jugador.copy()
     datos_jugador["items_equipados"] = []
     return datos_jugador
+
 
 # se cargan datos de partida
 info_alimento_partida = importar_datos_comida_sin_modificaciones()
@@ -89,9 +98,10 @@ info_equipamiento_partida = importar_datos_armas_sin_modificaciones()
 datos_jugador_actual = importar_datos_jugador_sin_modificaciones()
 datos_partida_actual = importar_datos_partida_sin_modificaciones()
 
-
 # CARGADO DE PARTIDAS
 ver_todos = False  # RESET A TRUE CUANDO SE PASE DE PANTALLA
+
+
 def seleccionar_partidas_guardadas():
     if ver_todos:  # MODIFICAR AL CAMBIAR LA BBDD
         cursor.execute("SELECT GameID, DataLastSave, NomJugador, Region, HeartsRemaining, HeartsTotal "
@@ -109,12 +119,15 @@ def seleccionar_partidas_guardadas():
         diccionario_partidas_guardadas[partida_cargada_bbdd[0]] = partida
     return diccionario_partidas_guardadas
 
+
 def metodo_burbuja_ordenar_partidas_recientes(lista):
     for i in range(len(lista) - 1):
         for j in range(len(lista) - i - 1):
-            if partidas_guardadas[lista[j]]["fecha_modificacion"] < partidas_guardadas[lista[j + 1]]["fecha_modificacion"]:  # Aqui se comprueba el parámetro
+            if partidas_guardadas[lista[j]]["fecha_modificacion"] < partidas_guardadas[lista[j + 1]][
+                "fecha_modificacion"]:  # Aqui se comprueba el parámetro
                 lista[j], lista[j + 1] = lista[j + 1], lista[j]  # Pero lo que se ordena es la lista de keys
     return lista
+
 
 partidas_guardadas = seleccionar_partidas_guardadas()
 lista_partidas = metodo_burbuja_ordenar_partidas_recientes(list(partidas_guardadas.keys()))
@@ -137,12 +150,14 @@ flag_show_map = False
 flag_zelda_saved = False
 flag_link_death = False
 
+
 def print_main_menu():  # Se pone aqui por error (se produce circular import)
     print("* " * 40)
     eleccion_personaje_ascii = random.randrange(3)
     for i in range(len(pm.decoracion_personaje_1)):
         if i == 4:
-            print("* " + " Zelda breath of the Wild".ljust(56) + pm.decoracion_main_menu[eleccion_personaje_ascii][i] + " " * 5 + "*")
+            print("* " + " Zelda breath of the Wild".ljust(56) + pm.decoracion_main_menu[eleccion_personaje_ascii][
+                i] + " " * 5 + "*")
         else:
             print("* " + " " * 56 + pm.decoracion_main_menu[eleccion_personaje_ascii][i] + " " * 5 + "*")
     # PUEDE ESTAR PENDIENTE DE MODIFICAR AL HACER SELECT DE LAS PARTIDAS GUARDADAS
@@ -150,6 +165,7 @@ def print_main_menu():  # Se pone aqui por error (se produce circular import)
         print("* Continue, New Game, Help, About, Queries, Exit  " + "* " * 15)
     else:
         print("* New Game, Help, About, Queries, Exit  " + "* " * 20)
+
 
 def print_saved_games():
     print("* " + "Saved games " + "* " * 33 + "\n" +
@@ -159,7 +175,8 @@ def print_saved_games():
             print("*\t" + f"{i}: {partidas_guardadas[lista_partidas[i]]['fecha_modificacion']} - "
                           f"{partidas_guardadas[lista_partidas[i]]['nombre_jugador']}, "
                           f"{partidas_guardadas[lista_partidas[i]]['region']}".ljust(68) +
-                  f"♥ {partidas_guardadas[lista_partidas[i]]['corazones_actuales']}/{partidas_guardadas[lista_partidas[i]]['corazones_totales']}".rjust(5) + " *")
+                  f"♥ {partidas_guardadas[lista_partidas[i]]['corazones_actuales']}/{partidas_guardadas[lista_partidas[i]]['corazones_totales']}".rjust(
+                      5) + " *")
         for i in range(8 - len(lista_partidas)):
             print("* " + " " * 76 + "* ")
     else:
@@ -167,12 +184,14 @@ def print_saved_games():
             print("*\t" + f"{i}: {partidas_guardadas[lista_partidas[i]]['fecha_modificacion']} - "
                           f"{partidas_guardadas[lista_partidas[i]]['nombre_jugador']}, "
                           f"{partidas_guardadas[lista_partidas[i]]['region']}".ljust(68) +
-                  f"♥ {partidas_guardadas[lista_partidas[i]]['corazones_actuales']}/{partidas_guardadas[lista_partidas[i]]['corazones_totales']}".rjust(5) + " *")
+                  f"♥ {partidas_guardadas[lista_partidas[i]]['corazones_actuales']}/{partidas_guardadas[lista_partidas[i]]['corazones_totales']}".rjust(
+                      5) + " *")
     print("* " + " " * 76 + "* ")
     if not ver_todos:
         print("* " + "Play X, Erase X, Show All, Help, Back " + "* " * 20)
     else:
         print("* " + "Play X, Erase X, Show Recent, Help, Back  " + "* " * 18)
+
 
 def asignar_nombre(nombre):
     global flag_new_game
@@ -191,6 +210,7 @@ def asignar_nombre(nombre):
     else:
         lista_prompt.append(f"{nombre} is not a valid name")
         return ""
+
 
 def input_main_menu():
     global flag_main_menu
@@ -233,6 +253,7 @@ def input_main_menu():
     else:
         lista_prompt.append("Invalid action")
 
+
 def input_saved_games():
     global flag_saved_games
     global lista_partidas
@@ -260,7 +281,8 @@ def input_saved_games():
         try:
             if int(opc[5]) == 0 and len(opc[5:]) > 1:
                 raise ValueError
-            indice_partida = int(opc[5:].replace(" ", "/")) # lista_partidas[indice_partida] == primary key == key del diccionario
+            indice_partida = int(
+                opc[5:].replace(" ", "/"))  # lista_partidas[indice_partida] == primary key == key del diccionario
             assert 0 <= indice_partida < len(lista_partidas)
         except (ValueError, AssertionError):
             lista_prompt.append("Invalid Action")
@@ -312,7 +334,7 @@ while not flag_general_juego:
         else:
             lista_prompt.append("Invalid action")
     while flag_about:
-        #limpiar_pantalla()
+        # limpiar_pantalla()
         pm.print_about()
         prompt(lista_prompt)
         opc = input("What to do now? ")
@@ -322,7 +344,7 @@ while not flag_general_juego:
         else:
             lista_prompt.append("Invalid action")
     while flag_help_main_menu:
-        #limpiar_pantalla()
+        # limpiar_pantalla()
         pm.print_help_main_menu()
         prompt(lista_prompt)
         opc = input("What to do now? ")
@@ -331,15 +353,15 @@ while not flag_general_juego:
             flag_main_menu = True
         else:
             lista_prompt.append("Invalid action")
-    #while flag_queries:
-        # limpiar_pantalla()
+    # while flag_queries:
+    # limpiar_pantalla()
     while flag_saved_games:
-        #limpiar_pantalla()
+        # limpiar_pantalla()
         print_saved_games()
         prompt(lista_prompt)
         input_saved_games()
     while flag_help_saved_games:
-        #limpiar_pantalla()
+        # limpiar_pantalla()
         pm.print_help_saved_game()
         prompt(lista_prompt)
         opc = input("What to do now? ")
@@ -367,15 +389,14 @@ while not flag_general_juego:
             lista_prompt.append("The adventure begins")
             datos_jugador_actual["nombre"] = nombre_jugador
             # SE HACE INSERT DE LO NECESARIO EN LA NUEVA PARTIDA
-            #cursor.lastrowid se obtene la pk de la ultima partida
             flag_plot = False
             flag_in_game = True
         else:
             lista_prompt.append("Invalid action")
     while flag_in_game:
         # SI (datos_jugador_actual["vida_actual"]) < 1
-            # flag_in_game = False
-            # flag_link_death
+        # flag_in_game = False
+        # flag_link_death
         # Si vida ganon == 0
         # limpiar_pantalla()
         print("Bienvenido al Juego Principal")
@@ -385,30 +406,4 @@ while not flag_general_juego:
         print(datos_partida_actual)
         prompt(lista_prompt)
         input("Press enter to continue")
-    """
-    while flag_castillo_ganon:
-    while flag_show_map:
-    while flag_help_inventory:
-        pm.print_help_inventory()
-        prompt(lista_prompt)
-        opc = input("What to do now? ")
-        if opc.lower() == "back":
-            flag_help_inventory = False
-            flag_in_game = True
-        else:
-            lista_prompt.append("Invalid action")
-    while flag_link_death:
-        pm.print_personaje_death
-        prompt(lista_prompt)
-        opc = input("What to do now? ")
-        if opc.lower() == "continue:
-            flag_link_death = False
-            flag_main_menu = True
-        else:
-            lista_prompt.append("Invalid action")
-    while flag_zelda_saved:
-        
-    
-    """
-
 

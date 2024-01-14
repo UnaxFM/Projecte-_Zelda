@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d86b9cfc-92df-4ee3-a703-0f01ee329b43" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/M3/PREGAME DEFINITIVO.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/M3/SAVE GAME.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/M3/comprobaciones de inicio de partida (fox etc).py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/M3/import de datos + carga + print mapa.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Projecte-_Zelda.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Projecte-_Zelda.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/M3/0. juego_principal_hasta_game.py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/0. juego_principal_hasta_game.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/M3/datos_juego.py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/datos_juego.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/M3/prueba_importar_datos_inicio.py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/prueba_importar_datos_inicio.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 7
+}]]></component>
+  <component name="ProjectId" id="2awiVTEwX6KlHgSxLuuh8Zxgjwb" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.0. juego_principal_hasta_game.executor": "Run",
+    "Python.DATOS_MAPAS_INICIO.executor": "Run",
+    "Python.FOX + BLOODMOON.executor": "Run",
+    "Python.castillo_ganon.executor": "Run",
+    "Python.comprobaciones de inicio de partida (fox etc).executor": "Run",
+    "Python.import de datos + carga + print mapa.executor": "Run",
+    "Python.prueba cargar partida.executor": "Run",
+    "Python.prueba_importar_datos_inicio.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "pregame"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-50da183f06c8-d3b881c8e49f-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-233.13135.95" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d86b9cfc-92df-4ee3-a703-0f01ee329b43" name="Changes" comment="" />
+      <created>1705236066816</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1705236066816</updated>
+    </task>
+    <servers />
+  </component>
+</project>
