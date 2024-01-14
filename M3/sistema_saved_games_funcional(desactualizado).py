@@ -2,9 +2,9 @@ import mysql.connector
 import datetime
 
 db = mysql.connector.connect(
-    host="localhost",  # IP
+    host="172.187.200.252",  # IP
     user="root",  # root
-    passwd="Cacadevaca48_",  # root
+    passwd="root",  # root
     database="zelda"  # la BBDD que sea
 )
 

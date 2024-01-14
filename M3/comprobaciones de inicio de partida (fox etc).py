@@ -250,6 +250,42 @@ while flag_principal:
         else:
             #lista_prompt.append("Invalid Action")
             print("Invalid Action")
+            
+# VERSION 2 MEJORADA
+SI LINK MUERE datos_jugador_actual["vida_actual"] < 1:
+
+def jugador_muerto():
+     global flag_in_game
+     global flag_link_death
+     if datos_jugador_actual["vida_actual"] < 1:
+            datos_jugador_actual["vida_actual"] = datos_jugador_actual["vida_total"]
+            # lista_prompt.append("Nice try, you died, game is over")
+            # Se guarda partida
+            flag_in_game = False
+            flag_link_death = True
+
+flag_principal = True
+flag_in_game = True
+flag_link_death = False
+while flag_principal:
+    while flag_in_game:
+        print(datos_jugador_actual["vida_actual"])
+
+        if datos_jugador_actual["vida_actual"] >= 1:
+            datos_jugador_actual["vida_actual"] -= 1
+        mapa_cargado = generar_mapa()
+        print_tablero(mapa_cargado)
+        jugador_muerto()
+    while flag_link_death:
+        pm.print_personaje_death(datos_jugador_actual["nombre"])
+        opc = input("What to do now?")
+        if opc.lower() == "continue":
+            flag_link_death = False
+            flag_main_menu = True
+            print("Se acabo")
+        else:
+            #lista_prompt.append("Invalid Action")
+            print("Invalid Action")            
 """
 
 # BLOODMOON
@@ -268,6 +304,7 @@ for region_cargada in lista_lugares:
 print(datos_partida_actual["hyrule"]["enemigos"][0])
 print(datos_partida_actual["death mountain"]["enemigos"][0])
 """
+
 # ESTA ES LA PARTE GUAPA DE LA BLOODMOON
 print(datos_jugador_actual["blood_moon_countdown"])
 def blood_moon():  # Si resetean la posición, descomentar x, y

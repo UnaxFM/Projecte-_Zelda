@@ -1,5 +1,5 @@
 import datos_juego as datos_importados
-
+# ESTE NO TIENE LA PARTE DE GANON ACTUALIZADA
 def importar_datos_partida_sin_modificaciones():
     datos_partida = {}
     for key_mapa in datos_importados.datos:
