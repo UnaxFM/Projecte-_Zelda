@@ -92,7 +92,7 @@ datos_partida_actual = importar_datos_partida_sin_modificaciones()
 
 
 # CARGADO DE PARTIDAS
-ver_todos = False  # RESET A TRUE CUANDO SE PASE DE PANTALLA
+ver_todos = False  # RESET A FALSE CUANDO SE PASE DE PANTALLA
 def seleccionar_partidas_guardadas():
     if ver_todos:  # MODIFICAR AL CAMBIAR LA BBDD
         cursor.execute("SELECT GameID, DataLastSave, NomJugador, Region, HeartsRemaining, HeartsTotal "
@@ -283,6 +283,40 @@ def input_saved_games():
         lista_prompt.append("Invalid Action")
 
 
+def show_map():
+    mapa_show_map = [
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "," ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", ],
+        [" ", " ", "H", "y", "r", "u", "l", "e", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "D", "e", "a", "t", "h", " ", "m", "o", "u", "n", "t", "a", "i", "n", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "C", "a", "s", "t", "l", "e", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", "G", "e", "r", "u", "d", "o", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "N", "e", "c", "l", "u", "d", "a", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "]]
+    lugares = ["hyrule", "death mountain", "necluda", "gerudo"]
+    for lugar in lugares:
+        for santuario in datos_partida_actual[lugar]["santuarios"]:
+            mapa_show_map[datos_partida_actual[lugar]["santuarios"][santuario]["x"]][datos_partida_actual[lugar]["santuarios"][santuario]["y"]] = "S"
+            mapa_show_map[datos_partida_actual[lugar]["santuarios"][santuario]["x"]][datos_partida_actual[lugar]["santuarios"][santuario]["y"] + 1] = datos_partida_actual[lugar]["santuarios"][santuario]["nombre"][1]
+            if not datos_partida_actual[lugar]["santuarios"][santuario]["descubierto"]:
+                mapa_show_map[datos_partida_actual[lugar]["santuarios"][santuario]["x"]][datos_partida_actual[lugar]["santuarios"][santuario]["y"] + 2] = "?"
+    titulo = "Map" + " "
+    calculo = int(((60 - len(titulo)) / 2) - 1)
+    if len(titulo) % 2 != 0:
+        print("* " + titulo.title() + " " + "* " * calculo, end="")
+    else:
+        print("* " + titulo.title() + "* " * calculo, end="")
+    print("* " * 10)
+    for fila in mapa_show_map:
+        print("*", end="")
+        for elemento in fila:
+            print(elemento, end="")
+        print("* " + " " * 18 + "*")
+    print("* " + "Back  " + "* " * 36)
+
+
 while not flag_general_juego:
     while flag_main_menu:
         # limpiar_pantalla()
@@ -389,6 +423,12 @@ while not flag_general_juego:
     """
     while flag_castillo_ganon:
     while flag_show_map:
+        show_map()
+        if opc.lower() == "back":
+            flag_show_map = False
+            flag_in_game = True
+        else:
+            lista_prompt.append("Invalid action")
     while flag_help_inventory:
         pm.print_help_inventory()
         prompt(lista_prompt)
@@ -399,17 +439,27 @@ while not flag_general_juego:
         else:
             lista_prompt.append("Invalid action")
     while flag_link_death:
-        pm.print_personaje_death
+        pm.print_personaje_death(datos_jugador_actual["nombre"])
         prompt(lista_prompt)
         opc = input("What to do now? ")
         if opc.lower() == "continue:
+            # restart de los datos de partida
+            info_alimento_partida = importar_datos_comida_sin_modificaciones()
+            info_equipamiento_partida = importar_datos_armas_sin_modificaciones()
+            datos_jugador_actual = importar_datos_jugador_sin_modificaciones()
+            datos_partida_actual = importar_datos_partida_sin_modificaciones()
+            partidas_guardadas = seleccionar_partidas_guardadas()
+            lista_partidas = metodo_burbuja_ordenar_partidas_recientes(list(partidas_guardadas.keys()))
             flag_link_death = False
             flag_main_menu = True
         else:
             lista_prompt.append("Invalid action")
     while flag_zelda_saved:
-        
-    
-    """
+"""
+
+
+
+
+
 
 

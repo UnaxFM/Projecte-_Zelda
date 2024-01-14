@@ -7,7 +7,8 @@ informacion_jugador = {
     "items_equipados": [],
     "region": "hyrule"
 }
-# USOS?
+
+# USOS
 weapons = {
     "wood sword": {"nombre": "wood sword", "equipado": False, "usos": 5, "cantidad": 0},
     "sword": {"nombre": "sword", "equipado": False, "usos": 9, "cantidad": 0},
@@ -200,6 +201,7 @@ datos = {
             6: {"nombre": "S6", "descubierto": False, "x": 8, "y": 32}
         }
     },
-    "castle": {0: {"vida": 8}}
+    "castle": {"spawn": {"x": 8, "y": 2},
+               0: {"vida": 8}}
 }
 

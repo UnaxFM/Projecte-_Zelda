@@ -6,8 +6,9 @@ def importar_datos_partida_sin_modificaciones():
     datos_partida = {}
     for key_mapa in datos_importados.datos:
         if key_mapa == "castle":
+            spawn = datos_importados.datos[key_mapa]["spawn"].copy()
             ganon = datos_importados.datos[key_mapa][0].copy()
-            datos_partida[key_mapa] = {0: ganon}
+            datos_partida[key_mapa] = {"spawn": spawn, 0: ganon}
         else:
             if "spawn" in datos_importados.datos[key_mapa]:
                 spawn = datos_importados.datos[key_mapa]["spawn"].copy()
@@ -54,7 +55,7 @@ info_alimento_partida = importar_datos_comida_sin_modificaciones()
 info_equipamiento_partida = importar_datos_armas_sin_modificaciones()
 datos_jugador_actual = importar_datos_jugador_sin_modificaciones()
 datos_partida_actual = importar_datos_partida_sin_modificaciones()
-
+print(datos_partida_actual)
 def generar_mapa(): # genera el mapa
     # GENERAR COPIA MAPA -----> a partir de esta se hace el mapa sobre el que interactuar
     mapa_a_cargar = []
@@ -191,7 +192,6 @@ mapa_cargado = generar_mapa()
 print_tablero(mapa_cargado)
 cargar_partida()
 
-
 """ AÑADIDO LO DEL FOX
 while True:
     if not datos_partida_actual[datos_jugador_actual["region"]]["fox"][0]["intento"]:  # PERMITE QUE SOLO HAYA HABIDO UN INTENTO. SE DEBE REINICIAR AL SALIR DEL MAPA
@@ -289,4 +289,38 @@ def save_game():
 save_game()
 
 
+def show_map():
+    mapa_show_map = [
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "," ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", ],
+        [" ", " ", "H", "y", "r", "u", "l", "e", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "D", "e", "a", "t", "h", " ", "m", "o", "u", "n", "t", "a", "i", "n", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "C", "a", "s", "t", "l", "e", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", "G", "e", "r", "u", "d", "o", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "N", "e", "c", "l", "u", "d", "a", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "]]
+    lugares = ["hyrule", "death mountain", "necluda", "gerudo"]
+    for lugar in lugares:
+        for santuario in datos_partida_actual[lugar]["santuarios"]:
+            mapa_show_map[datos_partida_actual[lugar]["santuarios"][santuario]["x"]][datos_partida_actual[lugar]["santuarios"][santuario]["y"]] = "S"
+            mapa_show_map[datos_partida_actual[lugar]["santuarios"][santuario]["x"]][datos_partida_actual[lugar]["santuarios"][santuario]["y"] + 1] = datos_partida_actual[lugar]["santuarios"][santuario]["nombre"][1]
+            if not datos_partida_actual[lugar]["santuarios"][santuario]["descubierto"]:
+                mapa_show_map[datos_partida_actual[lugar]["santuarios"][santuario]["x"]][datos_partida_actual[lugar]["santuarios"][santuario]["y"] + 2] = "?"
+    titulo = "Map" + " "
+    calculo = int(((60 - len(titulo)) / 2) - 1)
+    if len(titulo) % 2 != 0:
+        print("* " + titulo.title() + " " + "* " * calculo, end="")
+    else:
+        print("* " + titulo.title() + "* " * calculo, end="")
+    print("* " * 10)
+    for fila in mapa_show_map:
+        print("*", end="")
+        for elemento in fila:
+            print(elemento, end="")
+        print("* " + " " * 18 + "*")
+    print("* " + "Back  " + "* " * 36)
+
+show_map()
 
