@@ -3,6 +3,7 @@ import platform
 import random
 import prints_menus as pm
 import mysql.connector
+import datos_juego as datos_importados
 
 # Conexión con la BBDD
 db = mysql.connector.connect(
@@ -31,7 +32,7 @@ def prompt(lista):
         print(elemento)
 
 # IMPORTACION DE DATOS
-import datos_juego as datos_importados
+
 
 def importar_datos_partida_sin_modificaciones():
     datos_partida = {}

@@ -200,5 +200,6 @@ datos = {
             6: {"nombre": "S6", "descubierto": False, "x": 8, "y": 32}
         }
     },
-    "castle": {"ganon_vivo": True, "vida_ganon": 8}
+    "castle": {0: {"vida": 8}}
 }
+

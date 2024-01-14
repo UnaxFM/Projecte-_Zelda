@@ -6,7 +6,8 @@ def importar_datos_partida_sin_modificaciones():
     datos_partida = {}
     for key_mapa in datos_importados.datos:
         if key_mapa == "castle":
-            datos_partida[key_mapa] = datos_importados.datos[key_mapa].copy()
+            ganon = datos_importados.datos[key_mapa][0].copy()
+            datos_partida[key_mapa] = {0: ganon}
         else:
             if "spawn" in datos_importados.datos[key_mapa]:
                 spawn = datos_importados.datos[key_mapa]["spawn"].copy()
@@ -155,11 +156,14 @@ def cargar_partida():
             datos_jugador_actual["items_equipados"].append(arma)
     # CARGAR ENEMIGOS
     # cursor.execute(f"SELECT region, numero, x, y, vida WHERE primary_key = {key_primaria}")
-    cursor = (("hyrule", 0, 3, 8, 5), ("death mountain", 0, 3, 50, 6))
+    cursor = (("hyrule", 0, 3, 8, 5), ("death mountain", 0, 3, 50, 6), ("castle", 0, 3, 50, 0))
     for enemigo in cursor:
-        datos_partida_actual[enemigo[0]]["enemigos"][enemigo[1]]["x"] = enemigo[2]
-        datos_partida_actual[enemigo[0]]["enemigos"][enemigo[1]]["y"] = enemigo[3]
-        datos_partida_actual[enemigo[0]]["enemigos"][enemigo[1]]["vida"] = enemigo[4]
+        if enemigo[0] == "castle":
+            datos_partida_actual[enemigo[0]][0]["vida"] = enemigo[4]
+        else:
+            datos_partida_actual[enemigo[0]]["enemigos"][enemigo[1]]["x"] = enemigo[2]
+            datos_partida_actual[enemigo[0]]["enemigos"][enemigo[1]]["y"] = enemigo[3]
+            datos_partida_actual[enemigo[0]]["enemigos"][enemigo[1]]["vida"] = enemigo[4]
     # CARGAR COFRES
     # cursor.execute(f"SELECT region, numero WHERE primary_key = {key_primaria}")
     cursor = (("hyrule", 0), ("death mountain", 0))
@@ -171,10 +175,21 @@ def cargar_partida():
     for santuario in cursor:
         datos_partida_actual[santuario[0]]["santuarios"][santuario[1]]["descubierto"] = True
         datos_jugador_actual["vida_total"] += 1  # SUMO LA VIDA
-
+"""
+print(info_alimento_partida)
+print(info_equipamiento_partida)
+print(datos_jugador_actual)
+print(datos_partida_actual)
 cargar_partida()
+print(info_alimento_partida)
+print(info_equipamiento_partida)
+print(datos_jugador_actual)
+print(datos_partida_actual)
+"""
+
 mapa_cargado = generar_mapa()
 print_tablero(mapa_cargado)
+cargar_partida()
 
 
 """ AÑADIDO LO DEL FOX
@@ -241,6 +256,37 @@ while flag_principal:
             #lista_prompt.append("Invalid Action")
             print("Invalid Action")
 """
+
+# SAVE GAME
+key_primaria_partida = 3
+def save_game():
+    #cursor.execute("query_delete")
+    print(f"UPDATE game SET user_name = {datos_jugador_actual['nombre']}, "
+          f"hearts_remaining = {datos_jugador_actual['vida_actual']}, "
+          f"blood_moon_countdown = {datos_jugador_actual['blood_moon_countdown']}, "
+          f"blood_moon_appearances = {datos_jugador_actual['blood_moon_appearances']}, "
+          f"region = {datos_jugador_actual['region']} "
+          f"WHERE game_id = {key_primaria_partida};")
+    for alimento in info_alimento_partida:
+        print(f"UPDATE game_food SET quantity_remaining = {info_alimento_partida[alimento]['cantidad']} "
+              f"WHERE game_id = {key_primaria_partida} AND food_name = {alimento};")
+    for arma in info_equipamiento_partida:
+        print(f"UPDATE game_weapons SET equiped = {info_equipamiento_partida[arma]['equipado']}, "
+              f"lives_remaining = {info_equipamiento_partida[arma]['usos']}, "
+              f"quantity_remaining = {info_equipamiento_partida[arma]['cantidad']} "
+              f"WHERE game_id = {key_primaria_partida} AND weapon_name = {arma};")
+    for region in datos_partida_actual:
+        if region == "castle":
+            print(f"UPDATE game_enemies SET lifes_remaining = {datos_partida_actual[region][0]['vida']} WHERE game_id = {key_primaria_partida} AND region = {region} AND num = {0};")
+        else:
+            for enemigo in datos_partida_actual[region]["enemigos"]:
+                print(f"UPDATE game_enemies "
+                      f"SET xpos = {datos_partida_actual[region]['enemigos'][enemigo]['x']}, "
+                      f"ypos {datos_partida_actual[region]['enemigos'][enemigo]['y']}, "
+                      f"lifes_remaining = {datos_partida_actual[region]['enemigos'][enemigo]['vida']} "
+                      f"WHERE game_id = {key_primaria_partida} AND region = {region} AND num = {enemigo};")
+    #db.commit()
+save_game()
 
 
 
