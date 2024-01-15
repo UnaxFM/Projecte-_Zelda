@@ -7,8 +7,8 @@ ALTER TABLE game
     MODIFY user_name VARCHAR(10) NOT NULL,
 	MODIFY hearts_remaining INT NOT NULL,
     MODIFY hearts_total INT NOT NULL,
-	MODIFY date_started TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    MODIFY date_modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE NOW(),
+	MODIFY date_started TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    MODIFY date_modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE NOW(),
     MODIFY region VARCHAR(20) NOT NULL,
     MODIFY blood_moon_countdown INT NOT NULL DEFAULT 0,
     MODIFY blood_moon_appearences INT NOT NULL DEFAULT 0,
@@ -23,7 +23,7 @@ ALTER TABLE game
 ALTER TABLE food
 	MODIFY food_name VARCHAR(15) NOT NULL,
 	MODIFY game_id INT UNSIGNED NOT NULL,
-    MODIFY quantity_remaining INT NOT NULL,
+    MODIFY quantity_remaining INT NOT NULL DEFAULT 0,
     MODIFY date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     MODIFY date_modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE NOW(),
     
@@ -36,18 +36,18 @@ ALTER TABLE food
 -- Taula weapons
 
 ALTER TABLE weapons
-	MODIFY weapon_id INT AUTO_INCREMENT,
     MODIFY game_id INT UNSIGNED NOT NULL,
     MODIFY weapon_name VARCHAR(15) NOT NULL,
     MODIFY equiped BOOLEAN DEFAULT FALSE NOT NULL,
-    MODIFY lives_remaining INT NOT NULL,
+    MODIFY lives_remaining INT NOT NULL DEFAULT 0,
+    MODIFY uses INT NOT NULL DEFAULT 0,
     MODIFY date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     MODIFY date_modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE NOW(),
     
     ADD CONSTRAINT ck_weapons_weapon_name CHECK (weapon_name IN ('wood sword', 'sword', 'wood shield', 'shield')),
     
     ADD CONSTRAINT fk_game_weapons  FOREIGN KEY (game_id) REFERENCES game(game_id) ON UPDATE CASCADE ON DELETE CASCADE,
-    ADD CONSTRAINT pk_weapons PRIMARY KEY(weapon_id,game_id, weapon_name);
+    ADD CONSTRAINT pk_weapons PRIMARY KEY(game_id, weapon_name);
 
 
 -- Taula enemies

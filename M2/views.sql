@@ -5,7 +5,7 @@ CREATE OR REPLACE VIEW v_armas_partidas as
 select g.user_name as 'NomUsuari',
 	   g.game_id,
        w.weapon_name as 'NomArma',
-       COUNT(distinct w.weapon_id) as 'QuantitatObtenida',
+       w.uses as 'Uses',
        g.date_started as 'DataPartida'
 
 from game g join weapons w on g.game_id = w.game_id
