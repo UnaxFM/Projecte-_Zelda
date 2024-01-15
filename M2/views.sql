@@ -14,7 +14,7 @@ select p.player_id as 'PlayerID',
        g.blood_moon_countdown as 'BM_countdown',
        g.blood_moon_appearences as 'BMappeareces'
        
-from players p left join game g on p.player_id = g.player_id;
+from players p join game g on p.player_id = g.player_id;
 
 -- VISTA CONTEO ARMAS POR PARTIDA DE CADA USUARIO
 
