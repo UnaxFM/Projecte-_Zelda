@@ -1,34 +1,20 @@
 USE zelda;
 
--- Taula players
-
-ALTER TABLE players
-	MODIFY player_id INT UNSIGNED AUTO_INCREMENT NOT NULL,
-    MODIFY user_name VARCHAR(10) NOT NULL,
-	MODIFY hearts_remaining INT NOT NULL,
-    MODIFY hearts_total INT NOT NULL,
-    MODIFY date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    MODIFY date_modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE NOW(),
-    
-	ADD CONSTRAINT pk_players PRIMARY KEY (player_id);
-
-
 -- Taula game
 
 ALTER TABLE game
 	MODIFY game_id INT UNSIGNED AUTO_INCREMENT,
-	MODIFY player_id INT UNSIGNED NOT NULL,
+    MODIFY user_name VARCHAR(10) NOT NULL,
+	MODIFY hearts_remaining INT NOT NULL,
+    MODIFY hearts_total INT NOT NULL,
 	MODIFY date_started TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     MODIFY date_modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE NOW(),
     MODIFY region VARCHAR(20) NOT NULL,
-    MODIFY xpos INT NOT NULL,
-    MODIFY ypos INT NOT NULL,
     MODIFY blood_moon_countdown INT NOT NULL DEFAULT 0,
     MODIFY blood_moon_appearences INT NOT NULL DEFAULT 0,
     
 	ADD CONSTRAINT ck_game_region CHECK (region IN ('hyrule', 'death mountain', 'gerudo', 'necluda', 'castle')),    
     
-    ADD CONSTRAINT fk_players_game FOREIGN KEY (player_id) REFERENCES players(player_id) ON UPDATE CASCADE ON DELETE CASCADE,
 	ADD CONSTRAINT pk_game PRIMARY KEY (game_id);
 
 

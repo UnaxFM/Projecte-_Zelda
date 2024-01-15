@@ -2,25 +2,15 @@ DROP DATABASE IF EXISTS zelda;
 CREATE DATABASE zelda CHARACTER SET utf8mb4;
 USE zelda;
 
-CREATE TABLE IF NOT EXISTS players(
-	player_id INT,
-    user_name VARCHAR(10),
-    hearts_remaining INT,
-    hearts_total INT,
-    
-    date_created TIMESTAMP,
-    date_modified TIMESTAMP
-);
-
 
 CREATE TABLE IF NOT EXISTS game(
 	game_id INT,
-    player_id INT,
+    user_name VARCHAR(10),
+    hearts_remaining INT,
+    hearts_total INT,
     date_started TIMESTAMP,
     date_modified TIMESTAMP,
     region VARCHAR(20),
-    xpos INT,
-    ypos INT,
     blood_moon_countdown INT,
     blood_moon_appearences INT
 );

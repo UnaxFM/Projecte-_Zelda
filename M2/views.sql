@@ -1,20 +1,3 @@
--- VITA INFO JUGADOR
-
-CREATE OR REPLACE VIEW v_inf_player as
-select p.player_id as 'PlayerID',
-       p.user_name as 'NomJugador',
-       p.hearts_remaining as 'HeartsRemaining',
-       p.hearts_total as 'HeartsTotal',
-       g.date_started as 'DataPrimeraPartida',
-       g.date_modified as 'DataLastSave',
-       g.game_id as 'GameID',
-       g.region as 'Region',
-       g.xpos as 'xpos',
-       g.ypos as 'ypos',
-       g.blood_moon_countdown as 'BM_countdown',
-       g.blood_moon_appearences as 'BMappeareces'
-       
-from players p join game g on p.player_id = g.player_id;
 
 -- VISTA CONTEO ARMAS POR PARTIDA DE CADA USUARIO
 
