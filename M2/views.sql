@@ -2,67 +2,60 @@
 -- VISTA CONTEO ARMAS POR PARTIDA DE CADA USUARIO
 
 CREATE OR REPLACE VIEW v_armas_partidas as
-select p.user_name as 'NomUsuari',
+select g.user_name as 'NomUsuari',
 	   g.game_id,
        w.weapon_name as 'NomArma',
        COUNT(distinct w.weapon_id) as 'QuantitatObtenida',
        g.date_started as 'DataPartida'
 
-from players p join game g on p.player_id = g.player_id
-	          join weapons w on g.game_id = w.game_id
-group by p.user_name, g.game_id,w.weapon_name;
+from game g join weapons w on g.game_id = w.game_id
+group by g.user_name, g.game_id,w.weapon_name;
 
 
 
 -- VISTA CONTEO COMIDA POR PARTIDA DE CADA USUARIO
 
 CREATE OR REPLACE VIEW v_comidas_partidas as
-select p.user_name as 'NomUsuari',
+select g.user_name as 'NomUsuari',
 	   g.game_id,
        f.food_name as 'NomMenjar',
        SUM(f.quantity_remaining) as 'QuantitatObtenida',
        g.date_started as 'DataPartida'
 
-from players p join game g on p.player_id = g.player_id
-	           join food f on g.game_id = f.game_id
-group by p.user_name, g.game_id, f.food_name;
+from game g join food f on g.game_id = f.game_id
+group by g.user_name, g.game_id, f.food_name;
 
 
 -- VISTA SANTUARIOS POR PARTIDA DE CADA USUARIO
 
 CREATE OR REPLACE VIEW v_santuarios_partidas as
-select p.player_id as 'PlayerID',
-	   p.user_name as 'NomUsuari',
+select g.user_name as 'NomUsuari',
        g.game_id,
        s.sactuary_id as 'SantuaryID',
        s.region as 'Region',
        s.xpos as 'xpos',
        s.ypos as 'ypos'
 
-from players p join game g on p.player_id = g.player_id
-			   join santuaries_opened s on g.game_id = s.game_id;
+from game g join santuaries_opened s on g.game_id = s.game_id;
 
 
 -- VISTA DE COFRES POR PARTIDA DE CADA USUARIO
 
 CREATE OR REPLACE VIEW v_chest_partidas as
-select p.player_id as 'PlayerID',
-	   p.user_name as 'NomUsuari',
+select g.user_name as 'NomUsuari',
        g.game_id,
        c.chest_id as'ChestID',
        c.region as 'Region',
        c.xpos as 'xpos',
        c.ypos as 'ypos'
 
-from players p join game g on p.player_id = g.player_id
-			   join chest_opened c on g.game_id = c.game_id;
+from game g join chest_opened c on g.game_id = c.game_id;
 
 
 -- VISTA DE ENEMIGOS POR PARTIDA DE CADA USUARIO
 
 CREATE OR REPLACE VIEW v_enemies_partidas as
-select p.player_id as 'PlayerID',
-	   p.user_name as 'NomUsuari',
+select g.user_name as 'NomUsuari',
        g.game_id,
        e.enemy_id as 'EnemyID',
        e.region as 'Region',
@@ -70,8 +63,7 @@ select p.player_id as 'PlayerID',
        e.ypos as 'ypos',
        e.lifes_remaining as 'Lifes'
 
-from players p join game g on p.player_id = g.player_id
-			   join enemies e on g.game_id = e.game_id;
+from game g join enemies e on g.game_id = e.game_id;
                
 
 -- VISTES DE CONSULTES A LA BD
@@ -79,22 +71,22 @@ from players p join game g on p.player_id = g.player_id
 -- 1) usuaris que han jugat
 
 CREATE OR REPLACE VIEW query_1_usuaris as
-select p.user_name as 'NomUsuari',
-	   MAX(g.date_started) as 'UltimaPartida'
+select user_name as 'NomUsuari',
+	   MAX(date_started) as 'UltimaPartida'
 
-from players p join game g on p.player_id = g.player_id
-group by p.player_id,p.user_name
-order by p.user_name;
+from game
+group by user_name
+order by user_name;
 
 -- 2) quantitat de partides jugades per usuari
 
 CREATE OR REPLACE VIEW query_2_partides as
-select p.user_name as 'NomUsuari', 
-	   COUNT(g.game_id) as 'PartidesJugades'
+select user_name as 'NomUsuari', 
+	   COUNT(game_id) as 'PartidesJugades'
 
-from players p join game g on p.player_id = g.player_id
-group by p.player_id, p.user_name
-order by p.user_name;
+from game
+group by user_name
+order by user_name;
 
 -- 3) Armes usades per cada usuari i dades de la partida on n'ha gastat més: Consulta a través de la vista --- mal ya que da solo la sum de esa partida
 
@@ -168,13 +160,9 @@ from game;
 
 CREATE OR REPLACE VIEW query_5_mesbm as
 SELECT
-    g.date_started AS DataPartida,
-    p.user_name AS NomUsuari,
-    g.blood_moon_appearences AS QuantitatBloodMoons
-FROM
-    game g
-JOIN
-    players p ON g.player_id = p.player_id
-ORDER BY
-    g.blood_moon_appearences DESC
+    date_started AS DataPartida,
+    user_name AS NomUsuari,
+    blood_moon_appearences AS QuantitatBloodMoons
+from game 
+order by blood_moon_appearences DESC
 LIMIT 1;
