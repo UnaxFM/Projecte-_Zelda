@@ -1,5 +1,16 @@
+
+import mysql.connector
 import datos_juego as datos_importados
 
+# Conexión con la BBDD
+db = mysql.connector.connect(
+    host="localhost",  # IP
+    user="root",  # root
+    passwd="Cacadevaca48_",  # root
+    database="zelda"  # la BBDD que sea
+)
+
+cursor = db.cursor()
 def importar_datos_partida_sin_modificaciones():
     datos_partida = {}
     for key_mapa in datos_importados.datos:
@@ -54,24 +65,26 @@ info_equipamiento_partida = importar_datos_armas_sin_modificaciones()
 datos_jugador_actual = importar_datos_jugador_sin_modificaciones()
 datos_partida_actual = importar_datos_partida_sin_modificaciones()
 
-def cargar_partida():
+def cargar_partida(primary_key):
     # CARGAR PARTIDA
     # para datos jugador
-    # cursor.execute(f"SELECT nombre_usuario, vida actual, blood_moon_countdown, "blood_moon_appearances", region WHERE primary_key = {key_primaria}")
+    global cursor
+    cursor.execute(f"SELECT user_name, hearts_remaining, blood_moon_countdown, blood_moon_appearances, region WHERE game_id = {primary_key};")
     cursor = ("Pablo", 4, 17, 5, "death mountain")
     datos_jugador_actual["nombre"] = cursor[0]
     datos_jugador_actual["vida_actual"] = cursor[1]
     datos_jugador_actual["blood_moon_countdown"] = cursor[2]
     datos_jugador_actual["blood_moon_appearances"] = cursor[3]
     datos_jugador_actual["region"] = cursor[4]
+    print("Info jugador cargada")
     # CARGAR COMIDA
-    # cursor.execute(f"SELECT comida, cantidad WHERE primary_key = {key_primaria}")
+    cursor.execute(f"SELECT food_name, quantity_remaining FROM food WHERE game_id = {primary_key}")
     cursor = (("vegetables", 0), ("fish", 34), ("meat", 1), ("salads", 7), ("pescatarian", 10), ("roasted", 5))
     for alimento_cargado in cursor:
         info_alimento_partida[alimento_cargado[0]]["cantidad"] = alimento_cargado[1]
+    print("Info comida cargada")
     # CARGAR ARMAS
-    # cursor.execute(f"SELECT arma, equipado, usos, cantidad WHERE primary_key = {key_primaria}")
-    cursor = (("wood sword", True, 3, 5), ("sword", False, 3, 1), ("wood shield", True, 3, 2), ("shield", False, 3, 3))
+    cursor.execute(f"SELECT weapon_name, equiped, lives_remaining, quantity FROM weapons WHERE game_id = {primary_key}")
     for arma_cargada in cursor:
         info_equipamiento_partida[arma_cargada[0]]["equipado"] = arma_cargada[1]
         info_equipamiento_partida[arma_cargada[0]]["usos"] = arma_cargada[2]
@@ -80,9 +93,9 @@ def cargar_partida():
     for arma in info_equipamiento_partida:
         if info_equipamiento_partida[arma]["equipado"]:
             datos_jugador_actual["items_equipados"].append(arma)
+    print("armas cargadas")
     # CARGAR ENEMIGOS
-    # cursor.execute(f"SELECT region, numero, x, y, vida WHERE primary_key = {key_primaria}")
-    cursor = (("hyrule", 0, 3, 8, 5), ("death mountain", 0, 3, 50, 6), ("castle", 0, 3, 50, 0))
+    cursor.execute(f"SELECT region, enemy_id, xpos, ypos, lifes_remaining FROM enemies WHERE game_id = {primary_key}")
     for enemigo in cursor:
         if enemigo[0] == "castle":
             datos_partida_actual[enemigo[0]][0]["vida"] = enemigo[4]
@@ -90,14 +103,14 @@ def cargar_partida():
             datos_partida_actual[enemigo[0]]["enemigos"][enemigo[1]]["x"] = enemigo[2]
             datos_partida_actual[enemigo[0]]["enemigos"][enemigo[1]]["y"] = enemigo[3]
             datos_partida_actual[enemigo[0]]["enemigos"][enemigo[1]]["vida"] = enemigo[4]
+    print("cofres cargados")
     # CARGAR COFRES
-    # cursor.execute(f"SELECT region, numero WHERE primary_key = {key_primaria}")
+    cursor.execute(f"SELECT region, chest_id FROM chest_opened WHERE game_id = {primary_key}")
     cursor = (("hyrule", 0), ("death mountain", 0))
     for cofre in cursor:
         datos_partida_actual[cofre[0]]["cofres"][cofre[1]]["abierto"] = True
     # CARGAR SANTUARIOS
-    # cursor.execute(f"SELECT region, numero WHERE primary_key = {key_primaria}")
-    cursor = (("hyrule", 0), ("death mountain", 3))
+    cursor.execute(f"SELECT region, sanctuary_id FROM sanctuaries_opened WHERE game_id = {primary_key}")
     for santuario in cursor:
         datos_partida_actual[santuario[0]]["santuarios"][santuario[1]]["descubierto"] = True
         datos_jugador_actual["vida_total"] += 1  # SUMO LA VIDA

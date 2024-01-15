@@ -46,10 +46,12 @@ def importar_datos_comida_sin_modificaciones():
     for alimento in datos_importados.food:
         datos_comida[alimento] = datos_importados.food[alimento].copy()
     return datos_comida
+
 info_alimento_partida = importar_datos_comida_sin_modificaciones()
 info_equipamiento_partida = importar_datos_armas_sin_modificaciones()
 datos_jugador_actual = importar_datos_jugador_sin_modificaciones()
 datos_partida_actual = importar_datos_partida_sin_modificaciones()
+
 def cargar_partida():
     # CARGAR PARTIDA
     # para datos jugador

@@ -1,6 +1,4 @@
 import datos_juego as datos_importados
-import random
-import prints_menus as pm
 
 def importar_datos_partida_sin_modificaciones():
     datos_partida = {}
@@ -55,7 +53,6 @@ info_alimento_partida = importar_datos_comida_sin_modificaciones()
 info_equipamiento_partida = importar_datos_armas_sin_modificaciones()
 datos_jugador_actual = importar_datos_jugador_sin_modificaciones()
 datos_partida_actual = importar_datos_partida_sin_modificaciones()
-print(datos_partida_actual)
 
 def cargar_partida():
     # CARGAR PARTIDA
@@ -152,6 +149,8 @@ def generar_mapa(): # genera el mapa
         "muerto"]:
         mapa_a_cargar[datos_partida_actual[datos_jugador_actual["region"]]["fox"][0]["x"]][
             datos_partida_actual[datos_jugador_actual["region"]]["fox"][0]["y"]] = "F"
+    #mapa[xpos][ypos]
+    mapa_a_cargar[4][5] = "X"
     return mapa_a_cargar
 
 def print_tablero(mapa): # hace print del tablero
@@ -174,7 +173,6 @@ def print_tablero(mapa): # hace print del tablero
             print(elemento, end="")
         print("* ")
     print("* " * 40)
-
 mapa_cargado = generar_mapa()
 print_tablero(mapa_cargado)
 
@@ -190,11 +188,11 @@ print(info_equipamiento_partida)
 print(datos_jugador_actual)
 print(datos_partida_actual)
 """
-
+"""
 mapa_cargado = generar_mapa()
 print_tablero(mapa_cargado)
 cargar_partida()
-
+"""
 """ AÑADIDO LO DEL FOX
 while True:
     if not datos_partida_actual[datos_jugador_actual["region"]]["fox"][0]["intento"]:  # PERMITE QUE SOLO HAYA HABIDO UN INTENTO. SE DEBE REINICIAR AL SALIR DEL MAPA
@@ -262,35 +260,35 @@ while flag_principal:
 
 # SAVE GAME
 key_primaria_partida = 3
-def save_game():
-    #cursor.execute("query_delete")
-    print(f"UPDATE game SET user_name = {datos_jugador_actual['nombre']}, "
+def save_game(primary_key):
+    cursor.execute(f"UPDATE game SET user_name = {datos_jugador_actual['nombre']}, "
           f"hearts_remaining = {datos_jugador_actual['vida_actual']}, "
+          f"hearts_total = {datos_jugador_actual['vida_total']}, "
           f"blood_moon_countdown = {datos_jugador_actual['blood_moon_countdown']}, "
           f"blood_moon_appearances = {datos_jugador_actual['blood_moon_appearances']}, "
           f"region = {datos_jugador_actual['region']} "
-          f"WHERE game_id = {key_primaria_partida};")
+          f"WHERE game_id = {primary_key};")
     for alimento in info_alimento_partida:
-        print(f"UPDATE game_food SET quantity_remaining = {info_alimento_partida[alimento]['cantidad']} "
-              f"WHERE game_id = {key_primaria_partida} AND food_name = {alimento};")
+        cursor.execute(f"UPDATE food SET quantity_remaining = {info_alimento_partida[alimento]['cantidad']} "
+              f"WHERE game_id = {primary_key} AND food_name = {alimento};")
     for arma in info_equipamiento_partida:
-        print(f"UPDATE game_weapons SET equiped = {info_equipamiento_partida[arma]['equipado']}, "
+        pcursor.execute(f"UPDATE weapons SET equiped = {info_equipamiento_partida[arma]['equipado']}, "
               f"lives_remaining = {info_equipamiento_partida[arma]['usos']}, "
               f"quantity_remaining = {info_equipamiento_partida[arma]['cantidad']} "
-              f"WHERE game_id = {key_primaria_partida} AND weapon_name = {arma};")
+              f"WHERE game_id = {primary_key} AND weapon_name = {arma};")
     for region in datos_partida_actual:
         if region == "castle":
-            print(f"UPDATE game_enemies SET lifes_remaining = {datos_partida_actual[region][0]['vida']} WHERE game_id = {key_primaria_partida} AND region = {region} AND num = {0};")
+            cursor.execute(f"UPDATE enemies SET lifes_remaining = {datos_partida_actual[region][0]['vida']} WHERE game_id = {primary_key} AND region = {region} AND enemy_id = {0};")
         else:
             for enemigo in datos_partida_actual[region]["enemigos"]:
-                print(f"UPDATE game_enemies "
+                cursor.execute(f"UPDATE enemies "
                       f"SET xpos = {datos_partida_actual[region]['enemigos'][enemigo]['x']}, "
                       f"ypos {datos_partida_actual[region]['enemigos'][enemigo]['y']}, "
                       f"lifes_remaining = {datos_partida_actual[region]['enemigos'][enemigo]['vida']} "
-                      f"WHERE game_id = {key_primaria_partida} AND region = {region} AND num = {enemigo};")
-    #db.commit()
-save_game()
-
+                      f"WHERE game_id = {primary_key} AND region = {region} AND enemy_id = {enemigo};")
+    db.commit()
+save_game(key_primaria_partida)
+"""
 
 def show_map():
     mapa_show_map = [
@@ -326,4 +324,4 @@ def show_map():
     print("* " + "Back  " + "* " * 36)
 
 show_map()
-
+"""

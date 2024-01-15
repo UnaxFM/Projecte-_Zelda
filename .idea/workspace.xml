@@ -5,8 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d86b9cfc-92df-4ee3-a703-0f01ee329b43" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/M3/CARGADA DE UNA NUEVA PARTIDA CON BBDD.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/M3/INSERT DE UNA NUEVA PARTIDA.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/M3/parte_ganon.py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/parte_ganon.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/M3/0. juego_principal_hasta_game(pruebas).py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/0. juego_principal_hasta_game(pruebas).py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/M3/IMPORT + CARGA RÁPIDA PARA PRUEBAS.py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/IMPORT + CARGA RÁPIDA PARA PRUEBAS.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/M3/cheats.py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/cheats.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/M3/comprobaciones de inicio de partida (fox etc).py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/comprobaciones de inicio de partida (fox etc).py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/M3/datos_juego.py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/datos_juego.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/M3/import de datos + carga + print mapa.py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/import de datos + carga + print mapa.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,13 +62,39 @@
     "Python.prueba_importar_datos_inicio.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "savegame"
+    "git-widget-placeholder": "pregame",
+    "last_opened_file_path": "C:/Users/willi/Desktop/proyecto_zelda/Projecte-_Zelda",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\William Sargisson\Desktop\proyecto_zelda\Projecte-_Zelda\M3" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="0. juego_principal_hasta_game(pruebas)" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="Projecte-_Zelda" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.9 (PROYECTO_ZELDA)" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/M3" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/M3/0. juego_principal_hasta_game(pruebas).py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -80,5 +113,27 @@
       <updated>1705236066816</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/M3/comprobaciones de inicio de partida (fox etc).py</url>
+          <line>6</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

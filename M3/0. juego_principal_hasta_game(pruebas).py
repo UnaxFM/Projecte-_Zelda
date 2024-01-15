@@ -7,9 +7,9 @@ import datos_juego as datos_importados
 
 # Conexión con la BBDD
 db = mysql.connector.connect(
-    host="172.187.200.252",  # IP
+    host="localhost",  # IP
     user="root",  # root
-    passwd="root",  # root
+    passwd="Cacadevaca48_",  # root
     database="zelda"  # la BBDD que sea
 )
 
@@ -33,14 +33,13 @@ def prompt(lista):
 
 # IMPORTACION DE DATOS
 
-
+import datos_juego as datos_importados
 def importar_datos_partida_sin_modificaciones():
     datos_partida = {}
     for key_mapa in datos_importados.datos:
         if key_mapa == "castle":
             datos_partida[key_mapa] = datos_importados.datos[key_mapa].copy()
         else:
-            dato_por_mapa = {}
             if "spawn" in datos_importados.datos[key_mapa]:
                 spawn = datos_importados.datos[key_mapa]["spawn"].copy()
             enemigos = {}
@@ -79,6 +78,7 @@ def importar_datos_comida_sin_modificaciones():
         datos_comida[alimento] = datos_importados.food[alimento].copy()
     return datos_comida
 
+
 def importar_datos_jugador_sin_modificaciones():
     datos_jugador = datos_importados.informacion_jugador.copy()
     datos_jugador["items_equipados"] = []
@@ -92,14 +92,14 @@ datos_partida_actual = importar_datos_partida_sin_modificaciones()
 
 
 # CARGADO DE PARTIDAS
-ver_todos = False  # RESET A FALSE CUANDO SE PASE DE PANTALLA
+ver_todos = False  # RESET A FALSE CUANDO SE PASE DE PANTALLA !!!!! ojo hay que actualizarlo
 def seleccionar_partidas_guardadas():
     if ver_todos:  # MODIFICAR AL CAMBIAR LA BBDD
-        cursor.execute("SELECT GameID, DataLastSave, NomJugador, Region, HeartsRemaining, HeartsTotal "
-                       "FROM v_inf_player ORDER BY DataLastSave DESC")
+        cursor.execute("SELECT game_id, date_modified, user_name, region, hearts_remaining, hearts_total "
+                       "FROM game ORDER BY date_modified DESC")
     else:
-        cursor.execute("SELECT GameID, DataLastSave, NomJugador, Region, HeartsRemaining, HeartsTotal "
-                       "FROM v_inf_player ORDER BY DataLastSave DESC LIMIT 8;")
+        cursor.execute("SELECT game_id, date_modified, user_name, region, hearts_remaining, hearts_total "
+                       "FROM game ORDER BY date_modified DESC LIMIT 8;")
     diccionario_partidas_guardadas = {}
     for partida_cargada_bbdd in cursor:
         partida = {"nombre_jugador": partida_cargada_bbdd[2],
@@ -138,6 +138,9 @@ flag_show_map = False
 flag_zelda_saved = False
 flag_link_death = False
 
+# DATOS DE PARTIDA ACTUALIZABLES FUERA
+key_primaria_partida = ""
+
 def print_main_menu():  # Se pone aqui por error (se produce circular import)
     print("* " * 40)
     eleccion_personaje_ascii = random.randrange(3)
@@ -146,7 +149,6 @@ def print_main_menu():  # Se pone aqui por error (se produce circular import)
             print("* " + " Zelda breath of the Wild".ljust(56) + pm.decoracion_main_menu[eleccion_personaje_ascii][i] + " " * 5 + "*")
         else:
             print("* " + " " * 56 + pm.decoracion_main_menu[eleccion_personaje_ascii][i] + " " * 5 + "*")
-    # PUEDE ESTAR PENDIENTE DE MODIFICAR AL HACER SELECT DE LAS PARTIDAS GUARDADAS
     if len(partidas_guardadas) != 0:
         print("* Continue, New Game, Help, About, Queries, Exit  " + "* " * 15)
     else:
@@ -220,13 +222,13 @@ def input_main_menu():
     elif len(partidas_guardadas) > 0 and opc.lower() == "continue":
         if len(partidas_guardadas) == 1:
             global flag_in_game
-            key_primaria = partidas_guardadas[0]
-            print("hay una sola partida")
-            # Se hace el select
-            # Se modifican datos importados del .py
-            # Envia al game
+            global key_primaria_partida
+            key_primaria_partida = lista_partidas[0]
+            cargar_partida(key_primaria_partida)
             flag_main_menu = False
             flag_in_game = True
+            global ver_todos
+            ver_todos = False
         else:
             global flag_saved_games
             flag_main_menu = False
@@ -234,8 +236,10 @@ def input_main_menu():
     else:
         lista_prompt.append("Invalid action")
 
+
 def input_saved_games():
     global flag_saved_games
+    global flag_in_game
     global lista_partidas
     global ver_todos
     global partidas_guardadas
@@ -247,8 +251,8 @@ def input_saved_games():
     elif opc.lower() == "back":
         ver_todos = False
         flag_saved_games = False
-        global flag_general
-        flag_general = True
+        global flag_main_menu
+        flag_main_menu = True
     elif ver_todos is False and opc.lower() == "show all":
         ver_todos = True
         partidas_guardadas = seleccionar_partidas_guardadas()
@@ -263,6 +267,11 @@ def input_saved_games():
                 raise ValueError
             indice_partida = int(opc[5:].replace(" ", "/")) # lista_partidas[indice_partida] == primary key == key del diccionario
             assert 0 <= indice_partida < len(lista_partidas)
+            print(lista_partidas[indice_partida])
+            key_primaria_partida = lista_partidas[indice_partida]
+            cargar_partida(key_primaria_partida)
+            flag_saved_games = False
+            flag_in_game = True
         except (ValueError, AssertionError):
             lista_prompt.append("Invalid Action")
     elif opc[0:5].lower() == "erase":
@@ -272,15 +281,130 @@ def input_saved_games():
             indice_partida = int(opc[6:].replace(" ", "/"))
             assert 0 <= indice_partida < len(lista_partidas)
             del partidas_guardadas[lista_partidas[indice_partida]]
+            print("eliminado del diccionario")
             query_delete = f"DELETE FROM game WHERE game_id = {lista_partidas[indice_partida]};"
             cursor.execute(query_delete)
+            print("query realizada")
             db.commit()
+            print("commit hecho")
             partidas_guardadas = seleccionar_partidas_guardadas()
             lista_partidas = metodo_burbuja_ordenar_partidas_recientes(list(partidas_guardadas.keys()))
+            print("nuevas partidas guardadas")
         except (ValueError, AssertionError):
             lista_prompt.append("Invalid Action")
     else:
         lista_prompt.append("Invalid Action")
+
+# CREACION Y CARGA DE PARTIDA
+def crear_nueva_partida(primary_key):
+    sql = "INSERT INTO food (game_id, food_name) VALUES (%s, %s)"
+    val = []
+    for alimento in info_alimento_partida:
+        temp = (primary_key, alimento)
+        val.append(temp)
+    print(val)
+    cursor.executemany(sql, val)
+
+    sql = "INSERT INTO weapons (game_id,weapon_name) VALUES (%s, %s)"
+    val = []
+    for arma in info_equipamiento_partida:
+        temp = (primary_key, arma)
+        val.append(temp)
+    print(val)
+    cursor.executemany(sql, val)
+
+    sql = "INSERT INTO enemies (game_id, enemy_id, region, xpos, ypos, lifes_remaining) VALUES (%s, %s, %s, %s, %s, %s)"
+    val = []
+    lista_lugares = ["hyrule", "death mountain", "gerudo", "necluda"]
+    for region_cargada in lista_lugares:
+        for enemigo in datos_partida_actual[region_cargada]["enemigos"]:
+            temp = (primary_key, enemigo, region_cargada, datos_partida_actual[region_cargada]["enemigos"][enemigo]["vida"], datos_partida_actual[region_cargada]["enemigos"][enemigo]["x"], datos_partida_actual[region_cargada]["enemigos"][enemigo]["y"])
+            val.append(temp)
+    print(val)
+    val.append(primary_key, 0, "castle", datos_partida_actual['castle'][0]['vida'],
+               datos_partida_actual['castle'][0]['x'], datos_partida_actual['castle'][0]['y'])
+    print(val)
+    cursor.executemany(sql, val)
+    db.commit()
+
+
+def cargar_partida(primary_key):
+    # CARGAR PARTIDA
+    # para datos jugador
+    cursor = db.cursor()
+    cursor.execute("SELECT user_name, hearts_remaining, blood_moon_countdown, blood_moon_appearences, region FROM game WHERE game_id = 1")
+    for jugador in cursor:
+        datos_jugador_actual["nombre"] = jugador[0]
+        datos_jugador_actual["vida_actual"] = jugador[1]
+        datos_jugador_actual["blood_moon_countdown"] = jugador[2]
+        datos_jugador_actual["blood_moon_appearances"] = jugador[3]
+        datos_jugador_actual["region"] = jugador[4]
+    print("Info jugador cargada")
+    # CARGAR COMIDA
+    cursor.execute(f"SELECT food_name, quantity_remaining FROM food WHERE game_id = {primary_key}")
+    for alimento_cargado in cursor:
+        info_alimento_partida[alimento_cargado[0]]["cantidad"] = alimento_cargado[1]
+    print("Info comida cargada")
+    # CARGAR ARMAS
+    cursor.execute(f"SELECT weapon_name, equiped, lives_remaining, quantity FROM weapons WHERE game_id = {primary_key}")
+    for arma_cargada in cursor:
+        info_equipamiento_partida[arma_cargada[0]]["equipado"] = arma_cargada[1]
+        info_equipamiento_partida[arma_cargada[0]]["usos"] = arma_cargada[2]
+        info_equipamiento_partida[arma_cargada[0]]["cantidad"] = arma_cargada[3]
+    # se comprueba si esta equipada y se añade al equipamiento dentro de items_equipados del usuario
+    for arma in info_equipamiento_partida:
+        if info_equipamiento_partida[arma]["equipado"]:
+            datos_jugador_actual["items_equipados"].append(arma)
+    print("armas cargadas")
+    # CARGAR ENEMIGOS
+    cursor.execute(f"SELECT region, enemy_id, xpos, ypos, lifes_remaining FROM enemies WHERE game_id = {primary_key}")
+    for enemigo in cursor:
+        if enemigo[0] == "castle":
+            datos_partida_actual[enemigo[0]][0]["vida"] = enemigo[4]
+        else:
+            datos_partida_actual[enemigo[0]]["enemigos"][enemigo[1]]["x"] = enemigo[2]
+            datos_partida_actual[enemigo[0]]["enemigos"][enemigo[1]]["y"] = enemigo[3]
+            datos_partida_actual[enemigo[0]]["enemigos"][enemigo[1]]["vida"] = enemigo[4]
+    print("cofres cargados")
+    # CARGAR COFRES
+    cursor.execute(f"SELECT region, chest_id FROM chest_opened WHERE game_id = {primary_key}")
+    cursor = (("hyrule", 0), ("death mountain", 0))
+    for cofre in cursor:
+        datos_partida_actual[cofre[0]]["cofres"][cofre[1]]["abierto"] = True
+    # CARGAR SANTUARIOS
+    cursor.execute(f"SELECT region, sanctuary_id FROM sanctuaries_opened WHERE game_id = {primary_key}")
+    for santuario in cursor:
+        datos_partida_actual[santuario[0]]["santuarios"][santuario[1]]["descubierto"] = True
+        datos_jugador_actual["vida_total"] += 1  # SUMO LA VIDA
+
+
+def save_game(primary_key):
+    cursor.execute(f"UPDATE game SET user_name = {datos_jugador_actual['nombre']}, "
+          f"hearts_remaining = {datos_jugador_actual['vida_actual']}, "
+          f"hearts_total = {datos_jugador_actual['vida_total']}, "
+          f"blood_moon_countdown = {datos_jugador_actual['blood_moon_countdown']}, "
+          f"blood_moon_appearances = {datos_jugador_actual['blood_moon_appearances']}, "
+          f"region = {datos_jugador_actual['region']} "
+          f"WHERE game_id = {primary_key};")
+    for alimento in info_alimento_partida:
+        cursor.execute(f"UPDATE food SET quantity_remaining = {info_alimento_partida[alimento]['cantidad']} "
+              f"WHERE game_id = {primary_key} AND food_name = {alimento};")
+    for arma in info_equipamiento_partida:
+        cursor.execute(f"UPDATE weapons SET equiped = {info_equipamiento_partida[arma]['equipado']}, "
+              f"lives_remaining = {info_equipamiento_partida[arma]['usos']}, "
+              f"quantity_remaining = {info_equipamiento_partida[arma]['cantidad']} "
+              f"WHERE game_id = {primary_key} AND weapon_name = {arma};")
+    for region in datos_partida_actual:
+        if region == "castle":
+            cursor.execute(f"UPDATE enemies SET lifes_remaining = {datos_partida_actual[region][0]['vida']} WHERE game_id = {primary_key} AND region = {region} AND enemy_id = {0};")
+        else:
+            for enemigo in datos_partida_actual[region]["enemigos"]:
+                cursor.execute(f"UPDATE enemies "
+                      f"SET xpos = {datos_partida_actual[region]['enemigos'][enemigo]['x']}, "
+                      f"ypos {datos_partida_actual[region]['enemigos'][enemigo]['y']}, "
+                      f"lifes_remaining = {datos_partida_actual[region]['enemigos'][enemigo]['vida']} "
+                      f"WHERE game_id = {primary_key} AND region = {region} AND enemy_id = {enemigo};")
+    db.commit()
 
 
 def show_map():
@@ -315,6 +439,7 @@ def show_map():
             print(elemento, end="")
         print("* " + " " * 18 + "*")
     print("* " + "Back  " + "* " * 36)
+
 
 
 while not flag_general_juego:
@@ -369,6 +494,7 @@ while not flag_general_juego:
     #while flag_queries:
         # limpiar_pantalla()
     while flag_saved_games:
+        print(lista_partidas)
         #limpiar_pantalla()
         print_saved_games()
         prompt(lista_prompt)
@@ -401,8 +527,14 @@ while not flag_general_juego:
         if opc.lower() == "continue":
             lista_prompt.append("The adventure begins")
             datos_jugador_actual["nombre"] = nombre_jugador
-            # SE HACE INSERT DE LO NECESARIO EN LA NUEVA PARTIDA
-            #cursor.lastrowid se obtene la pk de la ultima partida
+            sql = "INSERT INTO game (user_name, hearts_remaining, hearts_total, region) VALUES (%s, %s, %s, %s)"
+            val = (datos_jugador_actual['nombre'], 3, 3, "hyrule")
+            cursor.execute(sql, val)
+            db.commit()
+            print("Commit del insert")
+            key_primaria_partida = cursor.lastrowid
+            print(f"Key primaria de partida creada = {key_primaria_partida}")
+            crear_nueva_partida(key_primaria_partida)
             flag_plot = False
             flag_in_game = True
         else:
@@ -418,8 +550,16 @@ while not flag_general_juego:
         print(info_alimento_partida)
         print(info_equipamiento_partida)
         print(datos_partida_actual)
-        prompt(lista_prompt)
-        input("Press enter to continue")
+        datos_jugador_actual["nombre"] = "JAVIER"
+        info_equipamiento_partida["cantidad"] = 8
+        #prompt(lista_prompt)
+        print(datos_jugador_actual)
+        print(info_alimento_partida)
+        print(info_equipamiento_partida)
+        print(datos_partida_actual)
+        opc = input("Press enter to continue")
+        if opc.lower() == "guardar partida":
+            save_game(key_primaria_partida)
     """
     while flag_castillo_ganon:
     while flag_show_map:
@@ -442,12 +582,14 @@ while not flag_general_juego:
         pm.print_personaje_death(datos_jugador_actual["nombre"])
         prompt(lista_prompt)
         opc = input("What to do now? ")
+        # hay que pillar la vida total que tiene y igualar la actual y hacer update en la BBDD
         if opc.lower() == "continue:
             # restart de los datos de partida
             info_alimento_partida = importar_datos_comida_sin_modificaciones()
             info_equipamiento_partida = importar_datos_armas_sin_modificaciones()
             datos_jugador_actual = importar_datos_jugador_sin_modificaciones()
             datos_partida_actual = importar_datos_partida_sin_modificaciones()
+            key_primaria_partida = ""
             partidas_guardadas = seleccionar_partidas_guardadas()
             lista_partidas = metodo_burbuja_ordenar_partidas_recientes(list(partidas_guardadas.keys()))
             flag_link_death = False
@@ -456,9 +598,6 @@ while not flag_general_juego:
             lista_prompt.append("Invalid action")
     while flag_zelda_saved:
 """
-
-
-
 
 
 

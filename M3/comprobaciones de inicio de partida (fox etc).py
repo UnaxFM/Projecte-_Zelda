@@ -307,6 +307,7 @@ print(datos_partida_actual["death mountain"]["enemigos"][0])
 
 # ESTA ES LA PARTE GUAPA DE LA BLOODMOON
 print(datos_jugador_actual["blood_moon_countdown"])
+# a integrar
 def blood_moon():  # Si resetean la posición, descomentar x, y
     if datos_jugador_actual["blood_moon_countdown"] < 1:
         print(datos_partida_actual["hyrule"]["enemigos"][0])
@@ -326,7 +327,7 @@ def blood_moon():  # Si resetean la posición, descomentar x, y
                 datos_importados.datos[region_cargada]["enemigos"][enemigo_cargado]["vida"]
         print(datos_partida_actual["hyrule"]["enemigos"][0])
         print(datos_partida_actual["death mountain"]["enemigos"][0])
-
+"""
 while True:
     print(datos_jugador_actual["blood_moon_countdown"])
     datos_jugador_actual["blood_moon_countdown"] -= 1
@@ -335,5 +336,5 @@ while True:
     if datos_jugador_actual["blood_moon_countdown"] == 0:
         blood_moon()
         input("Enter to continue")
-
+"""
 
