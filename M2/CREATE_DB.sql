@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS food(
 
 
 CREATE TABLE IF NOT EXISTS weapons(
+	weapon_id INT,
     game_id INT,
     weapon_name VARCHAR(15),
     equiped BOOLEAN,

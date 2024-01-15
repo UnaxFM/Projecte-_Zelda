@@ -50,6 +50,7 @@ ALTER TABLE food
 -- Taula weapons
 
 ALTER TABLE weapons
+	MODIFY weapon_id INT AUTO_INCREMENT,
     MODIFY game_id INT UNSIGNED NOT NULL,
     MODIFY weapon_name VARCHAR(15) NOT NULL,
     MODIFY equiped BOOLEAN DEFAULT FALSE NOT NULL,
@@ -60,7 +61,7 @@ ALTER TABLE weapons
     ADD CONSTRAINT ck_weapons_weapon_name CHECK (weapon_name IN ('wood sword', 'sword', 'wood shield', 'shield')),
     
     ADD CONSTRAINT fk_game_weapons  FOREIGN KEY (game_id) REFERENCES game(game_id) ON UPDATE CASCADE ON DELETE CASCADE,
-    ADD CONSTRAINT pk_weapons PRIMARY KEY(game_id, weapon_name);
+    ADD CONSTRAINT pk_weapons PRIMARY KEY(weapon_id,game_id, weapon_name);
 
 
 -- Taula enemies
