@@ -10,10 +10,10 @@ informacion_jugador = {
 
 # USOS
 weapons = {
-    "wood sword": {"nombre": "wood sword", "equipado": False, "usos": 5, "cantidad": 0},
-    "sword": {"nombre": "sword", "equipado": False, "usos": 9, "cantidad": 0},
-    "wood shield": {"nombre": "wood shield", "equipado": False, "usos": 5, "cantidad": 0},
-    "shield": {"nombre": "shield", "equipado": False, "usos": 9, "cantidad": 0}}
+    "wood sword": {"nombre": "wood sword", "equipado": False, "usos": 0, "cantidad": 0},
+    "sword": {"nombre": "sword", "equipado": False, "usos": 0, "cantidad": 0},
+    "wood shield": {"nombre": "wood shield", "equipado": False, "usos": 0, "cantidad": 0},
+    "shield": {"nombre": "shield", "equipado": False, "usos": 0, "cantidad": 0}}
 
 food = {
     "vegetables": {"nombre": "vegetables", "cantidad": 0},

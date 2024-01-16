@@ -5,15 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d86b9cfc-92df-4ee3-a703-0f01ee329b43" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/M3/CARGADA DE UNA NUEVA PARTIDA CON BBDD.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/M3/INSERT DE UNA NUEVA PARTIDA.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/M3/ENTORNO_PRUEBAS_GAME.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/M3/PREGAME_FUNCIONAL_BACKUP.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/M3/0. juego_principal_hasta_game(pruebas).py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/0. juego_principal_hasta_game(pruebas).py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/M3/IMPORT + CARGA RÁPIDA PARA PRUEBAS.py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/IMPORT + CARGA RÁPIDA PARA PRUEBAS.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/M3/cheats.py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/cheats.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/M3/comprobaciones de inicio de partida (fox etc).py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/comprobaciones de inicio de partida (fox etc).py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/M3/datos_juego.py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/datos_juego.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/M3/import de datos + carga + print mapa.py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/import de datos + carga + print mapa.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/M3/parte_ganon.py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/parte_ganon.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,28 +42,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.0. juego_principal_hasta_game(pruebas).executor": "Run",
-    "Python.0. juego_principal_hasta_game.executor": "Run",
-    "Python.DATOS_MAPAS_INICIO.executor": "Run",
-    "Python.FOX + BLOODMOON.executor": "Run",
-    "Python.IMPORT + CARGA RÁPIDA PARA PRUEBAS.executor": "Run",
-    "Python.PREGAME_DEFINITIVO_SIN_QUERIES.executor": "Run",
-    "Python.castillo_ganon.executor": "Run",
-    "Python.cheats.executor": "Run",
-    "Python.comprobaciones de inicio de partida (fox etc).executor": "Run",
-    "Python.import de datos + carga + print mapa.executor": "Run",
-    "Python.parte_ganon.executor": "Run",
-    "Python.prueba cargar partida.executor": "Run",
-    "Python.prueba_importar_datos_inicio.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "pregame",
-    "last_opened_file_path": "C:/Users/willi/Desktop/proyecto_zelda/Projecte-_Zelda",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.0. juego_principal_hasta_game(pruebas).executor&quot;: &quot;Run&quot;,
+    &quot;Python.0. juego_principal_hasta_game.executor&quot;: &quot;Run&quot;,
+    &quot;Python.DATOS_MAPAS_INICIO.executor&quot;: &quot;Run&quot;,
+    &quot;Python.FOX + BLOODMOON.executor&quot;: &quot;Run&quot;,
+    &quot;Python.IMPORT + CARGA RÁPIDA PARA PRUEBAS.executor&quot;: &quot;Run&quot;,
+    &quot;Python.PREGAME_DEFINITIVO_SIN_QUERIES.executor&quot;: &quot;Run&quot;,
+    &quot;Python.castillo_ganon.executor&quot;: &quot;Run&quot;,
+    &quot;Python.cheats.executor&quot;: &quot;Run&quot;,
+    &quot;Python.comprobaciones de inicio de partida (fox etc).executor&quot;: &quot;Run&quot;,
+    &quot;Python.import de datos + carga + print mapa.executor&quot;: &quot;Run&quot;,
+    &quot;Python.parte_ganon.executor&quot;: &quot;Run&quot;,
+    &quot;Python.prueba cargar partida.executor&quot;: &quot;Run&quot;,
+    &quot;Python.prueba_importar_datos_inicio.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;pregame&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/willi/Desktop/proyecto_zelda/Projecte-_Zelda&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\William Sargisson\Desktop\proyecto_zelda\Projecte-_Zelda\M3" />

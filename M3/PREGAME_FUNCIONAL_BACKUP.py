@@ -7,9 +7,9 @@ import datos_juego as datos_importados
 
 # Conexión con la BBDD
 db = mysql.connector.connect(
-    host="51.105.57.176",  # IP
+    host="localhost",  # IP
     user="root",  # root
-    passwd="root",  # root
+    passwd="Cacadevaca48_",  # root
     database="zelda"  # la BBDD que sea
 )
 
@@ -117,6 +117,7 @@ def metodo_burbuja_ordenar_partidas_recientes(lista):
                 lista[j], lista[j + 1] = lista[j + 1], lista[j]  # Pero lo que se ordena es la lista de keys
     return lista
 
+# Esto permite obtener lista con las PK de las partidas cargadas
 partidas_guardadas = seleccionar_partidas_guardadas()
 lista_partidas = metodo_burbuja_ordenar_partidas_recientes(list(partidas_guardadas.keys()))
 
@@ -544,40 +545,26 @@ while not flag_general_juego:
         # SI (datos_jugador_actual["vida_actual"]) < 1
             # flag_in_game = False
             # flag_link_death
+        # Si vida ganon == 0
         # limpiar_pantalla()
         print("Bienvenido al Juego Principal")
-        print("ANTES DEL RESET")
-        print(datos_jugador_actual)
-        print(info_alimento_partida)
-        print(info_equipamiento_partida)
-        print(datos_partida_actual)
-        print(datos_jugador_actual["vida_total"])
-        input("Enter to continue")
         save_game(key_primaria_partida) #PARA GUARDAR LA PARTIDA
+        """ RESET DE DATOS DENTRO DE PARTIDA
         info_alimento_partida = importar_datos_comida_sin_modificaciones()
         info_equipamiento_partida = importar_datos_armas_sin_modificaciones()
         datos_jugador_actual = importar_datos_jugador_sin_modificaciones()
         datos_partida_actual = importar_datos_partida_sin_modificaciones()
-        print("Despues del reseteo")
-        print(datos_jugador_actual)
-        print(info_alimento_partida)
-        print(info_equipamiento_partida)
-        print(datos_partida_actual)
-        print("info region desde import", datos_importados.informacion_jugador["region"])
         key_primaria_partida = ""
         partidas_guardadas = seleccionar_partidas_guardadas()
         lista_partidas = metodo_burbuja_ordenar_partidas_recientes(list(partidas_guardadas.keys()))
-        flag_main_menu = True
-        flag_in_game = False
-        """
         opc = input("Press enter to continue")
         if opc.lower() == "guardar partida":
             save_game(key_primaria_partida)
             """
+    """
+    while flag_castillo_ganon:
     while flag_show_map:
         show_map()
-        prompt(lista_prompt)
-        opc = input("What to do now? ")
         if opc.lower() == "back":
             flag_show_map = False
             flag_in_game = True
@@ -592,11 +579,6 @@ while not flag_general_juego:
             flag_in_game = True
         else:
             lista_prompt.append("Invalid action")
-    """
-    while flag_castillo_ganon:
-        # Si vida ganon == 0 no puede atacar ya que no hay ganon
-        # No hay print de un enemigo
-        # Hay que hacer print del personaje en el tablero
     while flag_link_death:
         pm.print_personaje_death(datos_jugador_actual["nombre"])
         prompt(lista_prompt)
@@ -620,4 +602,13 @@ while not flag_general_juego:
 
 
 
-
+# PARA HACER RESET DE DATOS
+"""
+info_alimento_partida = importar_datos_comida_sin_modificaciones()
+info_equipamiento_partida = importar_datos_armas_sin_modificaciones()
+datos_jugador_actual = importar_datos_jugador_sin_modificaciones()
+datos_partida_actual = importar_datos_partida_sin_modificaciones()
+key_primaria_partida = ""
+partidas_guardadas = seleccionar_partidas_guardadas()
+lista_partidas = metodo_burbuja_ordenar_partidas_recientes(list(partidas_guardadas.keys()))
+"""

@@ -1,14 +1,15 @@
 import random
+nombre = "Pablo"
 frases_ganon = ("Ganon is powerful, are you sure you can defeat him?",
                 "Ganon's strength is supernatural, Zelda fought with bravery.",
                 "To Ganon, you are like a fly, find a weak spot and attack.",
                 "Ganon will not surrender easily.",
                 "Ganon has fought great battles, is an expert fighter.",
-                "Link, transform your fears into strengths.",
-                "Keep it up, Link, Ganon can't hold out much longer.",
-                "Link, history repeats itself, Ganon can be defeated.",
+                f"{nombre}, transform your fears into strengths.",
+                f"Keep it up, {nombre}, Ganon can't hold out much longer.",
+                f"{nombre}, history repeats itself, Ganon can be defeated.",
                 "Think of all the warriors who have tried before.",
-                "You fight for the weaker ones, Link, persevere.")
+                f"You fight for the weaker ones, {nombre}, persevere.")
 
 print(frases_ganon[random.randrange(0, len(frases_ganon))])
 print("* " * 30)
