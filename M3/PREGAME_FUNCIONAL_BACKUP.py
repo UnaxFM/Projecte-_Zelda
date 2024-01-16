@@ -7,9 +7,9 @@ import datos_juego as datos_importados
 
 # Conexión con la BBDD
 db = mysql.connector.connect(
-    host="localhost",  # IP
+    host="51.105.57.176",  # IP
     user="root",  # root
-    passwd="Cacadevaca48_",  # root
+    passwd="root",  # root
     database="zelda"  # la BBDD que sea
 )
 

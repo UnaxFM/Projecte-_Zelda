@@ -6,12 +6,11 @@ import mysql.connector
 
 # Conexión con la BBDD
 db = mysql.connector.connect(
-    host="172.187.200.252",  # IP
+    host="51.105.57.176",  # IP
     user="root",  # root
     passwd="root",  # root
     database="zelda"  # la BBDD que sea
 )
-
 cursor = db.cursor()
 
 # LIMPIEZA DE PANTALLA
