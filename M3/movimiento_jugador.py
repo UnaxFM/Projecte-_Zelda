@@ -268,7 +268,7 @@ def mover_a_objeto(objeto, numero, mapa, xpos, ypos):
 
     # NO HA ENCONTRADO NADA
     #print(f"No se encontró el objeto {objeto.upper()}{numero}")
-    print_append_mensaje("Invalid option")
+    lista_prompt.append("Invalid option")
     return xpos, ypos
 
 
@@ -303,13 +303,13 @@ def move_region(region,region_to_go,xpos,ypos):
         nuevas_pos = pos_spawn[region_to_go]
         pescar_mapa = True
         datos_partida_actual[datos_jugador_actual["region"]]["fox"][0]["muerto"] = False
-        print_append_mensaje(f"You are now in {region_to_go}")
+        lista_prompt.append(f"You are now in {region_to_go}")
 
         return nuevas_pos[0], nuevas_pos[1],region_to_go
 
     #no puedes
     else:
-        print_append_mensaje(f"You can't go to {region_to_go} from here")
+        lista_prompt.append(f"You can't go to {region_to_go} from here")
         return xpos,ypos, region
 
 
@@ -330,7 +330,7 @@ def mover_a_direccion(matriz, fila_personaje, columna_personaje, direccion, step
         elif direccion == "down":
             fila_personaje += 1
         else:
-            print_append_mensaje("Invalid option")
+            lista_prompt.append("Invalid option")
             return fila_anterior, columna_anterior
 
         # Verificar límites del mapa - si la nueva pos está dentro del mapa
@@ -338,13 +338,13 @@ def mover_a_direccion(matriz, fila_personaje, columna_personaje, direccion, step
 
             # Si hay algún obstáculo
             if matriz[fila_personaje][columna_personaje] != " ":
-                print_append_mensaje("You can't go there, is not a valid position")
+                lista_prompt.append("You can't go there, is not a valid position")
                 #print(f"obstáculo en el camino {fila_personaje},{columna_personaje}")
                 return fila_anterior, columna_anterior
 
         # te sales del mapa - la nueva pos está fuera del mapa
         else:
-            print_append_mensaje("You can't go there, is not a valid position")
+            lista_prompt.append("You can't go there, is not a valid position")
             return fila_anterior, columna_anterior
 
     # actualizar los puntos restantes de espera de los arboles
@@ -353,57 +353,18 @@ def mover_a_direccion(matriz, fila_personaje, columna_personaje, direccion, step
     # el movimiento es correcto y se puede
     return fila_personaje, columna_personaje
 
-def print_append_mensaje(mensaje):
-    print(mensaje)
-    lista_prompt.append(mensaje)
 
-# -------
+def go_by_the_x(to_do,xpos,ypos):
+    # print("tp")
 
-#VARIABLES -------------------
-xpos = 3
-ypos = 5
-
-pescar_mapa = True
-
-#------------------------------
-
-
-mapa_cargado = generar_mapa()
-print_tablero(mapa_cargado)
-
-# flags importados"
-flag_in_game = False
-flag_ganon_castle = False
-
-
-lista_prompt = []
-
-def prompt(lista):
-    lista = lista[-8:]
-    for elemento in lista:
-        print(elemento)
-
-#------------------------------
-
-
-# INPUT
-
-to_do = input("What to do know?") #esto será un input
-
-
-# orden: GO BY THE [f,t,water,sX,eX,m,c] ----------------------------------------------------------------------------------------------
-
-if to_do[0:9].lower() == "go by the":
-    #print("tp")
-
-    to_do = to_do[10:].lower() #objeto
-    #print(to_do)
+    to_do = to_do[10:].lower()  # objeto
+    # print(to_do)
     numero = None
 
     # el input es incorrecto: el objeto no es correcto
     if not to_do == "f" and not to_do == "t" and not to_do == "water" and not to_do[0:1] == "s" and not to_do[0:1] == "e" \
             and not to_do == "m" and not to_do == "c":
-        print_append_mensaje("Invalid Option")
+        lista_prompt.append("Invalid Option")
 
     else:
         if to_do[0:1] == "s" or to_do[0:1] == "e":
@@ -412,38 +373,13 @@ if to_do[0:9].lower() == "go by the":
         else:
             objeto = to_do
 
-
         # moverse
         xpos, ypos = mover_a_objeto(objeto, numero, mapa_cargado, xpos, ypos)
+        return xpos,ypos
 
 
+def go_direction(to_do,xpos,ypos):
 
-# ordern: GO TO [REGION] -----------------------------------------------------------------------------------------------
-elif to_do[0:5].lower() == "go to":
-    #print("mapa")
-
-    region_to_go = to_do[6:].lower()
-    #print(region_to_go)
-
-    xpos,ypos,datos_jugador_actual["region"] = move_region(datos_jugador_actual["region"],region_to_go,xpos,ypos)
-
-    # save_game(key_primaria_partida) !!!!!!!!!!!
-
-    print(flag_in_game,flag_ganon_castle)
-    if xpos == 8 and ypos == 2:
-        flag_in_game = False
-        flag_ganon_castle = True
-
-        print(flag_in_game,flag_ganon_castle)
-
-
-
-    # print(xpos,ypos)
-    #print(datos_jugador_actual)
-
-
-# orden: GO [DIRECCIÓN] ------------------------------------------------------------------------------------------------
-elif to_do[0:2].lower() == "go":
     to_do = to_do[3:].lower()
 
     # la dirección que quiere tomar: left/...
@@ -455,7 +391,8 @@ elif to_do[0:2].lower() == "go":
     #print(direction,"-",steps)
 
     if not direction.isalpha() or not steps.isdigit():
-        print_append_mensaje("Invalid Option")
+        lista_prompt.append("Invalid Option")
+        return xpos,ypos
 
     # la orden es correcta
     else:
@@ -466,10 +403,80 @@ elif to_do[0:2].lower() == "go":
         # Mover el jugador
         xpos, ypos = mover_a_direccion(mapa_cargado, xpos, ypos, direction, steps)
 
-        #imprimir mapa
-        mapa_cargado = generar_mapa()
-        print_tablero(mapa_cargado)
+        return xpos,ypos
 
 
-else:
-    print_append_mensaje("Invalid Option")
+# -------
+
+#VARIABLES -------------------
+xpos = 4
+ypos = 5
+
+pescar_mapa = True
+
+#------------------------------
+
+
+# flags importados"
+flag_in_game = False
+flag_ganon_castle = False
+
+#---------------
+
+lista_prompt = []
+
+def prompt(lista):
+    lista = lista[-8:]
+    for elemento in lista:
+        print(elemento)
+
+#------------------------------
+
+while True:
+    #MAPA
+    mapa_cargado = generar_mapa()
+    print_tablero(mapa_cargado)
+    #PROMPT
+    prompt(lista_prompt)
+
+    # INPUT
+
+    to_do = input("What to do know?") #esto será un input
+
+    if to_do.lower() == "exit":
+        break
+
+    # orden: GO BY THE [f,t,water,sX,eX,m,c]
+
+    if to_do[0:9].lower() == "go by the":
+        xpos,ypos = go_by_the_x(to_do,xpos,ypos)
+
+    # ordern: GO TO [REGION]
+
+    elif to_do[0:5].lower() == "go to":
+        region_to_go = to_do[6:].lower()
+
+        xpos,ypos,datos_jugador_actual["region"] = move_region(datos_jugador_actual["region"],region_to_go,xpos,ypos)
+
+        # save_game(key_primaria_partida) !!!!!!!!!!!
+
+        if xpos == 8 and ypos == 2:
+            flag_in_game = False
+            flag_ganon_castle = True
+
+            print(flag_in_game,flag_ganon_castle)
+
+    # orden: GO [DIRECCIÓN]
+
+    elif to_do[0:2].lower() == "go":
+        xpos,ypos = go_direction(to_do,xpos,ypos)
+
+    else:
+        lista_prompt.append("Invalid Option")
+
+
+    actualizar_turnos_restantes_arboles(datos_jugador_actual["region"])
+
+
+    mapa_cargado = generar_mapa()
+    print_tablero(mapa_cargado)
