@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS weapons(
     equiped BOOLEAN,
     lives_remaining INT,
     uses INT,
+    quantity INT,
     
     date_created TIMESTAMP,
     date_modified TIMESTAMP

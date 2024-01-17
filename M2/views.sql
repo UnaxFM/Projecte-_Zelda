@@ -88,35 +88,19 @@ from game
 group by user_name
 order by user_name;
 
--- 3) Armes usades per cada usuari i dades de la partida on n'ha gastat més: Consulta a través de la vista --- mal ya que da solo la sum de esa partida
+-- 3) Armes usades per cada usuari i dades de la partida on n'ha gastat més: Consulta a través de la vista 
 
 CREATE OR REPLACE VIEW query_3_armes as
 SELECT
-    NomUsuari,
-    NomArma,
-    QuantitatTotalObtenida,
-    DataPartida
-FROM (
-    SELECT
-        NomUsuari,
-        NomArma,
-        QuantitatTotalObtenida,
-        DataPartida,
-        RANK() OVER (PARTITION BY NomUsuari, NomArma ORDER BY QuantitatTotalObtenida DESC) AS RankPartida
-    FROM (
-        SELECT
-            NomUsuari,
-            NomArma,
-            SUM(QuantitatObtenida) AS QuantitatTotalObtenida,
-            MAX(DataPartida) AS DataPartida
-        FROM
-            v_armas_partidas
-        GROUP BY
-            NomUsuari, NomArma
-    ) AS SubconsultaTotal
-) AS SubconsultaRankeada
-WHERE
-    RankPartida = 1;
+    g.user_name as 'NomUsuari',
+    w.weapon_name as 'NomArma',
+    COUNT(*) as 'QuantitatTotalObtenida',
+    MAX(g.date_started) as 'DataPartida'
+
+from game g join weapons w on g.game_id = w.game_id
+group by g.user_name, w.weapon_name
+having 'QuantitatTotalObtenida' > 0;
+
     
 -- 4) Menjar consumit per cada usuari i dades de la partida on n'ha consumit més: consulta a través de la vista
 
