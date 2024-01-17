@@ -95,7 +95,7 @@ def cargar_partida():
         datos_partida_actual[cofre[0]]["cofres"][cofre[1]]["abierto"] = True
     # CARGAR SANTUARIOS
     # cursor.execute(f"SELECT region, numero WHERE primary_key = {key_primaria}")
-    cursor = (("hyrule", 0), ("death mountain", 3))
+    cursor = (("hyrule", 0), ("death mountain", 3), ("necluda", 6))
     for santuario in cursor:
         datos_partida_actual[santuario[0]]["santuarios"][santuario[1]]["descubierto"] = True
         datos_jugador_actual["vida_total"] += 1  # SUMO LA VIDA
@@ -108,16 +108,18 @@ if 3 <= len(nombre) <= 10 and nombre.replace(" ", "").isalnum():
 """
 
 # open sanctuaries
-lugares = ["hyrule", "death mountain", "necluda", "gerudo"]
+
 for lugar in lugares:
     for santuario in datos_partida_actual[lugar]["santuarios"]:
         print(datos_partida_actual[lugar]["santuarios"][santuario]["descubierto"])
 print(datos_jugador_actual["vida_total"])
+lugares = ["hyrule", "death mountain", "necluda", "gerudo"]
 for lugar in lugares:
     for santuario in datos_partida_actual[lugar]["santuarios"]:
         if not datos_partida_actual[lugar]["santuarios"][santuario]["descubierto"]:
             datos_partida_actual[lugar]["santuarios"][santuario]["descubierto"] = True
             datos_jugador_actual["vida_total"] += 1
+            # INSERTS + SAVE PARTIDA
 for lugar in lugares:
     for santuario in datos_partida_actual[lugar]["santuarios"]:
         print(datos_partida_actual[lugar]["santuarios"][santuario]["descubierto"])

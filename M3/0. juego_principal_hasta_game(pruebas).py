@@ -2,15 +2,16 @@ import os
 import platform
 import random
 import prints_menus as pm
-import mysql.connector
 import datos_juego as datos_importados
+
+import mysql.connector
 
 # Conexión con la BBDD
 db = mysql.connector.connect(
-    host="51.105.57.176",  # IP
-    user="root",  # root
-    passwd="root",  # root
-    database="zelda"  # la BBDD que sea
+    host="51.105.57.176",
+    user="root",
+    passwd="root",
+    database="zelda"
 )
 
 cursor = db.cursor()
@@ -31,15 +32,14 @@ def prompt(lista):
     for elemento in lista:
         print(elemento)
 
-# IMPORTACION DE DATOS
+# IMPORTACION DE DATOS DE datos_juego
 
-import datos_juego as datos_importados
 def importar_datos_partida_sin_modificaciones():
     datos_partida = {}
     for key_mapa in datos_importados.datos:
         if key_mapa == "castle":
             datos_partida[key_mapa] = datos_importados.datos[key_mapa].copy()
-        else:
+        else:  # para evitar errores entre la diferente estructura castle / resto de regiones
             if "spawn" in datos_importados.datos[key_mapa]:
                 spawn = datos_importados.datos[key_mapa]["spawn"].copy()
             enemigos = {}
@@ -84,7 +84,8 @@ def importar_datos_jugador_sin_modificaciones():
     datos_jugador["items_equipados"] = []
     return datos_jugador
 
-# se cargan datos de partida
+
+# Estos son los datos sobre los que se interactua, puesto que son los mismos diccionarios importados.
 info_alimento_partida = importar_datos_comida_sin_modificaciones()
 info_equipamiento_partida = importar_datos_armas_sin_modificaciones()
 datos_jugador_actual = importar_datos_jugador_sin_modificaciones()
@@ -93,6 +94,7 @@ datos_partida_actual = importar_datos_partida_sin_modificaciones()
 
 # CARGADO DE PARTIDAS
 ver_todos = False  # RESET A FALSE CUANDO SE PASE DE PANTALLA !!!!! ojo hay que actualizarlo
+
 def seleccionar_partidas_guardadas():
     if ver_todos:  # MODIFICAR AL CAMBIAR LA BBDD
         cursor.execute("SELECT game_id, date_modified, user_name, region, hearts_remaining, hearts_total "
@@ -110,6 +112,7 @@ def seleccionar_partidas_guardadas():
         diccionario_partidas_guardadas[partida_cargada_bbdd[0]] = partida
     return diccionario_partidas_guardadas
 
+
 def metodo_burbuja_ordenar_partidas_recientes(lista):
     for i in range(len(lista) - 1):
         for j in range(len(lista) - i - 1):
@@ -117,8 +120,10 @@ def metodo_burbuja_ordenar_partidas_recientes(lista):
                 lista[j], lista[j + 1] = lista[j + 1], lista[j]  # Pero lo que se ordena es la lista de keys
     return lista
 
+# PRIMERA CARGADA DE PARTIDAS DISPONIBLES  (permite cargar partida nada más iniciar el juego)
 partidas_guardadas = seleccionar_partidas_guardadas()
 lista_partidas = metodo_burbuja_ordenar_partidas_recientes(list(partidas_guardadas.keys()))
+
 
 # FLAGS
 flag_general_juego = False
@@ -133,6 +138,7 @@ flag_queries = False
 flag_legend = False
 flag_plot = False
 flag_in_game = False
+flag_ganon_castle = False
 flag_help_inventory = False
 flag_show_map = False
 flag_zelda_saved = False
@@ -140,6 +146,7 @@ flag_link_death = False
 
 # DATOS DE PARTIDA ACTUALIZABLES FUERA
 key_primaria_partida = ""
+
 
 def print_main_menu():  # Se pone aqui por error (se produce circular import)
     print("* " * 40)
@@ -153,6 +160,7 @@ def print_main_menu():  # Se pone aqui por error (se produce circular import)
         print("* Continue, New Game, Help, About, Queries, Exit  " + "* " * 15)
     else:
         print("* New Game, Help, About, Queries, Exit  " + "* " * 20)
+
 
 def print_saved_games():
     print("* " + "Saved games " + "* " * 33 + "\n" +
@@ -177,6 +185,7 @@ def print_saved_games():
     else:
         print("* " + "Play X, Erase X, Show Recent, Help, Back  " + "* " * 18)
 
+
 def asignar_nombre(nombre):
     global flag_new_game
     global flag_legend
@@ -194,6 +203,7 @@ def asignar_nombre(nombre):
     else:
         lista_prompt.append(f"{nombre} is not a valid name")
         return ""
+
 
 def input_main_menu():
     global flag_main_menu
@@ -218,7 +228,7 @@ def input_main_menu():
         global flag_general_juego
         flag_general_juego = True
         flag_main_menu = False
-    # SI SOLAMENTE HAY UNA PARTIDA, CARGA DIRECTAMENTE //  SI HAY MÁS DE UNA, sale lista a elegir
+    # SI SOLAMENTE HAY UNA PARTIDA, CARGA DIRECTAMENTE //  SI HAY MÁS DE UNA, sale lista a elegir (input_save_game + flag_save_game)
     elif len(partidas_guardadas) > 0 and opc.lower() == "continue":
         if len(partidas_guardadas) == 1:
             global flag_in_game
@@ -265,12 +275,13 @@ def input_saved_games():
     elif opc[0:4].lower() == "play":
         try:
             if int(opc[5]) == 0 and len(opc[5:]) > 1:
-                raise ValueError
+                raise ValueError                            # Me aseguro que no hayan espacios en blanco y sea un num
             indice_partida = int(opc[5:].replace(" ", "/")) # lista_partidas[indice_partida] == primary key == key del diccionario
             assert 0 <= indice_partida < len(lista_partidas)
-            print(lista_partidas[indice_partida])
+            print(lista_partidas, lista_partidas[indice_partida])
             key_primaria_partida = lista_partidas[indice_partida]
             cargar_partida(key_primaria_partida)
+            ver_todos = False
             flag_saved_games = False
             flag_in_game = True
         except (ValueError, AssertionError):
@@ -295,6 +306,7 @@ def input_saved_games():
             lista_prompt.append("Invalid Action")
     else:
         lista_prompt.append("Invalid Action")
+
 
 # CREACION Y CARGA DE PARTIDA
 def crear_nueva_partida(primary_key):
@@ -444,6 +456,29 @@ def show_map():
     print("* " + "Back  " + "* " * 36)
 
 
+def jugador_muerto(primary_key):
+    global flag_link_death
+    global flag_in_game
+    global flag_ganon_castle
+    if datos_jugador_actual["vida_actual"] < 1:
+        lista_prompt.append("Nice try, you died, game is over")
+        datos_jugador_actual["vida_actual"] = datos_jugador_actual["vida_total"]
+        cursor.execute(f"UPDATE game SET hearts_remaining = {datos_jugador_actual['vida_actual']}, hearts_total = {datos_jugador_actual['vida_total']} WHERE game_id = {primary_key};")
+        db.commit()
+        flag_link_death = True
+        flag_in_game = False
+        flag_ganon_castle = False
+
+def mostrar_fox(): # FALTA EL INPUT DE MATAR + REINICIO AL MOVERSE DE REGION
+    if not datos_partida_actual[datos_jugador_actual["region"]]["fox"][0]["intento"]:  # PERMITE QUE SOLO HAYA HABIDO UN INTENTO. SE DEBE REINICIAR AL SALIR DEL MAPA
+        datos_partida_actual[datos_jugador_actual["region"]]["fox"][0]["intento"] = True
+        visible = random.choice([True, False])  # 50% CHANCE
+        if visible:
+            lista_prompt.append("You see a Fox")
+            datos_partida_actual[datos_jugador_actual["region"]]["fox"][0]["visible"] = True
+        else:
+            lista_prompt.append("You don't see a Fox")
+
 while not flag_general_juego:
     while flag_main_menu:
         # limpiar_pantalla()
@@ -532,7 +567,6 @@ while not flag_general_juego:
             sql = "INSERT INTO game (user_name, hearts_remaining, hearts_total, region) VALUES (%s, %s, %s, %s)"
             val = (datos_jugador_actual['nombre'], 3, 3, "hyrule")
             cursor.execute(sql, val)
-            print("Commit del insert")
             key_primaria_partida = cursor.lastrowid
             print(f"Key primaria de partida creada = {key_primaria_partida}")
             crear_nueva_partida(key_primaria_partida)
@@ -541,10 +575,9 @@ while not flag_general_juego:
         else:
             lista_prompt.append("Invalid action")
     while flag_in_game:
-        # SI (datos_jugador_actual["vida_actual"]) < 1
-            # flag_in_game = False
-            # flag_link_death
         # limpiar_pantalla()
+        mostrar_fox()
+        # BLOOD_MOON
         print("Bienvenido al Juego Principal")
         print("ANTES DEL RESET")
         print(datos_jugador_actual)
@@ -574,7 +607,9 @@ while not flag_general_juego:
         if opc.lower() == "guardar partida":
             save_game(key_primaria_partida)
             """
-    while flag_show_map:
+        # comprobación de si esta muerto y si es el caso, append + update de la vida a la total en la partida
+        jugador_muerto(key_primaria_partida)
+    while flag_show_map: # FALTA INPUT en in_game para ir a este flag
         show_map()
         prompt(lista_prompt)
         opc = input("What to do now? ")
@@ -583,7 +618,7 @@ while not flag_general_juego:
             flag_in_game = True
         else:
             lista_prompt.append("Invalid action")
-    while flag_help_inventory:
+    while flag_help_inventory: # FALTA INPUT en in_game para ir a este flag
         pm.print_help_inventory()
         prompt(lista_prompt)
         opc = input("What to do now? ")
@@ -592,32 +627,57 @@ while not flag_general_juego:
             flag_in_game = True
         else:
             lista_prompt.append("Invalid action")
-    """
-    while flag_castillo_ganon:
-        # Si vida ganon == 0 no puede atacar ya que no hay ganon
-        # No hay print de un enemigo
-        # Hay que hacer print del personaje en el tablero
     while flag_link_death:
         pm.print_personaje_death(datos_jugador_actual["nombre"])
         prompt(lista_prompt)
         opc = input("What to do now? ")
-        # hay que pillar la vida total que tiene y igualar la actual y hacer update en la BBDD
-        if opc.lower() == "continue:
+        if opc.lower() == "continue":
             # restart de los datos de partida
             info_alimento_partida = importar_datos_comida_sin_modificaciones()
             info_equipamiento_partida = importar_datos_armas_sin_modificaciones()
             datos_jugador_actual = importar_datos_jugador_sin_modificaciones()
             datos_partida_actual = importar_datos_partida_sin_modificaciones()
             key_primaria_partida = ""
-            partidas_guardadas = seleccionar_partidas_guardadas()
-            lista_partidas = metodo_burbuja_ordenar_partidas_recientes(list(partidas_guardadas.keys()))
+            # Vuelve al main menu
             flag_link_death = False
             flag_main_menu = True
         else:
             lista_prompt.append("Invalid action")
+    """
+    while flag_ganon_castle:
+        # Si vida ganon > 1 no puede atacar ya que no hay ganon, se hace print
+        # No hay print de un enemigo
+        # Hay que hacer print del personaje en el tablero
+        prompt(lista_prompt)
+        opc = input("What to do now? ")
+        if opc.lower() == "back": vuelve a la región anterior
+        # SI MUERE GANON , se puede visitar castillo pero no está
+            lista_prompt.append("You saved Zelda, you won the game")
+            datos_jugador_actual["vida_actual"] = datos_jugador_actual["vida_total"]
+            datos_jugador_actual["region"] = "hyrule"
+            save_game(key_primaria_partida)
+            flag_zelda_saved = True
+            flag_ganon_castle = False
     while flag_zelda_saved:
+        pm.print_zelda_saved(datos_jugador_actual["nombre"])
+        prompt(lista_prompt)
+        opc = input("What to do now? ")
+        if opc.lower() == "continue":
+            info_alimento_partida = importar_datos_comida_sin_modificaciones()
+            info_equipamiento_partida = importar_datos_armas_sin_modificaciones()
+            datos_jugador_actual = importar_datos_jugador_sin_modificaciones()
+            datos_partida_actual = importar_datos_partida_sin_modificaciones()
+            key_primaria_partida = ""
+            flag_main_menu = True
+            flag_zelda_saved =  False
+        else:
+            lista_prompt.append("Invalid action")
 """
 
 
-
+# INCRUSTAR INVENTARIO EN SHOW MAP
+# COMPROBACION NOMBRE: if 3 <= len(nombre) <= 10 and nombre.replace(" ", "").isalnum(): EN CHEATS
+# BLOOD MOON
+# REINICIO DE COFRES
+# CASTILLO GANON
 

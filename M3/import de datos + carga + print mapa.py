@@ -102,6 +102,7 @@ def cargar_partida():
         datos_partida_actual[santuario[0]]["santuarios"][santuario[1]]["descubierto"] = True
         datos_jugador_actual["vida_total"] += 1  # SUMO LA VIDA
 
+
 def generar_mapa(): # genera el mapa
     # GENERAR COPIA MAPA -----> a partir de esta se hace el mapa sobre el que interactuar
     mapa_a_cargar = []
@@ -153,6 +154,7 @@ def generar_mapa(): # genera el mapa
     mapa_a_cargar[4][5] = "X"
     return mapa_a_cargar
 
+
 def print_tablero(mapa): # hace print del tablero
     titulo = datos_jugador_actual["region"] + " "
     calculo = int(((60 - len(titulo)) / 2) - 1)
@@ -173,6 +175,8 @@ def print_tablero(mapa): # hace print del tablero
             print(elemento, end="")
         print("* ")
     print("* " * 40)
+
+
 mapa_cargado = generar_mapa()
 print_tablero(mapa_cargado)
 
@@ -258,6 +262,7 @@ while flag_principal:
             print("Invalid Action")
 """
 
+"""
 # SAVE GAME
 key_primaria_partida = 3
 def save_game(primary_key):
@@ -289,7 +294,7 @@ def save_game(primary_key):
     db.commit()
 save_game(key_primaria_partida)
 """
-
+"""
 def show_map():
     mapa_show_map = [
         [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "," ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", ],

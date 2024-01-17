@@ -119,6 +119,7 @@ def print_saved_games():
         print("* " + "Play X, Erase X, Show All, Help, Back " + "* " * 20)
     else:
         print("* " + "Play X, Erase X, Show Recent, Help, Back  " + "* " * 18)
+
 def print_help_saved_game():
     print("* " + "Help, saved games " + "* " * 30 + "\n" +
           "* " + " " * 76 + "* " + "\n" +

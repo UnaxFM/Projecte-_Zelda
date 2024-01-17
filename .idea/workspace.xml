@@ -5,12 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d86b9cfc-92df-4ee3-a703-0f01ee329b43" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/M3/ENTORNO_PRUEBAS_GAME.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/M3/PREGAME_FUNCIONAL_BACKUP.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/M3/link death.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/M3/reinicio de cofres.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/M3/0. juego_principal_hasta_game(pruebas).py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/0. juego_principal_hasta_game(pruebas).py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/M3/datos_juego.py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/datos_juego.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/M3/CARGADA DE UNA NUEVA PARTIDA CON BBDD.py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/CARGADA DE UNA NUEVA PARTIDA CON BBDD.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/M3/cheats.py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/cheats.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/M3/comprobaciones de inicio de partida (fox etc).py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/comprobaciones de inicio de partida (fox etc).py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/M3/import de datos + carga + print mapa.py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/import de datos + carga + print mapa.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/M3/parte_ganon.py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/parte_ganon.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/M3/sistema_saved_games_funcional(desactualizado).py" beforeDir="false" afterPath="$PROJECT_DIR$/M3/sistema_saved_games_funcional(desactualizado).py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

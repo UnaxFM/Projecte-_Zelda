@@ -194,28 +194,36 @@ cargar_partida()
 mapa_cargado = generar_mapa()
 print_tablero(mapa_cargado)
 
-""" AÑADIDO LO DEL FOX
-while True:
+lista_prompt = []
+def prompt(lista):
+    lista = lista[-8:]
+    for elemento in lista:
+        print(elemento)
+
+""" FOX YA INTEGRADO
+def mostrar_fox():
     if not datos_partida_actual[datos_jugador_actual["region"]]["fox"][0]["intento"]:  # PERMITE QUE SOLO HAYA HABIDO UN INTENTO. SE DEBE REINICIAR AL SALIR DEL MAPA
         datos_partida_actual[datos_jugador_actual["region"]]["fox"][0]["intento"] = True
         visible = random.choice([True, False])  # 50% CHANCE
         if visible:
-            # lista_prompt.append("You see a Fox")  APPEND AL PROMPT
-            print("You see a Fox")
+            lista_prompt.append("You see a Fox")
             datos_partida_actual[datos_jugador_actual["region"]]["fox"][0]["visible"] = True
         else:
-            #lista_prompt.append("You don't see a Fox")
-            print("You don't see a Fox")
+            lista_prompt.append("You don't see a Fox")
+
+while True:
+    mostrar_fox()
     mapa_cargado = generar_mapa()
     print_tablero(mapa_cargado)
-    opc = input("Que hacer: ")
+    prompt(lista_prompt)
     # ESTO ES EL INPUT, LO QUE TE INTERESA
+    opc = input("Que hacer: ")
     if opc == "matar fox":
         if datos_partida_actual[datos_jugador_actual["region"]]["fox"][0]["visible"] and not datos_partida_actual[datos_jugador_actual["region"]]["fox"][0]["muerto"]:
             datos_partida_actual[datos_jugador_actual["region"]]["fox"][0]["muerto"] = True
         else:
             # lista_prompt.append("Invalid Action")
-            print("Invalid Action")
+            lista_prompt.append("Invalid Action")
 
 # SI CAMBIA DE MAPA, ANTES DE CAMBIAR LOS DATOS DE REGION ACTUAL SE DEBE REESTABLECER TODO A FALSE
     #datos_partida_actual[datos_jugador_actual["region"]]["fox"][0]["intento"] = False
@@ -313,6 +321,7 @@ def blood_moon():  # Si resetean la posición, descomentar x, y
         print(datos_partida_actual["hyrule"]["enemigos"][0])
         print(datos_partida_actual["death mountain"]["enemigos"][0])
         datos_jugador_actual["blood_moon_countdown"] = 25
+        datos_jugador_actual["blood_moon_appearances"] += 1
         print(f"The bloodmoon rises once again. Please, be careful {datos_jugador_actual['nombre']}")
         #lista_prompt.append(f"The bloodmoon rises once again. Please, be careful {datos_jugador_actual["nombre"]}")
         lista_lugares = ["hyrule", "death mountain", "gerudo", "necluda"]
@@ -327,14 +336,14 @@ def blood_moon():  # Si resetean la posición, descomentar x, y
                 datos_importados.datos[region_cargada]["enemigos"][enemigo_cargado]["vida"]
         print(datos_partida_actual["hyrule"]["enemigos"][0])
         print(datos_partida_actual["death mountain"]["enemigos"][0])
-"""
+
 while True:
-    print(datos_jugador_actual["blood_moon_countdown"])
+    print("Blood moon antes de resta", datos_jugador_actual["blood_moon_countdown"])
     datos_jugador_actual["blood_moon_countdown"] -= 1
+    print("Blood moon despues de resta", datos_jugador_actual["blood_moon_countdown"])
     mapa_cargado = generar_mapa()
     print_tablero(mapa_cargado)
-    if datos_jugador_actual["blood_moon_countdown"] == 0:
-        blood_moon()
-        input("Enter to continue")
-"""
+    blood_moon()
+    input("Enter to continue")
+
 
