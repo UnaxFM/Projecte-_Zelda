@@ -94,8 +94,8 @@ CREATE OR REPLACE VIEW query_3_armes as
 SELECT
     g.user_name as 'NomUsuari',
     w.weapon_name as 'NomArma',
-    COUNT(*) as 'QuantitatTotalObtenida',
-    MAX(g.date_started) as 'DataPartida'
+    w.quantity as 'QuantitatTotalObtenida',
+    MAX(g.date_modified) as 'DataPartida'
 
 from game g join weapons w on g.game_id = w.game_id
 group by g.user_name, w.weapon_name
@@ -106,31 +106,15 @@ having 'QuantitatTotalObtenida' > 0;
 
 CREATE OR REPLACE VIEW query_4_menjar as
 SELECT
-    NomUsuari,
-    NomMenjar,
-    QuantitatTotalObtenida,
-    DataPartida
-FROM (
-    SELECT
-        NomUsuari,
-        NomMenjar,
-        QuantitatTotalObtenida,
-        DataPartida,
-        RANK() OVER (PARTITION BY NomUsuari, NomMenjar ORDER BY QuantitatTotalObtenida DESC) AS RankPartida
-    FROM (
-        SELECT
-            NomUsuari,
-            NomMenjar,
-            SUM(QuantitatObtenida) AS QuantitatTotalObtenida,
-            MAX(DataPartida) AS DataPartida
-        FROM
-            v_comidas_partidas
-        GROUP BY
-            NomUsuari, NomMenjar
-    ) AS SubconsultaTotal
-) AS SubconsultaRankeada
-WHERE
-    RankPartida = 1;
+    g.user_name as 'NomUsuari',
+    f.food_name as 'NomMenjar',
+    f.quantity_remaining as 'QuantitatTotalObtenida',
+	MAX(g.date_modified) as 'DataPartida'
+
+from game g join food f on g.game_id = f.game_id
+group by g.user_name, f.food_name
+having 'QuantitatTotalObtenida' > 0;
+
     
 -- 5) Estadística de "blood moons"
 
