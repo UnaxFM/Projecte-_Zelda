@@ -553,11 +553,11 @@ def open_sacntuary():
         #commit a la BBDD
         '''
         sql = "INSERT INTO santuaries_opened (sactuary_id,game_id,region,xpos,ypos) VALUES (%s, %s, %s, %s, %s)
-        val = [id_santuario_adyacente,key_primaria_partida,datos_jugador_actual["region"],
+        val = (id_santuario_adyacente,key_primaria_partida,datos_jugador_actual["region"],
               datos_partida_actual[datos_jugador_actual["region"]]["santuarios"][id_santuario_adyacente]["x"],
               datos_partida_actual[datos_jugador_actual["region"]]["santuarios"][id_santuario_adyacente]["y"]
-              ]
-        cursor.executemany(sql,val)
+              )
+        cursor.execute(sql,val)
         
         save_game(key_primaria_partida) !!!!!!!!!!!
         '''
@@ -598,10 +598,10 @@ def open_chest():
     #commit a la BBDD
     '''
     sql = "INSERT INTO chest_opened (chest_id,game_id,region,xpos,ypos) VALUES (%s, %s, %s, %s, %s)"
-    val = [id_cofre_adyacente,key_primaria_partida,datos_jugador_actual["region"],
+    val = (id_cofre_adyacente,key_primaria_partida,datos_jugador_actual["region"],
            datos_partida_actual[datos_jugador_actual["region"]]["cofres"]["x"]
            datos_partida_actual[datos_jugador_actual["region"]]["cofres"]["y"]
-          ]
+          )
     
     cursor.executemany(sql,val)
     
