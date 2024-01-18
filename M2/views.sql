@@ -98,7 +98,7 @@ SELECT
     MAX(g.date_modified) as 'DataPartida'
 
 from game g join weapons w on g.game_id = w.game_id
-group by g.user_name, w.weapon_name
+group by g.user_name, w.weapon_name, w.quantity
 having 'QuantitatTotalObtenida' > 0;
 
     
@@ -112,7 +112,7 @@ SELECT
 	MAX(g.date_modified) as 'DataPartida'
 
 from game g join food f on g.game_id = f.game_id
-group by g.user_name, f.food_name
+group by g.user_name, f.food_name, f.quantity_remaining
 having 'QuantitatTotalObtenida' > 0;
 
     
