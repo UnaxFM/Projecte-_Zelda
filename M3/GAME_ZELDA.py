@@ -302,8 +302,8 @@ def save_game(primary_key):
               f"WHERE game_id = {primary_key} AND food_name = '{alimento}';")
     for arma in info_equipamiento_partida:
         cursor.execute(f"UPDATE weapons SET equiped = {info_equipamiento_partida[arma]['equipado']}, "
-              f"lives_remaining = {info_equipamiento_partida[arma]['usos']}, "
-              f"uses = {info_equipamiento_partida[arma]['cantidad']} "
+              f"uses = {info_equipamiento_partida[arma]['usos']}, "
+              f"quantity = {info_equipamiento_partida[arma]['cantidad']} "
               f"WHERE game_id = {primary_key} AND weapon_name = '{arma}';")
     for region in datos_partida_actual:
         if region == "castle":
