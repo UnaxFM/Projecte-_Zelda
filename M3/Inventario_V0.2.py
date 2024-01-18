@@ -233,29 +233,32 @@ def prompt(lista):
     for elemento in lista:
         print(elemento)
 
-def generar_inventory(info_alimento_partida,datos_jugador_actual,info_equipamiento_partida):
+def generar_inventory(info_alimento_partida, datos_jugador_actual, info_equipamiento_partida):
+    
     suma_comida = 0
+
     for alimento in info_alimento_partida:
         suma_comida += info_alimento_partida[alimento]["cantidad"]
+
     suma_equip = 0
     for armamento in info_equipamiento_partida:
         suma_equip += info_equipamiento_partida[armamento]["cantidad"]
 
     return [
-        [f"* {datos_jugador_actual['nombre']:<10} ❤ {datos_jugador_actual['vida_actual']}/{datos_jugador_actual['vida_total']} "],
-        [f"* Blood moon in {datos_jugador_actual['blood_moon_appearances']:>3} "],
-        ["*", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-        ["* Equipment:" + " " * 8],
-        ["*", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-        ["*", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-        ["*", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-        [f"* Food {suma_comida:>12} "],
-        [f"* Weapons {suma_equip:>9} "],
-        ["*", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", ],
-    ]
+            [f"* {datos_jugador_actual['nombre']:<8} ❤ {datos_jugador_actual['vida_actual']}/{datos_jugador_actual['vida_total']} "],
+            [f"* Blood moon in {datos_jugador_actual['blood_moon_appearances']:>3} "],
+            ["*", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+            ["* Equipment:" + " " * 8],
+            ["*", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+            ["*", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+            ["*", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [f"* Food {suma_comida:>12} "],
+            [f"* Weapons {suma_equip:>9} "],
+            ["*", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", ],
+        ]
 
 # Example usage
-inventory = generar_inventory(info_alimento_partida,datos_jugador_actual,info_equipamiento_partida)
+inventory = generar_inventory(info_alimento_partida, datos_jugador_actual, info_equipamiento_partida)
 
 def generar_weapons(info_equipamiento_partida):
 
@@ -263,13 +266,13 @@ def generar_weapons(info_equipamiento_partida):
     ["*", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", ],
     ["*", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", ],
     [f"* Wood sword {info_equipamiento_partida['wood sword']['usos']:>4}/{info_equipamiento_partida['wood sword']['cantidad']:<2}"],
-    [f"* {'Equipado' if info_equipamiento_partida['wood sword']['equipado'] else '        '}          " ],
+    ["*", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", ],
     [f"* Sword {info_equipamiento_partida['sword']['usos']:>9}/{info_equipamiento_partida['sword']['cantidad']:<2}"],
-    [f"* {'Equipado' if info_equipamiento_partida['sword']['equipado'] else '        '}          " ],
+    ["*", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", ],
     [f"* Wood shield {info_equipamiento_partida['wood shield']['usos']:>3}/{info_equipamiento_partida['wood shield']['cantidad']:<2}"],
-    [f"* {'Equipado' if info_equipamiento_partida['wood shield']['equipado'] else '        '}          " ],
+    ["*", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", ],
     [f"* Shield {info_equipamiento_partida['shield']['usos']:>8}/{info_equipamiento_partida['shield']['cantidad']:<2}"],
-    [f"* {'Equipado' if info_equipamiento_partida['shield']['equipado'] else '        '}          " ],
+    ["*", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", ],
 ]
 
 # Example usage
@@ -278,36 +281,86 @@ weapons_inventory = generar_weapons(info_equipamiento_partida)
 # equip sword
 # show inventory weapons
 
-def equip_weapon(weapon_name):
+def equip_weapon(weapon_name,inventory,weapons_inventory):
     global equipped_sword, equipped_shield
 
     if weapon_name in info_equipamiento_partida and not info_equipamiento_partida[weapon_name]["equipado"]:
-        if "sword" in weapon_name and equipped_sword is not None:
-            lista_prompt.append(f"You already have {equipped_sword} equipped.")
-        elif "shield" in weapon_name and equipped_shield is not None:
-            lista_prompt.append(f"You already have {equipped_shield} equipped.")
+        if info_equipamiento_partida[weapon_name]["cantidad"] > 0:  # Verifica la cantidad
+            if "sword" in weapon_name and equipped_sword is not None:
+                lista_prompt.append(f"You already have {equipped_sword} equipped.")
+            elif "shield" in weapon_name and equipped_shield is not None:
+                lista_prompt.append(f"You already have {equipped_shield} equipped.")
+            else:
+                info_equipamiento_partida[weapon_name]["equipado"] = True
+                info_equipamiento_partida[weapon_name]["cantidad"] -= 1  # Reduce la cantidad al equipar
+                lista_prompt.append(f"{weapon_name} equipped.")
+                if "sword" in weapon_name:
+                    equipped_sword = weapon_name
+                elif "shield" in weapon_name:
+                    equipped_shield = weapon_name
+                # Añadir al campo items_equipados
+                datos_jugador_actual["items_equipados"].append(weapon_name)
         else:
-            info_equipamiento_partida[weapon_name]["equipado"] = True
-            lista_prompt.append(f"{weapon_name} equipped.")
-            if "sword" in weapon_name:
-                equipped_sword = weapon_name
-            elif "shield" in weapon_name:
-                equipped_shield = weapon_name
+            lista_prompt.append(f"You don't have enough {weapon_name}.")
     else:
         lista_prompt.append(f"You don't have {weapon_name}.")
+   
+    if len(datos_jugador_actual["items_equipados"]) == 1:
+        inventory[4] = f"*{datos_jugador_actual['items_equipados'][0]:>18} "
 
-def unequip_weapon(weapon_name):
+    elif len(datos_jugador_actual["items_equipados"]) == 2:
+        inventory[4] = f"*{datos_jugador_actual['items_equipados'][0]:>18} "
+        inventory[5] = f"*{datos_jugador_actual['items_equipados'][1]:>18} "
+
+    if info_equipamiento_partida["wood sword"]["equipado"] == True:
+        weapons_inventory[3] = f"*  (equiped)        "
+
+    if info_equipamiento_partida["sword"]["equipado"] == True:
+        weapons_inventory[5] = f"*  (equiped)        "
+
+    if info_equipamiento_partida["wood shield"]["equipado"] == True:
+        weapons_inventory[7] = f"*  (equiped)        "
+
+    if info_equipamiento_partida["shield"]["equipado"] == True:
+        weapons_inventory[9] = f"*  (equiped)        "
+
+    return inventory,weapons_inventory
+
+def unequip_weapon(weapon_name,inventory,weapons_inventory):
     global equipped_sword, equipped_shield
 
     if weapon_name in info_equipamiento_partida and info_equipamiento_partida[weapon_name]["equipado"]:
         info_equipamiento_partida[weapon_name]["equipado"] = False
+        info_equipamiento_partida[weapon_name]["cantidad"] += 1  # Aumenta la cantidad al desequipar
         lista_prompt.append(f"{weapon_name} unequipped.")
         if "sword" in weapon_name:
             equipped_sword = None
         elif "shield" in weapon_name:
             equipped_shield = None
+        # Eliminar del campo items_equipados
+        datos_jugador_actual["items_equipados"].remove(weapon_name)
     else:
         lista_prompt.append(f"You don't have {weapon_name} equipped.")
+        
+    if len(datos_jugador_actual["items_equipados"]) == 1:
+        inventory[5] = f"*                   "
+    elif len(datos_jugador_actual["items_equipados"]) == 0:
+        inventory[4] = f"*                   "
+        inventory[5] = f"*                   "
+
+    if info_equipamiento_partida["wood sword"]["equipado"] == False:
+        weapons_inventory[3] = f"*                   "
+
+    if info_equipamiento_partida["sword"]["equipado"] == False:
+        weapons_inventory[5] = f"*                   "
+
+    if info_equipamiento_partida["wood shield"]["equipado"] == False:
+        weapons_inventory[7] = f"*                   "
+
+    if info_equipamiento_partida["shield"]["equipado"] == False:
+        weapons_inventory[9] = f"*                   "
+
+    return inventory,weapons_inventory
 
 def generar_food_inventory(info_alimento_partida):
     return [
@@ -443,7 +496,7 @@ def aplicar_truco(cheat, datos_jugador, info_alimento_partida, inventory, food_i
                 # Actualiza el nombre del jugador en el inventario principal
                 inventory[0][0] = f"* {nuevo_nombre:<10} ❤ {datos_jugador['vida_actual']}/{datos_jugador['vida_total']} "
             else:
-                print("Invalid new name. Must be between 3 and 10 characters and contain only letters, numbers, or spaces.")
+                lista_prompt.append("Invalid new name. Must be between 3 and 10 characters and contain only letters, numbers, or spaces.")
         else:
             lista_prompt.append("Invalid command.")
 
@@ -460,7 +513,7 @@ def aplicar_truco(cheat, datos_jugador, info_alimento_partida, inventory, food_i
                 info_alimento_partida[item_name]["cantidad"] += 1
                 lista_prompt.append("Cheating: meat:")
             else:
-                print(f"Invalid item '{item_name}'.")
+                lista_prompt.append(f"Invalid item '{item_name}'.")
         else:
             lista_prompt.append("Invalid command.")
 
@@ -485,9 +538,9 @@ def aplicar_truco(cheat, datos_jugador, info_alimento_partida, inventory, food_i
                     info_alimento_partida["roasted"]["cantidad"] += 1
                     lista_prompt.append("Cheating: cook roasted")
                 else:
-                    print(f"Not enough ingredients to cook {dish_name}.")
+                    lista_prompt.append(f"Not enough ingredients to cook {dish_name}.")
             else:
-                print(f"Invalid dish '{dish_name}'.")
+                lista_prompt.append(f"Invalid dish '{dish_name}'.")
         else:
             lista_prompt.append("Invalid command.")
 
@@ -504,7 +557,7 @@ def aplicar_truco(cheat, datos_jugador, info_alimento_partida, inventory, food_i
                 for santuario in datos_partida_actual[lugar]["santuarios"]:
                     datos_partida_actual[lugar]["santuarios"][santuario]["descubierto"] = True
         else:
-            print("You have already opened sanctuaries. Your maximum heart capacity is already 10.")
+            lista_prompt.append("You have already opened sanctuaries. Your maximum heart capacity is already 10.")
     elif cheat_name == "game" and cheat_parts[2].lower() == "over":
         datos_jugador["vida_actual"] = 0
         lista_prompt.append("Cheating: game over")
@@ -512,6 +565,18 @@ def aplicar_truco(cheat, datos_jugador, info_alimento_partida, inventory, food_i
         datos_partida_actual["castle"][0]["vida"]=0
         # save_game(key_primaria_partida)
         lista_prompt.append("Cheating: win game")
+    elif cheat_name == "wood" :
+        info_equipamiento_partida['wood sword']['cantidad'] += 1
+        lista_prompt.append("Cheating: add wood sword")
+    elif cheat_name == "sword" :
+        info_equipamiento_partida['sword']['cantidad']+= 1
+        lista_prompt.append("Cheating: add sword")
+    elif cheat_name == "swood" :
+        info_equipamiento_partida['wood shield']['cantidad']+= 1
+        lista_prompt.append("Cheating: wood shield")
+    elif cheat_name == "shield" :
+        info_equipamiento_partida['shield']['cantidad']+= 1
+        lista_prompt.append("Cheating: add shield ")
 
     else:
         lista_prompt.append("Invalid command.")
@@ -539,14 +604,6 @@ def mostrar_inventario(opcion, informacion_jugador, inventory, food_inventory):
         imprimir_todo(mapa_cargado, weapons_inventory)
     elif opcion == "show inventory food":
         imprimir_todo(mapa_cargado, food_inventory)
-    elif opcion == "chea add wood sword":
-        info_equipamiento_partida['wood sword']['cantidad']+= 1
-    elif opcion == "chea add sword":
-        info_equipamiento_partida['sword']['cantidad']+= 1
-    elif opcion == "chea add wood shield":
-        info_equipamiento_partida['wood shield']['cantidad']+= 1
-    elif opcion == "chea add shield":
-        info_equipamiento_partida['shield']['cantidad']+= 1
     elif opcion.startswith("eat "):
         comida_opcion = opcion[4:]
         if comida_opcion in info_alimento_partida:
@@ -568,10 +625,10 @@ def mostrar_inventario(opcion, informacion_jugador, inventory, food_inventory):
         print(flag_help_inventory)
     elif to_do.startswith('equip'):
         weapon_to_equip = to_do.split(' ', 1)[1]
-        equip_weapon(weapon_to_equip)
+        equip_weapon(weapon_to_equip,inventory,weapons_inventory)
     elif to_do.startswith('unequip'):
         weapon_to_unequip = to_do.split(' ', 1)[1]
-        unequip_weapon(weapon_to_unequip)
+        unequip_weapon(weapon_to_unequip,inventory,weapons_inventory)
 
     else:
         lista_prompt.append("Invalid command.")
@@ -590,13 +647,5 @@ while True:
         break
     elif to_do.startswith('cheat'):
         datos_jugador_actual, info_alimento_partida, inventory, food_inventory = aplicar_truco(to_do, datos_jugador_actual, info_alimento_partida, inventory, food_inventory, datos_partida_actual)
-        prompt(lista_prompt)
     else:
         inventory, food_inventory = mostrar_inventario(to_do, datos_jugador_actual, inventory, food_inventory)
-        print(info_equipamiento_partida, lista_prompt)
-
-
-
-# eat pescatarian
-
-# show inventory main
