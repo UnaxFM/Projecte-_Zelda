@@ -30,7 +30,6 @@ CREATE TABLE IF NOT EXISTS weapons(
     game_id INT,
     weapon_name VARCHAR(15),
     equiped BOOLEAN,
-    lives_remaining INT,
     uses INT,
     quantity INT,
     
