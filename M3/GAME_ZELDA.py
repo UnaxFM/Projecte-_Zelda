@@ -1271,6 +1271,9 @@ def go_direction(to_do, xpos, ypos):
         return xpos, ypos
 
 
+# --- funciones cheats ---
+
+
 # --- funciones ganon ---
 
 def generar_mapa_ganon(): # genera el mapa
