@@ -463,6 +463,9 @@ def print_tablero(mapa):
         print("* " + combinado + "* " * calculo)
 
 
+# --- funciones querys ---
+
+
 # --- funciones inputs ---
 
 # PROMPT
