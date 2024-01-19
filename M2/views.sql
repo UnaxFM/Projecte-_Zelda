@@ -95,11 +95,10 @@ SELECT
     g.user_name as 'NomUsuari',
     w.weapon_name as 'NomArma',
     w.quantity as 'QuantitatTotalObtenida',
-    MAX(g.date_modified) as 'DataPartida'
-
+    g.date_modified as 'DataPartida'
+    
 from game g join weapons w on g.game_id = w.game_id
-group by g.user_name, w.weapon_name, w.quantity
-having 'QuantitatTotalObtenida' > 0;
+where w.quantity > 0;
 
     
 -- 4) Menjar consumit per cada usuari i dades de la partida on n'ha consumit més: consulta a través de la vista
@@ -109,11 +108,10 @@ SELECT
     g.user_name as 'NomUsuari',
     f.food_name as 'NomMenjar',
     f.quantity_remaining as 'QuantitatTotalObtenida',
-	MAX(g.date_modified) as 'DataPartida'
+	g.date_modified as 'DataPartida'
 
 from game g join food f on g.game_id = f.game_id
-group by g.user_name, f.food_name, f.quantity_remaining
-having 'QuantitatTotalObtenida' > 0;
+where f.quantity_remaining >0;
 
     
 -- 5) Estadística de "blood moons"
