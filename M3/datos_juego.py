@@ -215,8 +215,5 @@ datos = {
     },
     "castle": {"spawn": {"x": 8, "y": 2},
                0: {"vida": 8, "x": 8, "y": 32},
-               "arboles": {
-                   0: {"vida": 4, "turnos_restantes": 0, "x": 8, "y": 1}
-               },
     }
 }
