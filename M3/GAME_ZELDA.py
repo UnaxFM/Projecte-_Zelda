@@ -254,7 +254,7 @@ def cargar_partida(primary_key):
         info_alimento_partida[alimento_cargado[0]]["cantidad"] = alimento_cargado[1]
     print("Info comida cargada")
     # CARGAR ARMAS
-    cursor.execute(f"SELECT weapon_name, equiped, lives_remaining, uses FROM weapons WHERE game_id = {primary_key}")
+    cursor.execute(f"SELECT weapon_name, equiped, uses, quantity FROM weapons WHERE game_id = {primary_key}")
     for arma_cargada in cursor:
         info_equipamiento_partida[arma_cargada[0]]["equipado"] = arma_cargada[1]
         info_equipamiento_partida[arma_cargada[0]]["usos"] = arma_cargada[2]
