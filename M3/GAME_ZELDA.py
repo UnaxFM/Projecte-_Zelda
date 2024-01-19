@@ -465,6 +465,43 @@ def print_tablero(mapa):
 
 # --- funciones querys ---
 
+def print_query(opcion):
+    print("* " + "Queries " + "* " * 35 + "\n" +
+          "* " + " " * 76 + "* ")
+    if opcion == 1:
+        print("* " + "\t\t\t\tNom Usuari".ljust(30) + " ".ljust(4) + "Ultima partida".ljust(32) + "* ")
+        cursor.execute("SELECT NomUsuari, UltimaPartida FROM query_1_usuaris")
+        for consulta in cursor:
+            print("* " + f"\t\t\t\t{consulta[0]}".ljust(30) + " ".ljust(4) + f"{consulta[1].strftime('%d/%m/%Y %H:%M:%S')}".ljust(32) + "* ")
+    elif opcion == 2:
+        print("* " + "\t\t\t\tNom Usuari".ljust(30) + " ".ljust(4) + "Partides Jugades".ljust(32) + "* ")
+        print("* " + " " * 76 + "* ")
+        cursor.execute("SELECT NomUsuari, PartidesJugades FROM query_2_partides")
+        for consulta in cursor:
+            print("* " + f"\t\t\t\t{consulta[0]}".ljust(30) + " ".ljust(6) + f"{consulta[1]}".ljust(30) + "* ")
+    elif opcion == 3:
+        print("* " + "\tNom Usuari".ljust(12) + "  ".ljust(6) + "Nom Arma".ljust(18) + " " + "Quantitat".ljust(12) + "  " + "Data Partida".ljust(24) + "* ")
+        print("* " + " " * 76 + "* ")
+        cursor.execute("SELECT NomUsuari, NomArma, QuantitatTotalObtenida, DataPartida FROM query_3_armes")
+        for consulta in cursor:
+            print("* " + f"\t{consulta[0]}".ljust(12) + "  ".ljust(6) + f"{consulta[1]}".ljust(18) + " " + f"{consulta[2]}".ljust(12) + "  " + f"{consulta[3].strftime('%d/%m/%Y %H:%M:%S')}".ljust(24) + "* ")
+    elif opcion == 4:
+        print("* " + "\tNom Usuari".ljust(12) + "  ".ljust(6) + "Nom Menjar".ljust(18) + " " + "Quantitat".ljust(12) + "  " + "Data Partida".ljust(24) + "* ")
+        print("* " + " " * 76 + "* ")
+        cursor.execute("SELECT NomUsuari, NomMenjar, QuantitatTotalObtenida, DataPartida FROM query_4_menjar")
+        for consulta in cursor:
+            print("* " + f"\t{consulta[0]}".ljust(12) + "  ".ljust(6) + f"{consulta[1]}".ljust(18) + " " + f"{consulta[2]}".ljust(12) + "  " + f"{consulta[3].strftime('%d/%m/%Y %H:%M:%S')}".ljust(24) + "* ")
+    elif opcion == 5:
+        cursor.execute("SELECT MediaBloodMoons FROM query_5_mitjanabm")
+        for consulta in cursor:
+            print("* " + f"\t\tMitjana de bloodmoons: " + f"{consulta[0]}".ljust(47) + "* ")
+        cursor.execute("SELECT NomUsuari, DataPartida, QuantitatBloodMoons FROM query_5_mesbm")
+        for consulta in cursor:
+            print("* " + f"\t\tNom usuari: " + f"{consulta[0]}".ljust(58) + "* ")
+            print("* " + f"\t\tData partida: " + f"{consulta[1]}".ljust(56) + "* ")
+            print("* " + f"\t\tQuantitat de bloodmoons: " + f"{consulta[2]}".ljust(45) + "* ")
+    print("* " + " " * 76 + "* " + "\n" +
+          "* " * 40)
 
 # --- funciones inputs ---
 
@@ -1447,11 +1484,27 @@ while not flag_general_juego:
         prompt(lista_prompt)
         input_main_menu()
 
-    '''
-     QUERIES MENU
+
+    # QUERIES MENU
     while flag_queries:
-      limpiar_pantalla()
-    '''
+        #limpiar_pantalla()
+        pm.print_menu_queries()
+        opc = input("What to do now? ")
+        if opc.lower() == "back":
+            flag_main_menu = True
+            flag_queries = False
+        elif opc[0:5].lower() == "show ":
+            try:
+                if len(opc[5:]) > 1:
+                    raise Exception
+                assert 0 < int(opc[5]) < 6
+                print_query(int(opc[5]))
+                input("Press enter to continue ")
+            except:
+                lista_prompt.append("Invalid Option")
+        else:
+            lista_prompt.append("Invalid Option")
+
 
     # HELP MENU
     while flag_help_new_game:
