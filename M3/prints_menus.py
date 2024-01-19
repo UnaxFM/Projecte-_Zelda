@@ -49,6 +49,20 @@ def print_help_main_menu():
           "* " + "Back  " + "* " * 36)
 
 
+def print_menu_queries():
+    print("* " + "Queries " + "* " * 35 + "\n" +
+          "* " + " " * 76 + "* " + "\n" +
+          "* " + " " * 76 + "* " + "\n" +
+          "* " + "\t 1. Usuaris que han jugat".ljust(75) + "* " + "\n" +
+          "* " + "\t 2. Quantitat de partides jugades per usuari".ljust(75) + "* " + "\n" +
+          "* " + "\t 3. Armes usades per usuari".ljust(75) + "* " + "\n" +
+          "* " + "\t 4. Menjar consumit per usuari".ljust(75) + "* " + "\n" +
+          "* " + "\t 5. Estadística de Blood Moons".ljust(75) + "* " + "\n" +
+          "* " + " " * 76 + "* " + "\n" +
+          "* " + " " * 76 + "* " + "\n" +
+          "* " + "Show X, Back  " + "* " * 32)
+
+
 def print_about():
     print("* " + "About " + "* " * 36 + "\n" +
           "* " + " " * 76 + "* " + "\n" +
