@@ -412,7 +412,7 @@ equipped_sword = None
 equipped_shield = None
 
 def print_tablero(mapa, inventario):
-    titulo = datos_jugador_actual["region"] + " "
+    titulo = datos_jugador_actual["region"].title() + " "
     calculo = int(((60 - len(titulo)) / 2) - 1)
     if len(titulo) % 2 != 0:
         print("* " + titulo + " " + "* " * calculo, end="")
@@ -1110,7 +1110,7 @@ def aplicar_truco(cheat, datos_jugador, info_alimento_partida, inventory, food_i
 
     elif cheat_name.lower() == "win" and cheat_parts[2].lower() == "game":
         datos_partida_actual["castle"][0]["vida"] = 0
-        muerte_ganon(key_primaria_partida)
+        muerte_ganon()
         lista_prompt.append("Cheating: win game")
 
 
