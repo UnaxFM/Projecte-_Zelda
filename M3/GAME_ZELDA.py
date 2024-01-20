@@ -3,7 +3,6 @@ import platform
 import random
 import prints_menus as pm
 import datos_juego as datos_importados
-
 import mysql.connector
 
 # Conexión con la BBDD
@@ -165,21 +164,22 @@ def print_saved_games():
         for i in range(len(lista_partidas)):
             print("*\t" + f"{i}: {partidas_guardadas[lista_partidas[i]]['fecha_modificacion']} - "
                           f"{partidas_guardadas[lista_partidas[i]]['nombre_jugador']}, "
-                          f"{partidas_guardadas[lista_partidas[i]]['region']}".ljust(68) +
-                  f"♥ {partidas_guardadas[lista_partidas[i]]['corazones_actuales']}/{partidas_guardadas[lista_partidas[i]]['corazones_totales']}".rjust(5) + " *")
+                          f"{partidas_guardadas[lista_partidas[i]]['region']}".ljust(64) +
+                  f"♥ {partidas_guardadas[lista_partidas[i]]['corazones_actuales']}/{partidas_guardadas[lista_partidas[i]]['corazones_totales']} ".rjust(10) + "*")
         for i in range(8 - len(lista_partidas)):
             print("* " + " " * 76 + "* ")
     else:
         for i in range(len(lista_partidas)):
             print("*\t" + f"{i}: {partidas_guardadas[lista_partidas[i]]['fecha_modificacion']} - "
                           f"{partidas_guardadas[lista_partidas[i]]['nombre_jugador']}, "
-                          f"{partidas_guardadas[lista_partidas[i]]['region']}".ljust(68) +
-                  f"♥ {partidas_guardadas[lista_partidas[i]]['corazones_actuales']}/{partidas_guardadas[lista_partidas[i]]['corazones_totales']}".rjust(5) + " *")
+                          f"{partidas_guardadas[lista_partidas[i]]['region']}".ljust(64) +
+                  f"♥ {partidas_guardadas[lista_partidas[i]]['corazones_actuales']}/{partidas_guardadas[lista_partidas[i]]['corazones_totales']} ".ljust(10) + "*")
     print("* " + " " * 76 + "* ")
     if not ver_todos:
         print("* " + "Play X, Erase X, Show All, Help, Back " + "* " * 20)
     else:
         print("* " + "Play X, Erase X, Show Recent, Help, Back  " + "* " * 18)
+
 
 
 def asignar_nombre(nombre):
@@ -208,7 +208,7 @@ def crear_nueva_partida(primary_key):
     for alimento in info_alimento_partida:
         temp = (primary_key, alimento)
         val.append(temp)
-    print(val)
+    # print(val)
     cursor.executemany(sql, val)
 
     sql = "INSERT INTO weapons (game_id,weapon_name) VALUES (%s, %s)"
@@ -216,7 +216,7 @@ def crear_nueva_partida(primary_key):
     for arma in info_equipamiento_partida:
         temp = (primary_key, arma)
         val.append(temp)
-    print(val)
+    # print(val)
     cursor.executemany(sql, val)
 
     sql = "INSERT INTO enemies (enemy_id, game_id, region, xpos, ypos, lifes_remaining) VALUES (%s, %s, %s, %s, %s, %s)"
@@ -228,10 +228,10 @@ def crear_nueva_partida(primary_key):
             print(enemigo)
             temp = (enemigo, primary_key, region_cargada, datos_partida_actual[region_cargada]["enemigos"][enemigo]["x"], datos_partida_actual[region_cargada]["enemigos"][enemigo]["y"], datos_partida_actual[region_cargada]["enemigos"][enemigo]["vida"],)
             val.append(temp)
-    print(val)
+    # print(val)
 
     val.append((0, primary_key, "castle", datos_partida_actual['castle'][0]['x'], datos_partida_actual['castle'][0]['y'], datos_partida_actual['castle'][0]['vida']))
-    print(val)
+    # print(val)
     cursor.executemany(sql, val)
     db.commit()
 
@@ -247,12 +247,12 @@ def cargar_partida(primary_key):
         datos_jugador_actual["blood_moon_countdown"] = jugador[2]
         datos_jugador_actual["blood_moon_appearances"] = jugador[3]
         datos_jugador_actual["region"] = jugador[4]
-    print("Info jugador cargada")
+    # print("Info jugador cargada")
     # CARGAR COMIDA
     cursor.execute(f"SELECT food_name, quantity_remaining FROM food WHERE game_id = {primary_key}")
     for alimento_cargado in cursor:
         info_alimento_partida[alimento_cargado[0]]["cantidad"] = alimento_cargado[1]
-    print("Info comida cargada")
+    # print("Info comida cargada")
     # CARGAR ARMAS
     cursor.execute(f"SELECT weapon_name, equiped, uses, quantity FROM weapons WHERE game_id = {primary_key}")
     for arma_cargada in cursor:
@@ -263,7 +263,7 @@ def cargar_partida(primary_key):
     for arma in info_equipamiento_partida:
         if info_equipamiento_partida[arma]["equipado"]:
             datos_jugador_actual["items_equipados"].append(arma)
-    print("armas cargadas")
+    # print("armas cargadas")
     # CARGAR ENEMIGOS
     cursor.execute(f"SELECT region, enemy_id, xpos, ypos, lifes_remaining FROM enemies WHERE game_id = {primary_key}")
     for enemigo in cursor:
@@ -273,7 +273,7 @@ def cargar_partida(primary_key):
             datos_partida_actual[enemigo[0]]["enemigos"][enemigo[1]]["x"] = enemigo[2]
             datos_partida_actual[enemigo[0]]["enemigos"][enemigo[1]]["y"] = enemigo[3]
             datos_partida_actual[enemigo[0]]["enemigos"][enemigo[1]]["vida"] = enemigo[4]
-    print("cofres cargados")
+    # print("cofres cargados")
     # CARGAR COFRES
     cursor.execute(f"SELECT region, chest_id FROM chest_opened WHERE game_id = {primary_key}")
     for cofre in cursor:
@@ -286,12 +286,12 @@ def cargar_partida(primary_key):
 
 
 def save_game(primary_key):
-    print(
-        f"UPDATE game SET user_name = '{datos_jugador_actual['nombre']}', hearts_remaining = {datos_jugador_actual['vida_actual']}, hearts_total = {datos_jugador_actual['vida_total']}, "
-        f"blood_moon_countdown = {datos_jugador_actual['blood_moon_countdown']}, "
-        f"blood_moon_appearences = {datos_jugador_actual['blood_moon_appearances']}, "
-        f"region = '{datos_jugador_actual['region']}' "
-        f"WHERE game_id = {primary_key};")
+    # print(
+    #     f"UPDATE game SET user_name = '{datos_jugador_actual['nombre']}', hearts_remaining = {datos_jugador_actual['vida_actual']}, hearts_total = {datos_jugador_actual['vida_total']}, "
+    #     f"blood_moon_countdown = {datos_jugador_actual['blood_moon_countdown']}, "
+    #     f"blood_moon_appearences = {datos_jugador_actual['blood_moon_appearances']}, "
+    #     f"region = '{datos_jugador_actual['region']}' "
+    #     f"WHERE game_id = {primary_key};")
     cursor.execute(f"UPDATE game SET user_name = '{datos_jugador_actual['nombre']}', hearts_remaining = {datos_jugador_actual['vida_actual']}, hearts_total = {datos_jugador_actual['vida_total']}, "
                    f"blood_moon_countdown = {datos_jugador_actual['blood_moon_countdown']},"
                    f"blood_moon_appearences = {datos_jugador_actual['blood_moon_appearances']}, "
@@ -407,32 +407,36 @@ def show_map():
         print("* " + " " * 18 + "*")
     print("* " + "Back  " + "* " * 36)
 
+matriz_tipo_inventario = "Inventory"
+equipped_sword = None
+equipped_shield = None
 
-def print_tablero(mapa):
+def print_tablero(mapa, inventario):
     titulo = datos_jugador_actual["region"] + " "
     calculo = int(((60 - len(titulo)) / 2) - 1)
-    lista = ["Inventory", "Weapons", "Food"]
-    titulo_2 = lista[0]
-    calculo_secundario = int(((20 - len(titulo_2)) / 2) - 1)
     if len(titulo) % 2 != 0:
-        print("* " + titulo.title() + " " + "* " * calculo, end="")
+        print("* " + titulo + " " + "* " * calculo, end="")
     else:
-        print("* " + titulo.title() + "* " * calculo, end="")
+        print("* " + titulo + "* " * calculo, end="")
+    titulo_2 = matriz_tipo_inventario.title()
+    calculo_2 = int((17 - len(titulo_2)) // 2)
     if len(titulo_2) % 2 != 0:
-        print("* " * calculo_secundario + titulo_2.title() + " *")
+        print("* " * calculo_2 + titulo_2 + " * ")
     else:
-        print("* " * (calculo_secundario - 1) + " " + titulo_2.title() + " *")
+        print("* " * calculo_2 + " " + titulo_2 + " * ")
     for i in range(len(mapa)):
         print("*", end="")
         for elemento in mapa[i]:
             print(elemento, end="")
+        print("* ", end="")
+        for elemento in inventario[i]:
+            print(elemento, end="")
         print("* ")
-    #print("* " * 40)
 
     # PRINT DINÁMICO
     global cocinar, pescar, santuario, cofre, equip, unequip, eat, atacar_general
 
-    lista_acciones = ["attack", "equip", "unequip", "eat", "cook", "fish", "open",]
+    lista_acciones = ["attack", "equip", "unequip", "eat", "cook", "fish", "open", ]
     lista_acciones_disponibles = ["exit", "go"]
 
     if atacar_general:
@@ -583,34 +587,34 @@ def input_saved_games():
     elif opc[0:4].lower() == "play":
         try:
             if int(opc[5]) == 0 and len(opc[5:]) > 1:
-                raise ValueError                            # Me aseguro que no hayan espacios en blanco y sea un num
+                raise Exception                           # Me aseguro que no hayan espacios en blanco y sea un num
             indice_partida = int(opc[5:].replace(" ", "/")) # lista_partidas[indice_partida] == primary key == key del diccionario
             assert 0 <= indice_partida < len(lista_partidas)
-            print(lista_partidas, lista_partidas[indice_partida])
+            # print(lista_partidas, lista_partidas[indice_partida])
             key_primaria_partida = lista_partidas[indice_partida]
             cargar_partida(key_primaria_partida)
             ver_todos = False
             flag_saved_games = False
             flag_in_game = True
-        except (ValueError, AssertionError):
+        except:
             lista_prompt.append("Invalid Action")
     elif opc[0:5].lower() == "erase":
         try:
             if int(opc[6]) == 0 and len(opc[6:]) > 1:
-                raise ValueError
+                raise Exception
             indice_partida = int(opc[6:].replace(" ", "/"))
             assert 0 <= indice_partida < len(lista_partidas)
             del partidas_guardadas[lista_partidas[indice_partida]]
-            print("eliminado del diccionario")
+            # print("eliminado del diccionario")
             query_delete = f"DELETE FROM game WHERE game_id = {lista_partidas[indice_partida]};"
             cursor.execute(query_delete)
-            print("query realizada")
+            # print("query realizada")
             db.commit()
-            print("commit hecho")
+            # print("commit hecho")
             partidas_guardadas = seleccionar_partidas_guardadas()
             lista_partidas = metodo_burbuja_ordenar_partidas_recientes(list(partidas_guardadas.keys()))
-            print("nuevas partidas guardadas")
-        except (ValueError, AssertionError):
+            # print("nuevas partidas guardadas")
+        except:
             lista_prompt.append("Invalid Action")
     else:
         lista_prompt.append("Invalid Action")
@@ -645,6 +649,26 @@ def mostrar_fox(): # FALTA EL INPUT DE MATAR + REINICIO AL MOVERSE DE REGION
             lista_prompt.append("You don't see a Fox")
 
 
+def blood_moon():
+    if datos_jugador_actual["blood_moon_countdown"] < 1:
+        # print(datos_partida_actual["hyrule"]["enemigos"][0])
+        # print(datos_partida_actual["death mountain"]["enemigos"][0])
+        datos_jugador_actual["blood_moon_countdown"] = 25
+        datos_jugador_actual["blood_moon_appearances"] += 1
+        lista_prompt.append(f"The bloodmoon rises once again. Please, be careful {datos_jugador_actual['nombre']}")
+        lista_lugares = ["hyrule", "death mountain", "gerudo", "necluda"]
+        for region_cargada in lista_lugares:
+            for enemigo_cargado in datos_importados.datos[region_cargada]["enemigos"]:
+                #datos_partida_actual[region_cargada]["enemigos"][enemigo_cargado]["x"] = \
+                #datos_importados.datos[region_cargada]["enemigos"][enemigo_cargado]["x"]
+                #datos_partida_actual[region_cargada]["enemigos"][enemigo_cargado]["y"] = \
+                #datos_importados.datos[region_cargada]["enemigos"][enemigo_cargado]["y"]
+                datos_partida_actual[region_cargada]["enemigos"][enemigo_cargado]["vida"] = \
+                datos_importados.datos[region_cargada]["enemigos"][enemigo_cargado]["vida"]
+        # print(datos_partida_actual["hyrule"]["enemigos"][0])
+        # print(datos_partida_actual["death mountain"]["enemigos"][0])
+
+
 def reinicio_cofres(primary_key):
     if info_equipamiento_partida["wood sword"]["cantidad"] == 0 and info_equipamiento_partida["sword"] ["cantidad"] == 0:
         lugares = ["hyrule", "death mountain", "necluda", "gerudo"]
@@ -655,11 +679,11 @@ def reinicio_cofres(primary_key):
         sql = f"DELETE FROM chest_opened WHERE game_id = {primary_key}"
         cursor.execute(sql)
         db.commit()
-        print("Cofres reiniciados correctamente ya que no te quedaban espadas")
-        for lugar in lugares:
-            for cofre in datos_partida_actual[lugar]["cofres"]:
-                if datos_partida_actual[lugar]["cofres"][cofre]["abierto"]:  # Si esta abierto, lo cambio a false
-                    print(datos_partida_actual[lugar]["cofres"][cofre]["abierto"])
+        # print("Cofres reiniciados correctamente ya que no te quedaban espadas")
+        # for lugar in lugares:
+        #     for cofre in datos_partida_actual[lugar]["cofres"]:
+        #         if datos_partida_actual[lugar]["cofres"][cofre]["abierto"]:  # Si esta abierto, lo cambio a false
+        #             print(datos_partida_actual[lugar]["cofres"][cofre]["abierto"])
     else:
         contador = 0
         lugares = ["hyrule", "death mountain", "necluda", "gerudo"]
@@ -671,11 +695,11 @@ def reinicio_cofres(primary_key):
             sql = f"DELETE FROM chest_opened WHERE game_id = {primary_key}"
             cursor.execute(sql)
             db.commit()
-            print("Cofres reiniciados correctamente ya que estaban todos abiertos")
-            for lugar in lugares:
-                for cofre in datos_partida_actual[lugar]["cofres"]:
-                    if datos_partida_actual[lugar]["cofres"][cofre]["abierto"]:  # Si esta abierto, lo cambio a false
-                        print(datos_partida_actual[lugar]["cofres"][cofre]["abierto"])
+            # print("Cofres reiniciados correctamente ya que estaban todos abiertos")
+            # for lugar in lugares:
+            #     for cofre in datos_partida_actual[lugar]["cofres"]:
+            #         if datos_partida_actual[lugar]["cofres"][cofre]["abierto"]:  # Si esta abierto, lo cambio a false
+            #             print(datos_partida_actual[lugar]["cofres"][cofre]["abierto"])
 
 
 def actualizar_turnos_restantes_arboles(region_actual):
@@ -690,8 +714,410 @@ def actualizar_turnos_restantes_arboles(region_actual):
 
 # --- funciones inventario ----
 
+def generar_inventory(info_alimento_partida, datos_jugador_actual, info_equipamiento_partida):
+    contador_blood = datos_jugador_actual['blood_moon_countdown']
+
+    suma_comida = 0
+
+    for alimento in info_alimento_partida:
+        suma_comida += info_alimento_partida[alimento]["cantidad"]
+
+    suma_equip = 0
+    for armamento in info_equipamiento_partida:
+        suma_equip += info_equipamiento_partida[armamento]["cantidad"]
+
+    matriz_inventario = [
+        [
+            f"{datos_jugador_actual['nombre']:<8}  ❤ {datos_jugador_actual['vida_actual']}/{datos_jugador_actual['vida_total']:<2} "],
+        [f"Blood moon in {contador_blood :>3} "],
+        ["", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", ],
+        ["Equipment:" + " " * 8],
+        ["", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", ],
+        ["", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", ],
+        ["", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", ],
+        [f"Food {suma_comida:>12} "],
+        [f"Weapons {suma_equip:>9} "],
+        ["", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+    ]
+
+    if len(datos_jugador_actual["items_equipados"]) == 1:
+        matriz_inventario[4] = f"{datos_jugador_actual['items_equipados'][0].title():>17} "
+
+    elif len(datos_jugador_actual["items_equipados"]) == 2:
+        matriz_inventario[4] = f"{datos_jugador_actual['items_equipados'][0].title():>17} "
+        matriz_inventario[5] = f"{datos_jugador_actual['items_equipados'][1].title():>17} "
+
+    return matriz_inventario
 
 
+# Example usage
+inventory = generar_inventory(info_alimento_partida, datos_jugador_actual, info_equipamiento_partida)
+
+
+def generar_weapons(info_equipamiento_partida):
+    usos_sword = 0
+
+    if info_equipamiento_partida['sword']['cantidad'] > 0:
+
+        if info_equipamiento_partida['sword']['usos'] % 9 == 0:
+            usos_sword = 9
+        else:
+            usos_sword = info_equipamiento_partida['sword']['usos'] % 9
+
+    usos_wood_sword = 0
+
+    if info_equipamiento_partida['wood sword']['cantidad'] > 0:
+
+        if info_equipamiento_partida['wood sword']['usos'] % 5 == 0:
+            usos_wood_sword = 5
+        else:
+            usos_wood_sword = info_equipamiento_partida['wood sword']['usos'] % 5
+
+    usos_wood_shield = 0
+
+    if info_equipamiento_partida['wood shield']['cantidad'] > 0:
+
+        if info_equipamiento_partida['wood shield']['usos'] % 5 == 0:
+            usos_wood_shield = 5
+        else:
+            usos_wood_shield = info_equipamiento_partida['wood shield']['usos'] % 5
+
+    usos_shield = 0
+
+    if info_equipamiento_partida['shield']['cantidad'] > 0:
+
+        if info_equipamiento_partida['shield']['usos'] % 9 == 0:
+            usos_shield = 9
+        else:
+            usos_sword = info_equipamiento_partida['shield']['usos'] % 9
+
+    matriz_weapons = [
+        ["", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        ["", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [f"Wood sword {usos_wood_sword:>4}/{info_equipamiento_partida['wood sword']['cantidad']:<2}"],
+        ["", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [f"Sword {usos_sword:>9}/{info_equipamiento_partida['sword']['cantidad']:<2}"],
+        ["", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [f"Wood shield {usos_wood_shield:>3}/{info_equipamiento_partida['wood shield']['cantidad']:<2}"],
+        ["", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [f"Shield {usos_shield:>8}/{info_equipamiento_partida['shield']['cantidad']:<2}"],
+        ["", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+    ]
+
+    if info_equipamiento_partida["wood sword"]["equipado"] == True:
+        matriz_weapons[3] = f"  (equiped)       "
+
+    if info_equipamiento_partida["sword"]["equipado"] == True:
+        matriz_weapons[5] = f"  (equiped)       "
+
+    if info_equipamiento_partida["wood shield"]["equipado"] == True:
+        matriz_weapons[7] = f"  (equiped)       "
+
+    if info_equipamiento_partida["shield"]["equipado"] == True:
+        matriz_weapons[9] = f"  (equiped)       "
+
+    if info_equipamiento_partida["wood sword"]["equipado"] == False:
+        matriz_weapons[3] = f"                  "
+
+    if info_equipamiento_partida["sword"]["equipado"] == False:
+        matriz_weapons[5] = f"                  "
+
+    if info_equipamiento_partida["wood shield"]["equipado"] == False:
+        matriz_weapons[7] = f"                  "
+
+    if info_equipamiento_partida["shield"]["equipado"] == False:
+        matriz_weapons[9] = f"                  "
+
+    return matriz_weapons
+
+
+# Example usage
+weapons_inventory = generar_weapons(info_equipamiento_partida)
+
+
+def equip_weapon(weapon_name, inventory, weapons_inventory):
+    global equipped_sword, equipped_shield
+
+    if weapon_name in info_equipamiento_partida and not info_equipamiento_partida[weapon_name]["equipado"]:
+        if info_equipamiento_partida[weapon_name]["cantidad"] > 0:  # Verifica la cantidad
+            if "sword" in weapon_name and equipped_sword is not None:
+                lista_prompt.append(f"You already have {equipped_sword} equipped.")
+            elif "shield" in weapon_name and equipped_shield is not None:
+                lista_prompt.append(f"You already have {equipped_shield} equipped.")
+            else:
+                info_equipamiento_partida[weapon_name]["equipado"] = True
+                lista_prompt.append(f"{weapon_name} equipped.")
+                if "sword" in weapon_name:
+                    equipped_sword = weapon_name
+                elif "shield" in weapon_name:
+                    equipped_shield = weapon_name
+                # Añadir al campo items_equipados
+                datos_jugador_actual["items_equipados"].append(weapon_name)
+        else:
+            lista_prompt.append(f"You don't have enough {weapon_name}.")
+    else:
+        lista_prompt.append(f"You don't have {weapon_name}.")
+
+    return inventory, weapons_inventory
+
+
+def unequip_weapon(weapon_name, inventory, weapons_inventory):
+    global equipped_sword, equipped_shield
+
+    if weapon_name in info_equipamiento_partida and info_equipamiento_partida[weapon_name]["equipado"]:
+        info_equipamiento_partida[weapon_name]["equipado"] = False
+        lista_prompt.append(f"{weapon_name} unequipped.")
+        if "sword" in weapon_name:
+            equipped_sword = None
+        elif "shield" in weapon_name:
+            equipped_shield = None
+        # Eliminar del campo items_equipados
+        datos_jugador_actual["items_equipados"].remove(weapon_name)
+    else:
+        lista_prompt.append(f"You don't have {weapon_name} equipped.")
+
+    if len(datos_jugador_actual["items_equipados"]) == 1:
+        inventory[5] = f"*                   "
+    elif len(datos_jugador_actual["items_equipados"]) == 0:
+        inventory[4] = f"*                   "
+        inventory[5] = f"*                   "
+
+    if info_equipamiento_partida["wood sword"]["equipado"] == False:
+        weapons_inventory[3] = f"*                   "
+
+    if info_equipamiento_partida["sword"]["equipado"] == False:
+        weapons_inventory[5] = f"*                   "
+
+    if info_equipamiento_partida["wood shield"]["equipado"] == False:
+        weapons_inventory[7] = f"*                   "
+
+    if info_equipamiento_partida["shield"]["equipado"] == False:
+        weapons_inventory[9] = f"*                   "
+
+    return inventory, weapons_inventory
+
+
+def generar_food_inventory(info_alimento_partida):
+    return [
+        ["", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        ["", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [f"Vegetables {info_alimento_partida['vegetables']['cantidad']:>6} "],
+        [f"Fish {info_alimento_partida['fish']['cantidad']:>12} "],
+        [f"Meat {info_alimento_partida['meat']['cantidad']:>12} "],
+        ["", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [f"Salads {info_alimento_partida['salads']['cantidad']:>10} "],
+        [f"Pescatarian {info_alimento_partida['pescatarian']['cantidad']:>5} "],
+        [f"Roasted {info_alimento_partida['roasted']['cantidad']:>9} "],
+        ["", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "]
+    ]
+
+
+food_inventory = generar_food_inventory(info_alimento_partida)
+
+
+def comer(opcion, informacion_jugador, info_alimento_partida, inventory):
+    if opcion.lower() == "vegetables":
+        if info_alimento_partida["vegetables"]["cantidad"] > 0:
+            # Aumenta la vida actual
+            informacion_jugador["vida_actual"] += 1
+            # Disminuye la cantidad de comida
+            info_alimento_partida["vegetables"]["cantidad"] -= 1
+            # Asegúrate de que la vida actual no exceda la vida total
+            if informacion_jugador["vida_actual"] > informacion_jugador["vida_total"]:
+                informacion_jugador["vida_actual"] = informacion_jugador["vida_total"]
+            lista_prompt.append("Has comido vegetales.")
+        elif info_alimento_partida["vegetables"]["cantidad"] <= 0:
+            lista_prompt.append("Not enough 1 vegetable")
+    elif opcion.lower() == "salads":
+        if info_alimento_partida["salads"]["cantidad"] > 0:
+            # Aumenta la vida actual
+            informacion_jugador["vida_actual"] += 2
+            # Disminuye la cantidad de comida
+            info_alimento_partida["salads"]["cantidad"] -= 1
+            # Asegúrate de que la vida actual no exceda la vida total
+            if informacion_jugador["vida_actual"] > informacion_jugador["vida_total"]:
+                informacion_jugador["vida_actual"] = informacion_jugador["vida_total"]
+            lista_prompt.append("Has comido salads.")
+        elif info_alimento_partida["salads"]["cantidad"] <= 0:
+            lista_prompt.append("Not enough 1 salads")
+    elif opcion.lower() == "pescatarian":
+        if info_alimento_partida["pescatarian"]["cantidad"] > 0:
+            # Aumenta la vida actual
+            informacion_jugador["vida_actual"] += 3
+            # Disminuye la cantidad de comida
+            info_alimento_partida["pescatarian"]["cantidad"] -= 1
+            # Asegúrate de que la vida actual no exceda la vida total
+            if informacion_jugador["vida_actual"] > informacion_jugador["vida_total"]:
+                informacion_jugador["vida_actual"] = informacion_jugador["vida_total"]
+            lista_prompt.append("Has comido pescatarian.")
+        elif info_alimento_partida["pescatarian"]["cantidad"] <= 0:
+            lista_prompt.append("Not enough 1 pescatarian")
+    elif opcion.lower() == "roasted":
+        if info_alimento_partida["roasted"]["cantidad"] > 0:
+            # Aumenta la vida actual
+            informacion_jugador["vida_actual"] += 4
+            # Disminuye la cantidad de comida
+            info_alimento_partida["roasted"]["cantidad"] -= 1
+            # Asegúrate de que la vida actual no exceda la vida total
+            if informacion_jugador["vida_actual"] > informacion_jugador["vida_total"]:
+                informacion_jugador["vida_actual"] = informacion_jugador["vida_total"]
+            lista_prompt.append("Has comido alimentos roasted.")
+        elif info_alimento_partida["roasted"]["cantidad"] <= 0:
+            lista_prompt.append("Not enough 1 roasted")
+    else:
+        lista_prompt.append("Invalid opcion ")
+
+
+def cocinar_en_partida(opcion, info_alimento_partida):
+    if opcion.lower() == "salad":
+        if info_alimento_partida["vegetables"]["cantidad"] >= 2:
+            # Disminuye un vegetal
+            info_alimento_partida["vegetables"]["cantidad"] -= 1
+            # Aumenta una ensalada
+            info_alimento_partida["salads"]["cantidad"] += 1
+            lista_prompt.append("Has cocinado una ensalada.")
+        elif info_alimento_partida["vegetables"]["cantidad"] == 0:
+            lista_prompt.append("Not enough 2 vegetables")
+        elif info_alimento_partida["vegetables"]["cantidad"] == 1:
+            lista_prompt.append("Not enough 1 vegetable")
+    elif opcion.lower() == "pescatarian":
+        if info_alimento_partida["vegetables"]["cantidad"] > 0 and info_alimento_partida["fish"]["cantidad"] > 0:
+            # Disminuye un vegetal y un pez
+            info_alimento_partida["vegetables"]["cantidad"] -= 1
+            info_alimento_partida["fish"]["cantidad"] -= 1
+            # Aumenta un pescatarian
+            info_alimento_partida["pescatarian"]["cantidad"] += 1
+            lista_prompt.append("Has cocinado un plato pescatariano.")
+        elif info_alimento_partida["vegetables"]["cantidad"] < 1 and info_alimento_partida["fish"]["cantidad"] < 1:
+            lista_prompt.append("Not enough 1 vegetable and 1 fish  ")
+        elif info_alimento_partida["vegetables"]["cantidad"] < 1 and info_alimento_partida["fish"]["cantidad"] >= 1:
+            lista_prompt.append("Not enough 1 vegetable ")
+        elif info_alimento_partida["vegetables"]["cantidad"] >= 1 and info_alimento_partida["fish"]["cantidad"] < 1:
+            lista_prompt.append("Not enough 1 fish ")
+    elif opcion.lower() == "roasted":
+        if info_alimento_partida["vegetables"]["cantidad"] > 0 and info_alimento_partida["meat"]["cantidad"] > 0:
+            # Disminuye un vegetal y una carne
+            info_alimento_partida["vegetables"]["cantidad"] -= 1
+            info_alimento_partida["meat"]["cantidad"] -= 1
+            # Aumenta un plato asado
+            info_alimento_partida["roasted"]["cantidad"] += 1
+            lista_prompt.append("Has cocinado un plato asado. ")
+        elif info_alimento_partida["vegetables"]["cantidad"] < 1 and info_alimento_partida["meat"]["cantidad"] < 1:
+            lista_prompt.append("Not enough 1 vegetable and 1 meat  ")
+        elif info_alimento_partida["vegetables"]["cantidad"] < 1 and info_alimento_partida["meat"]["cantidad"] >= 1:
+            lista_prompt.append("Not enough 1 vegetable ")
+        elif info_alimento_partida["vegetables"]["cantidad"] >= 1 and info_alimento_partida["meat"]["cantidad"] < 1:
+            lista_prompt.append("Not enough 1 meat ")
+    else:
+        lista_prompt.append("Invalid opcion ")
+
+
+def aplicar_truco(cheat, datos_jugador, info_alimento_partida, inventory, food_inventory, datos_partida_actual):
+    cheat_parts = cheat.split()
+    cheat_name = cheat_parts[1].lower() if len(cheat_parts) > 1 else None
+
+    if cheat_name.lower() == "rename":
+        if len(cheat_parts) == 5 and cheat_parts[3].lower() == "to":
+            nuevo_nombre = cheat_parts[4].strip('"')
+            if 3 <= len(nuevo_nombre) <= 10 and nuevo_nombre.replace(" ", "").isalnum():
+                datos_jugador["nombre"] = nuevo_nombre
+                lista_prompt.append(f"Cheating: Player renamed to '{nuevo_nombre}'.")
+                save_game(key_primaria_partida)
+            else:
+                lista_prompt.append(
+                    "Invalid new name. Must be between 3 and 10 characters and contain only letters, numbers, or spaces.")
+        else:
+            lista_prompt.append("Invalid syntax. Use 'cheat rename player to <new_name>'.")
+
+    elif cheat_name.lower() == "add":
+        if len(cheat_parts) == 3:
+            item_name = cheat_parts[2].lower()
+            if item_name.lower() == "vegetables":
+                info_alimento_partida[item_name]["cantidad"] += 1
+                save_game(key_primaria_partida)
+                lista_prompt.append("Cheating: add vegetables:")
+            elif item_name.lower() == "fish":
+                info_alimento_partida[item_name]["cantidad"] += 1
+                save_game(key_primaria_partida)
+                lista_prompt.append("Cheating: add fisht:")
+            elif item_name.lower() == "meat":
+                info_alimento_partida[item_name]["cantidad"] += 1
+                save_game(key_primaria_partida)
+                lista_prompt.append("Cheating: add meat:")
+            else:
+                lista_prompt.append(f"Invalid item '{item_name}'.")
+        else:
+            lista_prompt.append("Invalid command.")
+
+    elif cheat_name.lower() == "cook":
+        if len(cheat_parts) == 3:
+            dish_name = cheat_parts[2].lower()
+            if dish_name in ["salad", "pescatarian", "roasted"]:
+                if dish_name.lower() == "salad" and info_alimento_partida["vegetables"]["cantidad"] >= 2:
+                    info_alimento_partida["vegetables"]["cantidad"] -= 2
+                    info_alimento_partida["salads"]["cantidad"] += 1
+                    save_game(key_primaria_partida)
+                    lista_prompt.append("Cheating: Cooked salad.")
+                elif dish_name.lower() == "pescatarian" and info_alimento_partida["vegetables"]["cantidad"] >= 1 and \
+                        info_alimento_partida["fish"]["cantidad"] >= 1:
+                    info_alimento_partida["vegetables"]["cantidad"] -= 1
+                    info_alimento_partida["fish"]["cantidad"] -= 1
+                    info_alimento_partida["pescatarian"]["cantidad"] += 1
+                    save_game(key_primaria_partida)
+                    lista_prompt.append("Cheating: Cooked pescatarian.")
+                elif dish_name.lower() == "roasted" and info_alimento_partida["vegetables"]["cantidad"] >= 1 and \
+                        info_alimento_partida["meat"]["cantidad"] >= 1:
+                    info_alimento_partida["vegetables"]["cantidad"] -= 1
+                    info_alimento_partida["meat"]["cantidad"] -= 1
+                    info_alimento_partida["roasted"]["cantidad"] += 1
+                    save_game(key_primaria_partida)
+                    lista_prompt.append("Cheating: Cooked roasted.")
+                else:
+                    lista_prompt.append(f"Not enough ingredients to cook {dish_name}.")
+            else:
+                lista_prompt.append(f"Invalid dish '{dish_name}'.")
+        else:
+            lista_prompt.append("Invalid syntax. Use 'cheat cook <dish_name>'.")
+
+
+
+    elif cheat_name.lower() == "open" and cheat_parts[2].lower() == "sanctuaries":
+        # Aumenta el límite de corazones a 9 si no supera ese valor
+        if datos_jugador["vida_total"] < 10:
+            datos_jugador["vida_total"] = 10
+            lista_prompt.append("Cheating: open sanctuaries")
+            # Actualiza la información del jugador en el inventario principal
+            inventory[0][
+                0] = f"* {datos_jugador['nombre']:<10} ❤ {datos_jugador['vida_actual']}/{datos_jugador['vida_total']} "
+            # Abre todos los santuarios
+            lugares = ["hyrule", "death mountain", "necluda", "gerudo"]
+            for lugar in lugares:
+                for santuario in datos_partida_actual[lugar]["santuarios"]:
+                    if not datos_partida_actual[lugar]["santuarios"][santuario]["descubierto"]:
+                        datos_partida_actual[lugar]["santuarios"][santuario]["descubierto"] = True
+                        sql = "INSERT INTO santuaries_opened (sactuary_id, game_id, region, xpos, ypos) VALUES (%s, %s, %s, %s, %s)"
+                        val = (santuario, key_primaria_partida, lugar,
+                                      datos_partida_actual[lugar]["santuarios"][santuario]["x"],
+                                      datos_partida_actual[lugar]["santuarios"][santuario]["y"])
+                        cursor.execute(sql, val)
+                        db.commit()
+            save_game(key_primaria_partida)
+
+    elif cheat_name.lower() == "game" and cheat_parts[2].lower() == "over":
+        datos_jugador["vida_actual"] = 0
+        jugador_muerto()
+        lista_prompt.append("Cheating: game over")
+
+    elif cheat_name.lower() == "win" and cheat_parts[2].lower() == "game":
+        datos_partida_actual["castle"][0]["vida"] = 0
+        muerte_ganon()
+        lista_prompt.append("Cheating: win game")
+
+
+    else:
+        lista_prompt.append("Invalid command.")
+
+    return datos_jugador, info_alimento_partida, inventory, food_inventory
 
 # --- funciones movimiento ---
 
@@ -1033,6 +1459,7 @@ def open_sacntuary():
               datos_partida_actual[datos_jugador_actual["region"]]["santuarios"][id_santuario_adyacente]["y"]
               )
         cursor.execute(sql,val)
+        db.commit()
 
         save_game(key_primaria_partida)
 
@@ -1078,6 +1505,7 @@ def open_chest():
           )
 
     cursor.execute(sql,val)
+    db.commit()
 
     save_game(key_primaria_partida)
 
@@ -1237,14 +1665,14 @@ def mover_a_direccion(matriz, fila_personaje, columna_personaje, direccion, step
 
             # Si hay algún obstáculo
             if matriz[fila_personaje][columna_personaje] != " ":
-                print("objeto de por medio")
+                # print("objeto de por medio")
                 lista_prompt.append("You can't go there, is not a valid position")
                 # print(f"obstáculo en el camino {fila_personaje},{columna_personaje}")
                 return fila_anterior, columna_anterior
 
         # te sales del mapa - la nueva pos está fuera del mapa
         else:
-            print("te sales del mapa")
+            # print("te sales del mapa")
             lista_prompt.append("You can't go there, is not a valid position")
             return fila_anterior, columna_anterior
 
@@ -1288,9 +1716,9 @@ def go_direction(to_do, xpos, ypos):
     # el número de pasos que quiere dar: 2
     steps = to_do[-1]
 
-    print(direction,"-",steps)
-    print(type(direction))
-    print(type(steps))
+    # print(direction,"-",steps)
+    # print(type(direction))
+    # print(type(steps))
 
     if not direction.isalpha() or not steps.isdigit():
         lista_prompt.append("Invalid Option")
@@ -1306,9 +1734,6 @@ def go_direction(to_do, xpos, ypos):
         xpos, ypos = mover_a_direccion(mapa_cargado, xpos, ypos, direction, steps)
 
         return xpos, ypos
-
-
-# --- funciones cheats ---
 
 
 # --- funciones ganon ---
@@ -1327,14 +1752,11 @@ def generar_mapa_ganon(): # genera el mapa
     return mapa_a_cargar_ganon
 
 
-def print_tablero_ganon(mapa, vida):  # hace print del tablero # a la espera de la parte de unax
+def print_tablero_ganon(mapa, vida,inventario):  # hace print del tablero # a la espera de la parte de unax
     vivo = [" ", " ", " ", " ", " ", " ", " ", " ", "\\", " ", "/", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "G", "a", "n", "o", "n", " ", f"{'♥' * vida}".ljust(8), " ", " ", " "]
     derrotado = [" ", " ", " ", " ", " ", " ", " ", " ", "\\", " ", "/", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "G", "a", "n", "o", "n", " ", "d", "e", "f", "e", "a", "t", "e", "d", " ", " ", " "]
     titulo = "Castle "
     calculo = int(((60 - len(titulo)) / 2) - 1)
-    lista = ["Inventory", "Weapons", "Food"]
-    titulo_2 = lista[1]
-    calculo_2 = int((17 - len(titulo_2)) // 2)
     if datos_partida_actual["castle"][0]["vida"] == 0:
         mapa[1] = derrotado
     else:
@@ -1343,6 +1765,8 @@ def print_tablero_ganon(mapa, vida):  # hace print del tablero # a la espera de 
         print("* " + titulo.title() + " " + "* " * calculo, end="")
     else:
         print("* " + titulo.title() + "* " * calculo, end="")
+    titulo_2 = matriz_tipo_inventario.title()
+    calculo_2 = int((17 - len(titulo_2)) // 2)
     if len(titulo_2) % 2 != 0:
         print("* " * calculo_2 + titulo_2 + " * ")
     else:
@@ -1351,14 +1775,27 @@ def print_tablero_ganon(mapa, vida):  # hace print del tablero # a la espera de 
         print("*", end="")
         for elemento in mapa[i]:
             print(elemento, end="")
+        print("* ", end="")
+        for elemento in inventario[i]:
+            print(elemento, end="")
         print("* ")
-    #print("* " * 40)
 
-    lista_acciones = ["attack"]
-    lista_acciones_disponibles = ["exit", "go"]
+    global equip,unequip,eat
+
+    lista_acciones = ["attack",'equip','unequip','eat']
+    lista_acciones_disponibles = ["back", "go"]
 
     if xpos == 8 and ypos == 20:
         lista_acciones_disponibles.append(lista_acciones[0])
+
+    if equip:
+        lista_acciones_disponibles.append(lista_acciones[1])
+
+    if unequip:
+        lista_acciones_disponibles.append(lista_acciones[2])
+
+    if eat:
+        lista_acciones_disponibles.append(lista_acciones[3])
 
 
     # print(lista_acciones_disponibles)
@@ -1383,9 +1820,9 @@ def go_direction_ganon(to_do,xpos,ypos):
     # el número de pasos que quiere dar: 2
     steps = to_do[-1]
 
-    print(direction, "-", steps)
-    print(type(direction))
-    print(type(steps))
+    # print(direction, "-", steps)
+    # print(type(direction))
+    # print(type(steps))
 
     if not direction.isalpha() or not steps.isdigit():
         lista_prompt.append("Invalid Option")
@@ -1454,8 +1891,8 @@ def muerte_ganon():
 
 # VARIABLES --------
 
-xpos = 7
-ypos = 10
+xpos = datos_partida_actual[datos_jugador_actual['region']]['spawn']['x']
+ypos = datos_partida_actual[datos_jugador_actual['region']]['spawn']['y']
 
 hierba = False
 cocinar = False
@@ -1479,7 +1916,7 @@ while not flag_general_juego:
 
     # MAIN MENU
     while flag_main_menu:
-        # limpiar_pantalla()
+        limpiar_pantalla()
         print_main_menu()
         prompt(lista_prompt)
         input_main_menu()
@@ -1487,8 +1924,9 @@ while not flag_general_juego:
 
     # QUERIES MENU
     while flag_queries:
-        #limpiar_pantalla()
+        limpiar_pantalla()
         pm.print_menu_queries()
+        prompt(lista_prompt)
         opc = input("What to do now? ")
         if opc.lower() == "back":
             flag_main_menu = True
@@ -1499,6 +1937,7 @@ while not flag_general_juego:
                     raise Exception
                 assert 0 < int(opc[5]) < 6
                 print_query(int(opc[5]))
+                prompt(lista_prompt)
                 input("Press enter to continue ")
             except:
                 lista_prompt.append("Invalid Option")
@@ -1508,7 +1947,7 @@ while not flag_general_juego:
 
     # HELP MENU
     while flag_help_new_game:
-        # limpiar_pantalla()
+        limpiar_pantalla()
         pm.print_help_new_game()
         prompt(lista_prompt)
         opc = input("What to do now? ")
@@ -1520,7 +1959,7 @@ while not flag_general_juego:
 
     # ABAOUT MENU
     while flag_about:
-        #limpiar_pantalla()
+        limpiar_pantalla()
         pm.print_about()
         prompt(lista_prompt)
         opc = input("What to do now? ")
@@ -1532,7 +1971,7 @@ while not flag_general_juego:
 
     # HELP MAIN MENU
     while flag_help_main_menu:
-        #limpiar_pantalla()
+        limpiar_pantalla()
         pm.print_help_main_menu()
         prompt(lista_prompt)
         opc = input("What to do now? ")
@@ -1544,7 +1983,7 @@ while not flag_general_juego:
 
     # NEW GAME MENU
     while flag_new_game:
-        # limpiar_pantalla()
+        limpiar_pantalla()
         pm.print_new_game()
         prompt(lista_prompt)
         opc = input("What to do now? ")
@@ -1559,15 +1998,15 @@ while not flag_general_juego:
 
     # SAVED GAMES MENU
     while flag_saved_games:
-        print(lista_partidas)
-        #limpiar_pantalla()
+        # print(lista_partidas)
+        limpiar_pantalla()
         print_saved_games()
         prompt(lista_prompt)
         input_saved_games()
 
     # HELP SAVED GAMES MENU
     while flag_help_saved_games:
-        #limpiar_pantalla()
+        limpiar_pantalla()
         pm.print_help_saved_game()
         prompt(lista_prompt)
         opc = input("What to do now? ")
@@ -1579,7 +2018,7 @@ while not flag_general_juego:
 
     # LEGEND MENU
     while flag_legend:
-        # limpiar_pantalla()
+        limpiar_pantalla()
         pm.print_legend()
         prompt(lista_prompt)
         opc = input("What to do now? ")
@@ -1590,7 +2029,7 @@ while not flag_general_juego:
             lista_prompt.append("Invalid action")
     # PLOT MENU
     while flag_plot:
-        # limpiar_pantalla()
+        limpiar_pantalla()
         pm.print_plot(nombre_jugador)
         prompt(lista_prompt)
         opc = input("What to do now? ")
@@ -1601,7 +2040,7 @@ while not flag_general_juego:
             val = (datos_jugador_actual['nombre'], 3, 3, "hyrule")
             cursor.execute(sql, val)
             key_primaria_partida = cursor.lastrowid
-            print(f"Key primaria de partida creada = {key_primaria_partida}")
+            # print(f"Key primaria de partida creada = {key_primaria_partida}")
             crear_nueva_partida(key_primaria_partida)
             flag_plot = False
             flag_in_game = True
@@ -1610,26 +2049,97 @@ while not flag_general_juego:
 
     # GAME MENU
     while flag_in_game:
-        # limpiar_pantalla()
+        limpiar_pantalla()
 
         # COMPROBACIONES
         mostrar_fox()
         reinicio_cofres(key_primaria_partida)
         actualizar_turnos_restantes_arboles(datos_jugador_actual["region"])
+        blood_moon()
+
+        #MATRIZES INVENTARIO
+        if matriz_tipo_inventario == "Inventory":
+            inventory = generar_inventory(info_alimento_partida, datos_jugador_actual, info_equipamiento_partida)
+        elif matriz_tipo_inventario == "weapons":
+            inventory = generar_weapons(info_equipamiento_partida)
+        elif matriz_tipo_inventario == "food":
+            inventory = generar_food_inventory(info_alimento_partida)
 
         # MAPA
         mapa_cargado = generar_mapa()
         (hierba, cocinar, talar, pescar, santuario, cofre,
          atacar_enemigo, equip, unequip, eat, atacar_general) = permitir_acciones_jugador(mapa_cargado, xpos, ypos)
-        print_tablero(mapa_cargado)
+        print_tablero(mapa_cargado,inventory)
         # PROMPT
         prompt(lista_prompt)
         # INPUT
         to_do = input("What to do now?")
 
+        #RESTA DE BLOOD_MOONS POR CADA INPUT
+        datos_jugador_actual["blood_moon_countdown"] -= 1
+
         if to_do.lower() == "exit":
+            matriz_tipo_inventario = "Inventory"
+            info_alimento_partida = importar_datos_comida_sin_modificaciones()
+            info_equipamiento_partida = importar_datos_armas_sin_modificaciones()
+            datos_jugador_actual = importar_datos_jugador_sin_modificaciones()
+            datos_partida_actual = importar_datos_partida_sin_modificaciones()
+            key_primaria_partida = ""
+            partidas_guardadas = seleccionar_partidas_guardadas()
+            lista_partidas = metodo_burbuja_ordenar_partidas_recientes(list(partidas_guardadas.keys()))
             flag_in_game = False
             flag_main_menu = True
+
+        #TIPOS DE INVENTARIO
+        elif to_do.lower() == "show inventory main":
+            matriz_tipo_inventario = "Inventory"
+        elif to_do.lower() == "show inventory weapons":
+            matriz_tipo_inventario = "weapons"
+        elif to_do.lower() == "show inventory food":
+            matriz_tipo_inventario = "food"
+
+        #EQUIPAR Y DESEQUIPAR ARMAS
+        elif to_do.lower().startswith('equip'):
+            weapon_to_equip = to_do.split(' ', 1)[1].lower()
+            equip_weapon(weapon_to_equip,
+                         generar_inventory(info_alimento_partida, datos_jugador_actual, info_equipamiento_partida),
+                         generar_weapons(info_equipamiento_partida))
+        elif to_do.lower().startswith('unequip'):
+            weapon_to_unequip = to_do.split(' ', 1)[1].lower()
+            unequip_weapon(weapon_to_unequip,
+                           generar_inventory(info_alimento_partida, datos_jugador_actual, info_equipamiento_partida),
+                           generar_weapons(info_equipamiento_partida))
+
+        #COMER
+        elif to_do.lower().startswith("eat "):
+            opcion_parts = to_do.split()
+            if len(opcion_parts) == 2:
+                accion = opcion_parts[0].lower()
+                comida_opcion = opcion_parts[1]
+
+                if accion == "eat" and comida_opcion in info_alimento_partida:
+                    inventory = comer(comida_opcion, datos_jugador_actual, info_alimento_partida,
+                                      generar_inventory(info_alimento_partida, datos_jugador_actual,
+                                                        info_equipamiento_partida))
+                else:
+                    lista_prompt.append("Invalid command.")
+            else:
+                lista_prompt.append("Invalid command.")
+
+        #COCINAR
+        elif to_do.lower().startswith("cook ")and cocinar:
+            opcion_parts = to_do.split()
+            if len(opcion_parts) == 2:
+                accion = opcion_parts[0].lower()  # "eat" or "cook"
+                comida_opcion = opcion_parts[1]
+
+                if accion == "cook" and comida_opcion in ["salad", "pescatarian", "roasted"]:
+                    inventory = cocinar_en_partida(comida_opcion, info_alimento_partida)
+                    food_inventory = generar_food_inventory(info_alimento_partida)
+                else:
+                    lista_prompt.append("Invalid command.")
+            else:
+                lista_prompt.append("Invalid command.")
 
 
         # orden: SHOW MAP
@@ -1691,6 +2201,36 @@ while not flag_general_juego:
         elif to_do[0:2].lower() == "go":
             xpos, ypos = go_direction(to_do, xpos, ypos)
 
+        #ORDENES CHEATS
+        elif to_do.lower() == "cheat add wood sword":
+            info_equipamiento_partida['wood sword']['cantidad'] += 1
+            info_equipamiento_partida['wood sword']['usos'] += 5
+            save_game(key_primaria_partida)
+            lista_prompt.append("Cheating: add wood sword")
+        elif to_do.lower()  == "cheat add sword":
+            info_equipamiento_partida['sword']['cantidad'] += 1
+            info_equipamiento_partida['sword']['usos'] += 9
+            save_game(key_primaria_partida)
+            lista_prompt.append("Cheating: add sword")
+        elif to_do.lower()  == "cheat add wood shield":
+            info_equipamiento_partida['wood shield']['cantidad'] += 1
+            info_equipamiento_partida['wood shield']['usos'] += 5
+            save_game(key_primaria_partida)
+            lista_prompt.append("Cheating: wood shield")
+        elif to_do.lower()  == "cheat add shield":
+            info_equipamiento_partida['shield']['cantidad'] += 1
+            info_equipamiento_partida['shield']['usos'] += 9
+            save_game(key_primaria_partida)
+            lista_prompt.append("Cheating: add shield ")
+        elif to_do.lower().startswith('cheat'):
+            datos_jugador_actual, info_alimento_partida, inventory, food_inventory = aplicar_truco(to_do,datos_jugador_actual,info_alimento_partida,generar_inventory(info_alimento_partida, datos_jugador_actual,
+                                                        info_equipamiento_partida),generar_food_inventory(info_alimento_partida),datos_partida_actual)
+
+        #ORDEN SHOW INVENTORY
+        elif to_do.lower() == 'show inventory help':
+            flag_in_game = False
+            flag_help_inventory = True
+
         # orden INCORRECTA
 
         else:
@@ -1701,6 +2241,7 @@ while not flag_general_juego:
 
     # SHOW MAP MENU
     while flag_show_map:
+        limpiar_pantalla()
         show_map()
         prompt(lista_prompt)
         opc = input("What to do now? ")
@@ -1711,7 +2252,8 @@ while not flag_general_juego:
             lista_prompt.append("Invalid action")
 
     # HELP INVENTORY MENU
-    while flag_help_inventory: # FALTA INPUT en in_game para ir a este flag
+    while flag_help_inventory:
+        limpiar_pantalla()
         pm.print_help_inventory()
         prompt(lista_prompt)
         opc = input("What to do now? ")
@@ -1723,15 +2265,27 @@ while not flag_general_juego:
 
     # GANON CASTLE MENU
     while flag_ganon_castle:
+        limpiar_pantalla()
+
+        blood_moon()
+
+        if matriz_tipo_inventario == "Inventory":
+            inventory = generar_inventory(info_alimento_partida, datos_jugador_actual, info_equipamiento_partida)
+        elif matriz_tipo_inventario == "weapons":
+            inventory = generar_weapons(info_equipamiento_partida)
+        elif matriz_tipo_inventario == "food":
+            inventory = generar_food_inventory(info_alimento_partida)
 
         mapa_cargado_ganon = generar_mapa_ganon()
         (hierba, cocinar, talar, pescar, santuario, cofre,
          atacar_enemigo, equip, unequip, eat, atacar_general) = permitir_acciones_jugador(mapa_cargado_ganon, xpos, ypos)
-        print_tablero_ganon(mapa_cargado_ganon,datos_partida_actual["castle"][0]["vida"])
+        print_tablero_ganon(mapa_cargado_ganon,datos_partida_actual["castle"][0]["vida"],inventory)
         # PROMPT
         prompt(lista_prompt)
         # INPUT
         to_do = input("What to do now?")
+
+        datos_jugador_actual["blood_moon_countdown"] -= 1
 
         # order: BACK
 
@@ -1757,21 +2311,94 @@ while not flag_general_juego:
         elif to_do.lower() == "attack" and xpos == 8 and ypos == 20 and datos_partida_actual["castle"][0]["vida"] > 0 : #ganon
             attack_ganon()
 
+        #COMER EN CASTILLO
+        elif to_do.lower().startswith("eat "):
+            opcion_parts = to_do.split()
+            if len(opcion_parts) == 2:
+                accion = opcion_parts[0].lower()
+                comida_opcion = opcion_parts[1]
+
+                if accion == "eat" and comida_opcion in info_alimento_partida:
+                    inventory = comer(comida_opcion, datos_jugador_actual, info_alimento_partida,
+                                      generar_inventory(info_alimento_partida, datos_jugador_actual,
+                                                        info_equipamiento_partida))
+                else:
+                    lista_prompt.append("Invalid command.")
+            else:
+                lista_prompt.append("Invalid command.")
+
+        #EQUIPAR Y DESEQUIPAR EN GANON
+        elif to_do.lower().startswith('equip'):
+            weapon_to_equip = to_do.split(' ', 1)[1].lower()
+            equip_weapon(weapon_to_equip,
+                         generar_inventory(info_alimento_partida, datos_jugador_actual, info_equipamiento_partida),
+                         generar_weapons(info_equipamiento_partida))
+        elif to_do.lower().startswith('unequip'):
+            weapon_to_unequip = to_do.split(' ', 1)[1].lower()
+            unequip_weapon(weapon_to_unequip,
+                           generar_inventory(info_alimento_partida, datos_jugador_actual, info_equipamiento_partida),
+                           generar_weapons(info_equipamiento_partida))
+
+        #CHEATS EN GANON
+        elif to_do.lower() == "cheat add wood sword":
+            info_equipamiento_partida['wood sword']['cantidad'] += 1
+            info_equipamiento_partida['wood sword']['usos'] += 5
+            save_game(key_primaria_partida)
+            lista_prompt.append("Cheating: add wood sword")
+        elif to_do.lower() == "cheat add sword":
+            info_equipamiento_partida['sword']['cantidad'] += 1
+            info_equipamiento_partida['sword']['usos'] += 9
+            save_game(key_primaria_partida)
+            lista_prompt.append("Cheating: add sword")
+        elif to_do.lower() == "cheat add wood shield":
+            info_equipamiento_partida['wood shield']['cantidad'] += 1
+            info_equipamiento_partida['wood shield']['usos'] += 5
+            save_game(key_primaria_partida)
+            lista_prompt.append("Cheating: wood shield")
+        elif to_do.lower() == "cheat add shield":
+            info_equipamiento_partida['shield']['cantidad'] += 1
+            info_equipamiento_partida['shield']['usos'] += 9
+            save_game(key_primaria_partida)
+            lista_prompt.append("Cheating: add shield ")
+        elif to_do.lower().startswith('cheat'):
+            datos_jugador_actual, info_alimento_partida, inventory, food_inventory = aplicar_truco(to_do,datos_jugador_actual,
+                                                                                                   info_alimento_partida,
+                                                                                                   generar_inventory(
+                                                                                                       info_alimento_partida,
+                                                                                                       datos_jugador_actual,
+                                                                                                       info_equipamiento_partida),
+                                                                                                   generar_food_inventory(
+                                                                                                       info_alimento_partida),
+                                                                                                   datos_partida_actual)
+        #MOSTRA INVENTARIOS EN GANON
+        elif to_do.lower() == "show inventory main":
+            matriz_tipo_inventario = "Inventory"
+        elif to_do.lower() == "show inventory weapons":
+            matriz_tipo_inventario = "weapons"
+        elif to_do.lower() == "show inventory food":
+            matriz_tipo_inventario = "food"
+
         else:
             lista_prompt.append("Incorrect Option")
 
+        jugador_muerto(key_primaria_partida)
+
     # LINK DEATH MENU
     while flag_link_death:
+        limpiar_pantalla()
         pm.print_personaje_death(datos_jugador_actual["nombre"])
         prompt(lista_prompt)
         opc = input("What to do now? ")
         if opc.lower() == "continue":
             # restart de los datos de partida
+            matriz_tipo_inventario = "Inventory"
             info_alimento_partida = importar_datos_comida_sin_modificaciones()
             info_equipamiento_partida = importar_datos_armas_sin_modificaciones()
             datos_jugador_actual = importar_datos_jugador_sin_modificaciones()
             datos_partida_actual = importar_datos_partida_sin_modificaciones()
             key_primaria_partida = ""
+            partidas_guardadas = seleccionar_partidas_guardadas()
+            lista_partidas = metodo_burbuja_ordenar_partidas_recientes(list(partidas_guardadas.keys()))
             # Vuelve al main menu
             flag_link_death = False
             flag_main_menu = True
@@ -1780,16 +2407,20 @@ while not flag_general_juego:
 
     # ZELDA SAVED MENU
     while flag_zelda_saved:
+        limpiar_pantalla()
         pm.print_zelda_saved(datos_jugador_actual["nombre"])
         prompt(lista_prompt)
         opc = input("What to do now? ")
         if opc.lower() == "continue":
             #reset datos
+            matriz_tipo_inventario = "Inventory"
             info_alimento_partida = importar_datos_comida_sin_modificaciones()
             info_equipamiento_partida = importar_datos_armas_sin_modificaciones()
             datos_jugador_actual = importar_datos_jugador_sin_modificaciones()
             datos_partida_actual = importar_datos_partida_sin_modificaciones()
             key_primaria_partida = ""
+            partidas_guardadas = seleccionar_partidas_guardadas()
+            lista_partidas = metodo_burbuja_ordenar_partidas_recientes(list(partidas_guardadas.keys()))
             # menu principal
             flag_main_menu = True
             flag_zelda_saved =  False
