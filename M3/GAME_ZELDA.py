@@ -1105,12 +1105,12 @@ def aplicar_truco(cheat, datos_jugador, info_alimento_partida, inventory, food_i
 
     elif cheat_name.lower() == "game" and cheat_parts[2].lower() == "over":
         datos_jugador["vida_actual"] = 0
-        jugador_muerto()
+        jugador_muerto(key_primaria_partida)
         lista_prompt.append("Cheating: game over")
 
     elif cheat_name.lower() == "win" and cheat_parts[2].lower() == "game":
         datos_partida_actual["castle"][0]["vida"] = 0
-        muerte_ganon()
+        muerte_ganon(key_primaria_partida)
         lista_prompt.append("Cheating: win game")
 
 
