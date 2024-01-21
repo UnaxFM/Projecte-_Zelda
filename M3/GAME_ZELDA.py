@@ -1089,6 +1089,7 @@ def aplicar_truco(cheat, datos_jugador, info_alimento_partida, inventory, food_i
         # Aumenta el límite de corazones a 9 si no supera ese valor
         if datos_jugador["vida_total"] < 10:
             datos_jugador["vida_total"] = 10
+            datos_jugador["vida_actual"] = 10
             lista_prompt.append("Cheating: open sanctuaries")
             # Actualiza la información del jugador en el inventario principal
             inventory[0][
