@@ -1,0 +1,447 @@
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=DotGothic16&family=Overlock+SC&display=swap');
+
+body {
+    background-image: url('imagen/fondo_tutorial.jpg');
+    background-repeat: repeat;
+    background-position: center 0%;
+    background-size: contain;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background-color: rgba(51, 51, 51, 0);
+    padding: 10px;
+    color: white;
+}
+
+.sticky-menu {
+    background-color: #333;
+    padding: 10px;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 2px solid black;
+    cursor: pointer;
+}
+
+.sticky-menu::after {
+    content: "";
+    border-style: solid;
+    border-width: 8px 8px 0;
+    border-color: white transparent transparent;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.menu {
+    display: none;
+}
+
+.sticky-menu:hover .menu {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu li {
+    margin-right: 20px;
+}
+
+.menu li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 10px 16px;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: border-bottom 0.3s ease;
+}
+
+.menu li a:hover {
+    border-bottom: 2px solid #fff;
+}
+
+.main {
+    flex: 1;
+    padding: 20px;
+    color: white;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav li {
+    margin-right: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+nav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 10px 16px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    font-family: 'Black Ops One', system-ui;
+}
+
+nav:hover li {
+    opacity: 1;
+}
+
+nav li:hover a {
+    background-color: rgba(51, 51, 51, 0);
+}
+
+main {
+    flex: 1;
+    padding: 20px;
+    color: white;
+}
+
+h1 {
+    font-size: 45px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #b99e66;
+    text-shadow: 2px 2px 4px #000;
+    margin-top: 35px;
+    font-family: 'Black Ops One', system-ui;
+}
+
+footer {
+    background-color: rgba(51, 51, 51, 0);
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin-top: auto;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+h3 {
+    font-size: 35px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #b99e66;
+    text-shadow: 2px 2px 4px #000;
+    font-family: 'Black Ops One', system-ui;
+    margin-right: 50px; /* Ajusta el valor según sea necesario para mover a la derecha */
+    margin-top: 30px; /* Ajusta el valor según sea necesario para bajarlo */
+}
+
+.text_principal {
+    font-size: 25px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    text-align: center;
+    font-family: 'Black Ops One', system-ui;
+}
+
+.gift-container_tutorial {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 150px;
+}
+
+.gift_tutorial {
+    margin-left: 50px;
+}
+
+
+
+.rectangle__Interacion_Mapa {
+    position: relative;
+    width: 1940px;
+    height: 2900px;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo semitransparente oscuro */
+    border: 3px solid #fff; /* Borde blanco */
+    border-radius: 10px; /* Esquinas redondeadas */
+    overflow: hidden;
+    right: 2%;
+    top:150px ;
+}
+
+.rectangle {
+    position: relative;
+    width: 1940px;
+    height: 800px;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo semitransparente oscuro */
+    border: 3px solid #fff; /* Borde blanco */
+    border-radius: 10px; /* Esquinas redondeadas */
+    overflow: hidden;
+    right: 2%;
+    top:150px ;
+}
+
+.text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    text-align: center;
+}
+
+.text_Mostra_info {
+    position: absolute;
+    top: 74%;
+    left: 17%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    text-align: left;
+    font-family: 'Black Ops One', system-ui;
+}
+
+.text_Equip {
+    position: absolute;
+    top: 73%;
+    left: 49%;
+    transform: translate(-50%, -50%);
+    font-family: 'Black Ops One', system-ui;
+    color: #fff;
+    text-align: left;
+}
+
+.text_Eat_Cook {
+    position: absolute;
+    top: 77%;
+    left: 69%;
+    margin-left: 13%;
+    transform: translate(-50%, -50%);
+    font-family: 'Black Ops One', system-ui;
+    color: #fff;
+    text-align: left;
+    max-height: 300px; /* Altura máxima del contenedor */
+    overflow-y: auto; /* Agregado para permitir el desplazamiento vertical */
+}
+
+.text_Eat_Cook::-webkit-scrollbar {
+    width: 0px; /* Grosor horizontal de la barra de desplazamiento */
+}
+
+.text_Eat_Cook::-webkit-scrollbar-thumb {
+    background-color: #888; /* Color del "pulgón" (la parte móvil de la barra) */
+    border-radius: 5px; /* Borde redondeado de la parte móvil de la barra */
+}
+
+.text_Eat_Cook::-webkit-scrollbar-track {
+    background-color: #eee; /* Color del "rastro" (la parte fija de la barra) */
+    border-radius: 5px; /* Borde redondeado de la parte fija de la barra */
+}
+
+.gift-container_tutorial_inventario {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 105px;
+}
+
+.gift_tutorial_inventario {
+    margin-left: 45px;
+}
+
+.gift-container_tutorial_inventario_Equip {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: -300px;
+}
+
+.gift_tutorial_inventario_Equip {
+    margin-left: 650px;
+}
+
+.gift-container_tutorial_inventario_Eat_Cook {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: -300px;
+}
+
+.gift_tutorial_inventario_Eat_Cook {
+    margin-left: 1320px;
+}
+
+h2 {
+    font-size: 30px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #b99e66;
+    text-shadow: 2px 2px 4px #000;
+    font-family: 'Black Ops One', system-ui;
+    margin-right: 50px; /* Ajusta el valor según sea necesario para mover a la derecha */
+    margin-top: 30px; /* Ajusta el valor según sea necesario para bajarlo */
+}
+
+.text_presentacion_inventario {
+    position: absolute;
+    top: 12%;
+    left: 35%;
+    margin-left: 13%;
+    transform: translate(-50%, -50%);
+    font-family: 'Black Ops One', system-ui;
+    color: #fff;
+    text-align: center;
+    max-height: 300px; /* Altura máxima del contenedor */
+    overflow-y: auto; /* Agregado para permitir el desplazamiento vertical */
+}
+
+.text_matarganon {
+    position: absolute;
+    top: 10%;
+    left: 31%;
+    margin-right: 10%;
+    transform: translate(-50%, -50%);
+    font-family: 'Black Ops One', system-ui;
+    color: #fff;
+    text-align: left;
+    max-height: 300px; /* Altura máxima del contenedor */
+    overflow-y: auto; /* Agregado para permitir el desplazamiento vertical */
+}
+
+.text_atacar {
+    position: absolute;
+    top: 30%;
+    left: 36%;
+    margin-right: 10%;
+    transform: translate(-50%, -50%);
+    font-family: 'Black Ops One', system-ui;
+    color: #fff;
+    text-align: left;
+    max-height: 300px; /* Altura máxima del contenedor */
+}
+
+.text_blood_moon {
+    position: absolute;
+    top: 50%;
+    left: 35%;
+    margin-right: 10%;
+    transform: translate(-50%, -50%);
+    font-family: 'Black Ops One', system-ui;
+    color: #fff;
+    text-align: left;
+    max-height: 300px; /* Altura máxima del contenedor */
+}
+
+.text_moverse {
+    position: absolute;
+    top: 65%;
+    left: 30%;
+    margin-right: 10%;
+    transform: translate(-50%, -50%);
+    font-family: 'Black Ops One', system-ui;
+    color: #fff;
+    text-align: left;
+    max-height: 300px; /* Altura máxima del contenedor */
+}
+
+.text_santuarios {
+    position: absolute;
+    top: 80%;
+    left: 28%;
+    margin-right: 10%;
+    transform: translate(-50%, -50%);
+    font-family: 'Black Ops One', system-ui;
+    color: #fff;
+    text-align: left;
+    max-height: 300px; /* Altura máxima del contenedor */
+}
+
+.text_cofres {
+    position: absolute;
+    top: 92%;
+    left: 29%;
+    margin-right: 10%;
+    transform: translate(-50%, -50%);
+    font-family: 'Black Ops One', system-ui;
+    color: #fff;
+    text-align: left;
+    max-height: 300px; /* Altura máxima del contenedor */
+}
+
+
+
+.gift-container_tutorial_matarganon {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 150px;
+}
+
+.gift_tutorial_matarganon  {
+    margin-left: 1150px;
+}
+
+.gift-container_tutorial_atacar {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 270px;
+}
+
+.gift_tutorial_atacar {
+    margin-left: 1150px;
+}
+
+.gift-container_tutorial_blood_moon {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 250px;
+}
+
+.gift_tutorial_blood_moon {
+    margin-left: 1150px;
+}
+
+.gift-container_tutorial_moverse {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 120px;
+}
+
+.gift_tutorial_moverse  {
+    margin-left: 1150px;
+}
+
+.gift-container_tutorial_santuarios {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 100px;
+}
+
+.gift_tutorial_santuarios  {
+    margin-left: 1150px;
+}
+
+.gift-container_tutorial_cofres {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 100px;
+}
+
+.gift_tutorial_cofres  {
+    margin-left: 1150px;
+}
+
+img {
+  width: 556px;
+  height: 296px;
+}
