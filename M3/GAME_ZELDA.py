@@ -2084,7 +2084,12 @@ while not flag_general_juego:
         datos_jugador_actual["blood_moon_countdown"] -= 1
 
         if to_do.lower() == "exit":
+            
+             # reinicio de datos
+
             matriz_tipo_inventario = "Inventory"
+            equipped_sword = None
+            equipped_shield = None
             info_alimento_partida = importar_datos_comida_sin_modificaciones()
             info_equipamiento_partida = importar_datos_armas_sin_modificaciones()
             datos_jugador_actual = importar_datos_jugador_sin_modificaciones()
@@ -2092,6 +2097,8 @@ while not flag_general_juego:
             key_primaria_partida = ""
             partidas_guardadas = seleccionar_partidas_guardadas()
             lista_partidas = metodo_burbuja_ordenar_partidas_recientes(list(partidas_guardadas.keys()))
+
+
             flag_in_game = False
             flag_main_menu = True
 
