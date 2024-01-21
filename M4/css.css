@@ -138,3 +138,251 @@ footer {
     z-index: 100;
 }
 
+.intro-text {
+    font-size: 18px;
+    text-align: left;
+    max-width: 600px;
+    margin-left: 180px ;
+    margin-top: 50px;
+    font-family: 'Black Ops One', system-ui;
+}
+
+.gift-container {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: -250px;
+}
+
+.gift {
+    margin-left: 190px;
+}
+
+.gift-container_2 {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -650px;
+}
+
+.gift_2 {
+    margin-right: 200px;
+}
+
+.gift-container_tutorial {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 150px;
+}
+
+.gift_tutorial {
+    margin-left: 50px;
+}
+
+
+.section-header {
+    position: relative;
+}
+
+.line {
+    position: absolute;
+    top: -50px;
+    right: 55%;
+    width: 40%;
+    height: 5px;
+    background-color: #b99e66; /* color de la línea */
+}
+
+.line::before,
+.line::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+}
+
+.line::before {
+    border-width: 10px 10px 0 10px;
+    border-color: #b99e66 transparent transparent transparent; /* color de la flecha */
+    left: -10px;
+    transform: rotate(90deg); /* Rotación de 90 grados */
+    top: -3px;
+}
+
+.line::after {
+    border-width: 10px 10px 0 10px;
+    border-color: #b99e66 transparent transparent transparent; /* color de la flecha */
+    right: -10px;
+    transform: rotate(-90deg); /* Rotación de 90 grados */
+    top: -3px;
+}
+
+.section-header_2 {
+    position: relative;
+}
+
+.line_2 {
+    position: absolute;
+    top: -50px;
+    left: 55%;
+    width: 40%;
+    height: 5px;
+    background-color: #b99e66; /* color de la línea */
+}
+
+.line_2::before,
+.line_2::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+}
+
+.line_2::before {
+    border-width: 10px 10px 0 10px;
+    border-color: #b99e66 transparent transparent transparent; /* color de la flecha */
+    left: -10px;
+    transform: rotate(90deg); /* Rotación de 90 grados */
+    top: -3px;
+}
+
+.line_2::after {
+    border-width: 10px 10px 0 10px;
+    border-color: #b99e66 transparent transparent transparent; /* color de la flecha */
+    right: -10px;
+    transform: rotate(-90deg); /* Rotación de 90 grados */
+    top: -3px;
+}
+
+.intro-text_2 {
+    font-size: 18px;
+    text-align: left;
+    max-width: 600px;
+    margin-left: 1100px ;
+    margin-top: 80px;
+    font-family: 'Black Ops One', system-ui;
+}
+
+.rectangle {
+    position: relative;
+    width: 1940px;
+    height: 600px;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo semitransparente oscuro */
+    border: 3px solid #fff; /* Borde blanco */
+    border-radius: 10px; /* Esquinas redondeadas */
+    overflow: hidden;
+    right: 2%;
+    top:150px ;
+}
+
+.text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    text-align: center;
+}
+
+h2 {
+    font-size: 30px;
+    text-transform: uppercase;
+    text-align: left;
+    color: #b99e66;
+    text-shadow: 2px 2px 4px #000;
+    margin-top: 35px;
+    font-family: 'Black Ops One', system-ui;
+    margin-right: 50px; /* Ajusta el valor según sea necesario para mover a la derecha */
+    margin-top: 100px; /* Ajusta el valor según sea necesario para bajarlo */
+}
+
+h3 {
+    font-size: 30px;
+    text-transform: uppercase;
+    text-align: right;
+    color: #b99e66;
+    text-shadow: 2px 2px 4px #000;
+    font-family: 'Black Ops One', system-ui;
+    margin-right: 50px; /* Ajusta el valor según sea necesario para mover a la derecha */
+    margin-top: 60px; /* Ajusta el valor según sea necesario para bajarlo */
+}
+
+.intro-text::before {
+    content: "";
+    position: absolute;
+    top: -70%;
+    left: 4%;
+    width: 42%;
+    height: 400%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: -1;
+}
+.intro-text_2::before {
+    content: "";
+    position: absolute;
+    top: -360%;
+    left: 54%;
+    width: 42%;
+    height: 500%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: -1;
+}
+
+@media only screen and (max-width: 600px) {
+    .intro-text {
+        margin-left: 0;
+        text-align: center;
+    }
+
+    .gift-container {
+        margin-top: 0;
+        justify-content: center;
+    }
+
+    .gift {
+        margin-left: 0;
+    }
+
+    .gift-container_2 {
+        margin-top: 0;
+        justify-content: center;
+    }
+
+    .gift_2 {
+        margin-right: 0;
+    }
+
+    .gift-container_tutorial {
+        margin-top: 0;
+        justify-content: center;
+    }
+
+    .gift_tutorial {
+        margin-left: 0;
+    }
+
+    .section-header,
+    .section-header_2 {
+        text-align: center;
+    }
+
+    .line,
+    .line_2 {
+        right: 50%;
+        left: 50%;
+        width: 100%;
+    }
+
+    .intro-text_2 {
+        margin-left: 0;
+        text-align: center;
+    }
+
+    .rectangle {
+        right: 0;
+        top: 0;
+        width: 100%;
+    }
+}
