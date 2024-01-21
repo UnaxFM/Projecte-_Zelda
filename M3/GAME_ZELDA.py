@@ -692,6 +692,10 @@ def reinicio_cofres(primary_key):
                 if datos_partida_actual[lugar]["cofres"][cofre]["abierto"]:
                     contador += 1
         if contador == 7:
+            lugares = ["hyrule", "death mountain", "necluda", "gerudo"]
+            for lugar in lugares:
+                for cofre in datos_partida_actual[lugar]["cofres"]:
+                    datos_partida_actual[lugar]["cofres"][cofre]["abierto"] = False
             sql = f"DELETE FROM chest_opened WHERE game_id = {primary_key}"
             cursor.execute(sql)
             db.commit()
