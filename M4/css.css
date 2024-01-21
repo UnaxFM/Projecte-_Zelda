@@ -292,7 +292,6 @@ h2 {
     text-align: left;
     color: #b99e66;
     text-shadow: 2px 2px 4px #000;
-    margin-top: 35px;
     font-family: 'Black Ops One', system-ui;
     margin-right: 50px; /* Ajusta el valor según sea necesario para mover a la derecha */
     margin-top: 100px; /* Ajusta el valor según sea necesario para bajarlo */
@@ -328,6 +327,11 @@ h3 {
     height: 500%;
     background-color: rgba(0, 0, 0, 0.7);
     z-index: -1;
+}
+
+img {
+  width: 556px;
+  height: 296px;
 }
 
 @media only screen and (max-width: 600px) {
