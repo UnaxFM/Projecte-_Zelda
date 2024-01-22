@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=DotGothic16&family=Overlock+SC&display=swap');
 
 body {
-    background-image: url('imagen/fondo_del_about.jpg');
-    background-repeat: repeat;
+    background-image: url('imagenes_pagina_web/fondo_del_about.jpg');
+    background-repeat: no-repeat;
     background-position: center 0%;
-    background-size: contain;
+    background-size: cover;
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
@@ -202,4 +202,53 @@ h3 {
     font-family: 'Black Ops One', system-ui;
     margin-right: 50px; /* Ajusta el valor según sea necesario para mover a la derecha */
     margin-top: 30px; /* Ajusta el valor según sea necesario para bajarlo */
+}
+
+@media only screen and (max-width: 600px) {
+
+
+.sticky-menu {
+    padding: 10px;
+    text-align: center;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.menu li {
+    margin: 10px 0;
+}
+
+.main {
+    padding: 10px;
+}
+
+.rectangle1 {
+    width: 100%; /* Ocupar todo el ancho disponible */
+    height: 100%;
+    margin-top: 20px;
+}
+
+.p_Unax, .p_Wiliam, .p_Marta {
+    margin-top: 10px;
+}
+
+img {
+    width: 100%; /* Hacer que las imágenes ocupen el 100% del ancho disponible */
+    height: auto; /* Mantener la proporción de la imagen */
+}
+
+h3 {
+    margin: 20px 0;
+}
+
+footer {
+    position: static; /* Quitar posición fija en dispositivos móviles */
+    margin-top: 20px;
+}
+
+
 }
