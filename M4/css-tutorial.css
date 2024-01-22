@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=DotGothic16&family=Overlock+SC&display=swap');
 
 body {
-    background-image: url('imagen/fondo_tutorial.jpg');
+    background-image: url('imagenes_pagina_web/fondo_tutorial.jpg');
     background-repeat: repeat;
     background-position: center 0%;
     background-size: contain;
@@ -444,4 +444,175 @@ h2 {
 img {
   width: 556px;
   height: 296px;
+}
+
+@media only screen and (max-width: 600px) {
+
+    body {
+        background-size: cover;
+    }
+
+    .rectangle__Interacion_Mapa{
+        width: 100%;
+        height: 100%;
+        right: 0;
+    }
+    .rectangle {
+        width: 100%;
+        height: 400%;
+        right: 0;
+    }
+
+    .text_Eat_Cook,
+    .text_matarganon,
+    .text_cofres {
+        left: 50%;
+        transform: translateX(-50%);
+        margin-left: 0;
+        margin-top: -220px;
+    }
+
+    .text_Eat_Cook{
+        left: 50%;
+        transform: translateX(-50%);
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    .text_Mostra_info{
+        left: 50%;
+        transform: translateX(-50%);
+        margin-left: 0;
+        margin-top: -1650px;
+    }
+
+    .text_Equip{
+        left: 50%;
+        transform: translateX(-50%);
+        margin-left: 0;
+        margin-top: -750px;
+    }
+
+    .text_presentacion_inventario{
+        left: 50%;
+        transform: translateX(-50%);
+        margin-left: 0;
+        margin-top: -120px;
+    }
+
+    .text_matarganon{
+        left: 50%;
+        transform: translateX(-50%);
+        margin-left: 0;
+        margin-top: -250px;
+    }
+
+    .text_atacar{
+        left: 50%;
+        transform: translateX(-50%);
+        margin-left: 0;
+        margin-top: -470px;
+    }
+
+    .text_blood_moon{
+        left: 50%;
+        transform: translateX(-50%);
+        margin-left: 0;
+        margin-top: -500px;
+    }
+
+    .text_moverse{
+        left: 50%;
+        transform: translateX(-50%);
+        margin-left: 0;
+        margin-top: -400px;
+    }
+
+    .text_santuarios{
+        left: 50%;
+        transform: translateX(-50%);
+        margin-left: 0;
+        margin-top: -370px;
+    }
+
+    .gift-container_tutorial,
+    .gift-container_tutorial_matarganon,
+    .gift-container_tutorial_atacar,
+    .gift-container_tutorial_blood_moon,
+    .gift-container_tutorial_moverse,
+    .gift-container_tutorial_santuarios,
+    .gift-container_tutorial_cofres,
+    .gift-container_tutorial_inventario_Equip,
+    .gift-container_tutorial_inventario_Eat_Cook {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 400px;
+    }
+
+    .gift-container_tutorial_inventario_Equip{
+        flex-direction: column;
+        align-items: center;
+        margin-top: 600px;
+    }
+
+    .gift-container_tutorial_inventario{
+        flex-direction: column;
+        align-items: center;
+        margin-top: 900px;
+    }
+
+    .gift_tutorial,
+    .gift_tutorial_matarganon,
+    .gift_tutorial_atacar,
+    .gift_tutorial_blood_moon,
+    .gift_tutorial_moverse,
+    .gift_tutorial_santuarios,
+    .gift_tutorial_cofres,
+    .gift_tutorial_inventario,
+    .gift_tutorial_inventario_Equip,
+    .gift_tutorial_inventario_Eat_Cook {
+        margin-left: 0;
+        margin-top: 10 px;
+    }
+
+    h2,
+    h3 {
+        margin-right: 0;
+        margin-top: 20px;
+    }
+
+    .text_principal {
+        font-size: 18px;
+        top: 100%;
+    }
+
+    img {
+        width: 100%;
+        height: auto;
+    }
+
+    .menu {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .menu li {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .sticky-menu {
+        padding: 10px 0;
+    }
+
+    .sticky-menu::after {
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .footer {
+        position: static;
+    }
 }
