@@ -1,0 +1,254 @@
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=DotGothic16&family=Overlock+SC&display=swap');
+
+body {
+    background-image: url('imagenes_pagina_web/fondo_del_about.jpg');
+    background-repeat: no-repeat;
+    background-position: center 0%;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background-color: rgba(51, 51, 51, 0);
+    padding: 10px;
+    color: white;
+}
+
+.sticky-menu {
+    background-color: #333;
+    padding: 10px;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 2px solid black;
+    cursor: pointer;
+}
+
+.sticky-menu::after {
+    content: "";
+    border-style: solid;
+    border-width: 8px 8px 0;
+    border-color: white transparent transparent;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.menu {
+    display: none;
+}
+
+.sticky-menu:hover .menu {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu li {
+    margin-right: 20px;
+}
+
+.menu li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 10px 16px;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: border-bottom 0.3s ease;
+}
+
+.menu li a:hover {
+    border-bottom: 2px solid #fff;
+}
+
+.main {
+    flex: 1;
+    padding: 20px;
+    color: white;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav li {
+    margin-right: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+nav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 10px 16px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    font-family: 'Black Ops One', system-ui;
+}
+
+nav:hover li {
+    opacity: 1;
+}
+
+nav li:hover a {
+    background-color: rgba(51, 51, 51, 0);
+}
+
+main {
+    flex: 1;
+    padding: 20px;
+    color: white;
+}
+
+h1 {
+    font-size: 45px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #b99e66;
+    text-shadow: 2px 2px 4px #000;
+    margin-top: 35px;
+    font-family: 'Black Ops One', system-ui;
+}
+
+footer {
+    background-color: rgba(51, 51, 51, 0);
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin-top: auto;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+.rectangle1 {
+    position: relative;
+    width: 500px;
+    height: 600px;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo semitransparente oscuro */
+    border: 3px solid #fff; /* Borde blanco */
+    border-radius: 10px; /* Esquinas redondeadas */
+    overflow: hidden;
+    left: 0%;
+    top:130px ;
+    font-family: 'Black Ops One', system-ui;
+}
+
+.rectangle-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    margin-top: -100px;
+}
+
+.p_Unax{
+    font-size: 20px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #b99e66;
+    text-shadow: 2px 2px 4px #000;
+    font-family: 'Black Ops One', system-ui;
+    margin-top: -100px; /* Ajusta este valor según tu preferencia */
+}
+
+.p_Wiliam{
+    font-size: 20px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #b99e66;
+    text-shadow: 2px 2px 4px #000;
+    font-family: 'Black Ops One', system-ui;
+    margin-top: -100px; /* Ajusta este valor según tu preferencia */
+}
+
+.p_Marta{
+    font-size: 20px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #b99e66;
+    text-shadow: 2px 2px 4px #000;
+    font-family: 'Black Ops One', system-ui;
+    margin-top: -100px; /* Ajusta este valor según tu preferencia */
+}
+
+img {
+  width: 120px;
+  height: 120px;
+}
+
+h3 {
+    font-size: 35px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #b99e66;
+    text-shadow: 2px 2px 4px #000;
+    font-family: 'Black Ops One', system-ui;
+    margin-right: 50px; /* Ajusta el valor según sea necesario para mover a la derecha */
+    margin-top: 30px; /* Ajusta el valor según sea necesario para bajarlo */
+}
+
+@media only screen and (max-width: 600px) {
+
+
+.sticky-menu {
+    padding: 10px;
+    text-align: center;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.menu li {
+    margin: 10px 0;
+}
+
+.main {
+    padding: 10px;
+}
+
+.rectangle1 {
+    width: 100%; /* Ocupar todo el ancho disponible */
+    height: 100%;
+    margin-top: 20px;
+}
+
+.p_Unax, .p_Wiliam, .p_Marta {
+    margin-top: 10px;
+}
+
+img {
+    width: 100%; /* Hacer que las imágenes ocupen el 100% del ancho disponible */
+    height: auto; /* Mantener la proporción de la imagen */
+}
+
+h3 {
+    margin: 20px 0;
+}
+
+footer {
+    position: static; /* Quitar posición fija en dispositivos móviles */
+    margin-top: 20px;
+}
+
+
+}
